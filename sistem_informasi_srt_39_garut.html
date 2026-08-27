@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Resmi SRT 39 Garut</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins untuk kesan modern dan fresh -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Konfigurasi Tema Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: {
+                        primary: '#4f46e5', // Indigo 600
+                        secondary: '#ec4899', // Pink 500
+                        accent: '#0ea5e9' // Sky 500
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Scrollbar */
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Styling untuk elemen yang bisa diedit */
+        [contenteditable="true"] {
+            border-bottom: 2px dashed #818cf8;
+            background-color: rgba(224, 231, 255, 0.5);
+            padding: 2px 6px;
+            border-radius: 6px;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+            cursor: text;
+        }
+        [contenteditable="true"]:focus {
+            background-color: rgba(224, 231, 255, 1);
+            border-bottom: 2px solid #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Tampilan khusus saat dicetak (Print) */
+        @media print {
+            body { background-color: white !important; }
+            .no-print { display: none !important; }
+            #main-content { margin-left: 0 !important; width: 100% !important; padding: 0 !important; overflow: visible !important;}
+            .print-shadow-none { box-shadow: none !important; border: 1px solid #e2e8f0; }
+            [contenteditable="true"] { border: none; background: transparent; padding: 0; }
+            .page-break { page-break-before: always; }
+        }
+        
+        /* Animasi */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="text-slate-800 h-screen overflow-hidden flex flex-col md:flex-row antialiased relative">
+
+    <div id="login-screen" class="fixed inset-0 bg-slate-900 bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center fade-in">
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl w-11/12 max-w-md relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-secondary"></div>
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-4 transform rotate-3">
+                    <i class="fas fa-school text-4xl text-primary"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-slate-800">Login Portal SRT 39</h1>
+                <p class="text-sm text-slate-500 mt-2">Masuk menggunakan NIP Anda.</p>
+            </div>
+            
+            <form id="login-form" class="space-y-5" onsubmit="handleLogin(event)">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">NIP (Nomor Induk Pegawai)</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-id-card text-slate-400"></i>
+                        </div>
+                        <input type="text" id="login-nip" required class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-primary focus:border-primary sm:text-sm transition-shadow" placeholder="Masukkan NIP...">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-slate-400"></i>
+                        </div>
+                        <input type="password" id="login-pass" required class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-primary focus:border-primary sm:text-sm transition-shadow" value="srt2026" placeholder="Password...">
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2"><i class="fas fa-info-circle"></i> Info: Password default adalah <b>srt2026</b>. NIP Wakasek: 199409082025211128</p>
+                </div>
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-md text-sm font-semibold text-white bg-gradient-to-r from-primary to-accent hover:from-indigo-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-300 transform hover:-translate-y-0.5">
+                    Masuk Sekarang <i class="fas fa-arrow-right ml-2 mt-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-wrapper" class="flex w-full h-full hidden">
+        
+        <!-- Sidebar Kiri -->
+        <aside id="sidebar" class="w-64 bg-slate-900 text-white flex flex-col h-full flex-shrink-0 transition-transform duration-300 z-40 fixed md:relative -translate-x-full md:translate-x-0 no-print shadow-2xl md:shadow-none">
+            <div class="p-6 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl">
+                        <i class="fas fa-graduation-cap text-xl"></i>
+                    </div>
+                    <span class="font-bold text-lg tracking-wide">SRT 39 Garut</span>
+                </div>
+                <button class="md:hidden text-slate-400 hover:text-white" onclick="toggleSidebar()">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <nav class="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
+                <p class="px-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Menu Utama</p>
+                <a href="#dashboard" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fas fa-home w-5 text-center"></i> Dashboard
+                </a>
+                <a href="#profil" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fas fa-building w-5 text-center"></i> Profil Sekolah
+                </a>
+                <a href="#kalender" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fas fa-calendar-alt w-5 text-center"></i> Kalender Akademik
+                </a>
+                <a href="#jadwal" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fas fa-clock w-5 text-center"></i> Jadwal Pelajaran
+                </a>
+                
+                <p class="px-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-6 mb-2">Manajemen SDM</p>
+                <a href="#guru" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fas fa-users w-5 text-center"></i> Data Guru & Tendik
+                </a>
+                <a href="#administrasi" class="nav-link flex items-center gap-3 px-3 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                    <i class="fas fa-cloud-upload-alt w-5 text-center"></i> Upload Administrasi
+                </a>
+            </nav>
+            
+            <div class="p-4 border-t border-slate-800">
+                <div class="bg-slate-800 rounded-xl p-3 flex items-center gap-3">
+                    <img id="user-avatar" src="" alt="User" class="w-10 h-10 rounded-full border-2 border-indigo-500">
+                    <div class="overflow-hidden">
+                        <p id="user-name" class="text-sm font-semibold truncate">Nama User</p>
+                        <p id="user-role" class="text-xs text-slate-400 truncate">Role User</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama -->
+        <main id="main-content" class="flex-1 flex flex-col h-full overflow-hidden bg-slate-50 relative w-full">
+            
+            <!-- Top Header -->
+            <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-4 md:px-8 z-10 no-print flex-shrink-0 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <button class="md:hidden text-slate-600 hover:text-primary transition" onclick="toggleSidebar()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h2 id="page-title" class="text-lg md:text-xl font-bold text-slate-800">Dashboard</h2>
+                </div>
+                
+                <div class="flex items-center gap-2 md:gap-4">
+                    <!-- Tombol Edit Mode -->
+                    <button onclick="toggleEditMode()" id="edit-toggle-btn" class="flex items-center gap-2 px-3 md:px-4 py-2 bg-slate-100 text-slate-600 rounded-full font-medium hover:bg-slate-200 transition-all text-sm md:text-base border border-slate-200">
+                        <i class="fas fa-edit"></i> <span class="hidden md:inline">Mode Edit:</span> <span id="edit-status" class="font-bold">OFF</span>
+                    </button>
+                    
+                    <!-- Tombol Cetak -->
+                    <button onclick="window.print()" class="w-10 h-10 md:w-auto md:px-4 md:py-2 bg-indigo-50 text-primary rounded-full font-medium hover:bg-indigo-100 transition-colors flex items-center justify-center gap-2 text-sm border border-indigo-100">
+                        <i class="fas fa-print"></i> <span class="hidden md:inline">Cetak</span>
+                    </button>
+                    
+                    <div class="w-px h-6 bg-slate-300 hidden md:block"></div>
+                    
+                    <!-- Tombol Logout -->
+                    <button onclick="handleLogout()" class="w-10 h-10 md:w-auto md:px-4 md:py-2 bg-rose-50 text-rose-600 rounded-full font-medium hover:bg-rose-100 transition-colors flex items-center justify-center gap-2 text-sm border border-rose-100" title="Keluar">
+                        <i class="fas fa-sign-out-alt"></i> <span class="hidden md:inline">Keluar</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Container Konten Dinamis -->
+            <div id="view-container" class="flex-1 overflow-y-auto p-4 md:p-8">
+                <!-- Injeksi HTML via JavaScript disini -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 no-print"></div>
+
+    <script>
+        // Data Default (Diambil dari referensi KSP, RKT, Jadwal, Kalender)
+        const defaultData = {
+            school: {
+                name: "Sekolah Rakyat Terintegrasi 39 Garut",
+                npsn_srd: "70058801",
+                npsn_srmp: "70058802",
+                address: "Jl. Raya Samarang KM 4 Desa Cintarakyat, Kec. Samarang, Garut 44161",
+                kepsek: "Andi Yasir Habibi, S.Sos., S.Pd.",
+                kepsekNip: "198008292014121002",
+                wakasek: "Fauzi Faturohman, S.Pd., Gr.",
+                wakasekNip: "199409082025211128",
+                moto: "Cerdas Bersama Tumbuh Setara",
+                visi: "MEWUJUDKAN GENERASI YANG DISIPLIN, JUJUR, MANDIRI, TANGGUH, RELIGIUS, DAN MAMPU BERSAING DI PERSAINGAN GLOBAL",
+                misi: [
+                    "Menanamkan kedisiplinan dimanapun berada",
+                    "Menanamkan karakter jujur dalam kehidupan sehari-hari",
+                    "Menumbuhkan kemandirian dalam berfikir dan berprilaku",
+                    "Menanamkan karakter tangguh atau tidak mudah menyerah dalam menghadapi permasalahan",
+                    "Membersamai dalam menumbuhkan ketaatan menjalankan ajaran agama",
+                    "Memberikan pembekalan ilmu dan keterampilan sebagai bekal untuk bersaing di persaingan global"
+                ],
+                sarpras: [
+                    { nama: "Ruang Kelas", jumlah: 3, kondisi: "Baik", ket: "Dilengkapi Smartboard & CCTV" },
+                    { nama: "Ruang Makan", jumlah: 1, kondisi: "Baik", ket: "Luas 225m2" },
+                    { nama: "Kamar Asrama", jumlah: 32, kondisi: "Baik", ket: "Kapasitas 35 siswa" }
+                ]
+            },
+            teachers: [
+                { nip: "198008292014121002", name: "Andi Yasir Habibi, S.Sos., S.Pd.", role: "Kepala Sekolah", classes: "-" },
+                { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wakasek Kurikulum", classes: "Kelas VII" },
+                { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Guru Kelas", classes: "Kelas I & IV" },
+                { nip: "199908182025212101", name: "Sarah Nur Faziah, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas VII" },
+                { nip: "200002282025211064", name: "Lufi Feriansyah, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas VII" },
+                { nip: "200003112025212061", name: "Mitha Amalia, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas VII" },
+                { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas I, IV & VII" },
+                { nip: "200004272025212059", name: "Youtrin Fadila, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas VII" },
+                { nip: "200006022025212083", name: "Navika Putri Dwi Lestari, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas I, IV & VII" },
+                { nip: "200009152025211042", name: "Mochamad Hoky Aldiansyah, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas I, IV & VII" },
+                { nip: "200102142025212047", name: "Syifa Nurlathifah Al Azmi, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas I & IV" },
+                { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru Mapel", classes: "Kelas VII" }
+            ],
+            calendar: [
+                { month: "Juli 2026", events: [{ date: "6 Jul", name: "Hari Pertama Sekolah", type: "primary" }, { date: "6-10 Jul", name: "MPLS / Asesmen Diagnostik", type: "info" }] },
+                { month: "Agustus 2026", events: [{ date: "17 Agu", name: "Hari Kemerdekaan RI", type: "danger" }, { date: "25-26 Agu", name: "Maulid Nabi Muhammad SAW", type: "success" }] },
+                { month: "September 2026", events: [{ date: "7-11 Sep", name: "Penilaian Sumatif Tengah Semester", type: "warning" }, { date: "30 Sep", name: "HUT SRT 39 Garut", type: "primary" }] },
+                { month: "Desember 2026", events: [{ date: "7-11 Des", name: "Penilaian Sumatif Akhir Semester", type: "warning" }, { date: "18 Des", name: "Pembagian Rapor", type: "info" }, { date: "21-31 Des", name: "Libur Semester 1", type: "danger" }] }
+            ],
+            jadwal: [
+                { jam: "1", waktu: "08.00-08.40", s: ["B. Indonesia", "IPA", "PJOK"], sel: ["PJOK", "Seni Budaya", "PAI"], r: ["MTK", "KKA", "B. Indonesia"], k: ["KKA", "B. Inggris", "Pancasila"], jm: "08.00-08.35", j: ["IPAS", "IPS", "B. Indonesia"] },
+                { jam: "2", waktu: "08.40-09.20", s: ["B. Indonesia", "IPA", "PJOK"], sel: ["PJOK", "Seni Budaya", "PAI"], r: ["MTK", "KKA", "B. Indonesia"], k: ["KKA", "B. Inggris", "Pancasila"], jm: "08.35-09.10", j: ["IPAS", "IPS", "B. Indonesia"] },
+                { jam: "3", waktu: "09.20-10.00", s: ["B. Indonesia", "IPA", "PJOK"], sel: ["PJOK", "Prakarya", "IPS"], r: ["MTK", "PJOK", "B. Indonesia"], k: ["B. Indonesia", "MTK", "Pancasila"], jm: "09.10-09.45", j: ["IPAS", "IPS", "B. Indonesia"] },
+                { jam: "4", waktu: "10.30-11.10", s: ["B. Inggris", "TIK", "IPA"], sel: ["PJOK", "PAI", "IPS"], r: ["BK", "PJOK", "KKA"], k: ["Pancasila", "MTK", "B. Inggris"], jm: "10.15-10.50", j: ["B. Indonesia", "B. Inggris", "BK"] },
+                { jam: "5", waktu: "11.10-11.50", s: ["B. Inggris", "TIK", "IPA"], sel: ["Calistung", "PAI", "IPS"], r: ["Pancasila", "PJOK", "KKA"], k: ["Pancasila", "MTK", "B. Inggris"], jm: "10.50-11.25", j: ["Prakarya", "B. Inggris", "MTK"] },
+                { jam: "6", waktu: "13.00-13.40", s: ["IPAS", "B. Indonesia", "IPA"], sel: ["Calistung", "B. Indonesia", "Seni Budaya"], r: ["TIK", "IPS", "MTK"], k: ["MTK", "Pancasila", "IPS"], jm: "13.15-13.50", j: ["Seni Budaya", "BK", "MTK"] },
+            ],
+            ekstra: [
+                { waktu: "15.30-Selesai", s: "OSIS", sel: "Literasi Numerasi", r: "Futsal", k: "Paskibra", j: "Hadroh", ws: "09.00-Selesai", sab: "Pramuka", wm: "15.30-Selesai", m: "Paskibra" },
+                { waktu: "-", s: "English Club", sel: "KIR", r: "Jurnalistik", k: "Silat", j: "UKS", ws: "-", sab: "-", wm: "-", m: "-" },
+                { waktu: "-", s: "-", sel: "Computer Club", r: "Sahabat Literasi", k: "-", j: "-", ws: "-", sab: "-", wm: "-", m: "-" }
+            ],
+            adminLinks: [
+                { id: Date.now(), nip: "199409082025211128", name: "Fauzi Faturohman", category: "Modul Ajar", title: "Modul Ajar Matematika Kelas VII Ganjil", link: "https://drive.google.com/drive/folders/contoh123", date: new Date().toLocaleDateString('id-ID') }
+            ],
+            isEditMode: false
+        };
+
+        // Generate Foto Dummy berdasarkan inisial
+        defaultData.teachers.forEach(t => {
+            const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+            const colors = ['4f46e5', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
+            const hash = Array.from(t.nip).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            t.photo = `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+        });
+
+        // State Manager
+        let appState = JSON.parse(localStorage.getItem('srt39_data')) || defaultData;
+        let currentUser = JSON.parse(localStorage.getItem('srt39_user'));
+
+        function saveState() {
+            localStorage.setItem('srt39_data', JSON.stringify(appState));
+        }
+
+        // Helper: Update Data dari Elemen contenteditable
+        function updateData(path, value) {
+            let parts = path.split('.');
+            let obj = appState;
+            for (let i = 0; i < parts.length - 1; i++) {
+                if (!obj[parts[i]]) obj[parts[i]] = {};
+                obj = obj[parts[i]];
+            }
+            obj[parts[parts.length - 1]] = value;
+            saveState();
+        }
+
+        function updateArrayItem(arrayName, index, key, value) {
+            appState[arrayName][index][key] = value;
+            saveState();
+        }
+
+        // Helper: Format Atribut Editable
+        function getEditableAttr(path) {
+            return appState.isEditMode ? `contenteditable="true" onblur="updateData('${path}', this.innerText)" title="Klik untuk mengedit"` : '';
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            const bg = type === 'success' ? 'bg-emerald-500' : type === 'error' ? 'bg-rose-500' : 'bg-indigo-500';
+            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            
+            toast.className = `flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg text-white font-medium ${bg} fade-in`;
+            toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+            
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        function toggleEditMode() {
+            appState.isEditMode = !appState.isEditMode;
+            saveState();
+            updateEditBtnUI();
+            router(); // Re-render current page
+            showToast(appState.isEditMode ? 'Mode Edit Diaktifkan' : 'Mode Edit Dinonaktifkan', 'info');
+        }
+
+        function updateEditBtnUI() {
+            const btn = document.getElementById('edit-toggle-btn');
+            const status = document.getElementById('edit-status');
+            if(appState.isEditMode) {
+                btn.classList.replace('bg-slate-100', 'bg-indigo-600');
+                btn.classList.replace('text-slate-600', 'text-white');
+                btn.classList.replace('hover:bg-slate-200', 'hover:bg-indigo-700');
+                status.innerText = 'ON';
+            } else {
+                btn.classList.replace('bg-indigo-600', 'bg-slate-100');
+                btn.classList.replace('text-white', 'text-slate-600');
+                btn.classList.replace('hover:bg-indigo-700', 'hover:bg-slate-200');
+                status.innerText = 'OFF';
+            }
+        }
+
+        function initAuth() {
+            if (currentUser) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-wrapper').classList.remove('hidden');
+                
+                // Set UI Profil Topbar/Sidebar
+                document.getElementById('user-avatar').src = currentUser.photo;
+                document.getElementById('user-name').innerText = currentUser.name.split(',')[0]; // Ambil nama depan saja
+                document.getElementById('user-role').innerText = currentUser.role;
+                
+                updateEditBtnUI();
+                router();
+            } else {
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('app-wrapper').classList.add('hidden');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const nip = document.getElementById('login-nip').value;
+            const pass = document.getElementById('login-pass').value;
+            
+            // Pencarian user di database mockup (teachers)
+            const user = appState.teachers.find(t => t.nip === nip);
+            
+            if (user && pass === 'srt2026') {
+                currentUser = user;
+                localStorage.setItem('srt39_user', JSON.stringify(currentUser));
+                showToast(`Selamat datang, ${user.name}!`);
+                initAuth();
+            } else {
+                showToast('NIP atau Password salah!', 'error');
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('srt39_user');
+            appState.isEditMode = false; // reset edit mode
+            saveState();
+            initAuth();
+        }
+
+        function router() {
+            if(!currentUser) return;
+            const hash = window.location.hash || '#dashboard';
+            const container = document.getElementById('view-container');
+            const pageTitle = document.getElementById('page-title');
+            
+            // Update active state di sidebar
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+                link.classList.add('text-slate-300');
+                if(link.getAttribute('href') === hash) {
+                    link.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+                    link.classList.remove('text-slate-300', 'hover:bg-slate-800');
+                }
+            });
+
+            // Routing logic
+            switch(hash) {
+                case '#dashboard': 
+                    pageTitle.innerText = "Dashboard Utama";
+                    container.innerHTML = renderDashboard(); 
+                    break;
+                case '#profil': 
+                    pageTitle.innerText = "Profil Instansi";
+                    container.innerHTML = renderProfile(); 
+                    break;
+                case '#kalender': 
+                    pageTitle.innerText = "Kalender Akademik";
+                    container.innerHTML = renderCalendar(); 
+                    break;
+                case '#jadwal': 
+                    pageTitle.innerText = "Jadwal Pelajaran & Ekstra";
+                    container.innerHTML = renderSchedule(); 
+                    break;
+                case '#guru': 
+                    pageTitle.innerText = "Data Guru & Tenaga Kependidikan";
+                    container.innerHTML = renderTeachers(); 
+                    break;
+                case '#administrasi': 
+                    pageTitle.innerText = "Pusat Upload Administrasi";
+                    container.innerHTML = renderAdmin(); 
+                    break;
+                default: 
+                    window.location.hash = '#dashboard';
+            }
+        }
+        window.addEventListener('hashchange', router);
+
+        function renderDashboard() {
+            return `
+            <div class="fade-in space-y-6">
+                <!-- Welcome Banner -->
+                <div class="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl p-8 text-white shadow-lg relative overflow-hidden print-shadow-none">
+                    <div class="absolute -right-10 -top-10 opacity-10">
+                        <i class="fas fa-school" style="font-size: 15rem;"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-bold mb-2">Halo, ${currentUser.name.split(',')[0]}! 👋</h2>
+                        <p class="text-indigo-100 text-lg max-w-2xl">Selamat datang di Sistem Informasi Manajemen ${appState.school.name}. Terus pantau jadwal dan kelola administrasi Anda dengan mudah.</p>
+                        ${appState.isEditMode ? '<span class="inline-block mt-4 px-3 py-1 bg-white text-indigo-700 text-xs font-bold rounded-full uppercase tracking-wider shadow-sm"><i class="fas fa-pen mr-1"></i> Mode Edit Aktif</span>' : ''}
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-5 hover:shadow-md transition">
+                        <div class="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <div>
+                            <p class="text-sm text-slate-500 font-medium">Total GTK</p>
+                            <h3 class="text-2xl font-bold text-slate-800">${appState.teachers.length} <span class="text-sm font-normal text-slate-400">Orang</span></h3>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-5 hover:shadow-md transition">
+                        <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl"><i class="fas fa-file-alt"></i></div>
+                        <div>
+                            <p class="text-sm text-slate-500 font-medium">Dokumen Administrasi</p>
+                            <h3 class="text-2xl font-bold text-slate-800">${appState.adminLinks.length} <span class="text-sm font-normal text-slate-400">File Tersimpan</span></h3>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-5 hover:shadow-md transition">
+                        <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-2xl"><i class="fas fa-calendar-check"></i></div>
+                        <div>
+                            <p class="text-sm text-slate-500 font-medium">Tahun Ajaran</p>
+                            <h3 class="text-2xl font-bold text-slate-800">2026/2027</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informasi Singkat Sekolah -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2"><i class="fas fa-info-circle text-primary mr-2"></i>Sekilas Sekolah</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Nama Sekolah</p>
+                            <p class="font-medium text-slate-700" ${getEditableAttr('school.name')}>${appState.school.name}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">NPSN</p>
+                            <p class="font-medium text-slate-700">SRD: <span ${getEditableAttr('school.npsn_srd')}>${appState.school.npsn_srd}</span> | SRMP: <span ${getEditableAttr('school.npsn_srmp')}>${appState.school.npsn_srmp}</span></p>
+                        </div>
+                        <div class="md:col-span-2">
+                            <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Moto</p>
+                            <p class="font-bold text-primary italic">"<span ${getEditableAttr('school.moto')}>${appState.school.moto}</span>"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        function renderProfile() {
+            let misiHTML = appState.school.misi.map((m, i) => `
+                <li class="flex gap-3 mb-2">
+                    <span class="w-6 h-6 rounded-full bg-indigo-100 text-primary flex items-center justify-center text-sm font-bold flex-shrink-0">${i+1}</span>
+                    <span ${getEditableAttr(`school.misi.${i}`)} class="flex-1">${m}</span>
+                </li>
+            `).join('');
+
+            return `
+            <div class="fade-in space-y-6">
+                <!-- Header Profil -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row gap-8 items-center text-center md:text-left">
+                    <div class="w-32 h-32 bg-slate-50 rounded-full border-4 border-white shadow-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-school text-5xl text-slate-300"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h1 class="text-3xl font-extrabold text-slate-800" ${getEditableAttr('school.name')}>${appState.school.name}</h1>
+                        <p class="text-slate-500 mt-2 flex items-center justify-center md:justify-start gap-2">
+                            <i class="fas fa-map-marker-alt text-rose-500"></i>
+                            <span ${getEditableAttr('school.address')}>${appState.school.address}</span>
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
+                            <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium border border-blue-100">Kepsek: <span ${getEditableAttr('school.kepsek')}>${appState.school.kepsek}</span></span>
+                            <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg text-sm font-medium border border-purple-100">Wakasek: <span ${getEditableAttr('school.wakasek')}>${appState.school.wakasek}</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visi Misi -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 h-full">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl"><i class="fas fa-eye"></i></div>
+                            <h2 class="text-xl font-bold text-slate-800">Visi Sekolah</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed font-medium p-4 bg-slate-50 rounded-2xl italic text-center" ${getEditableAttr('school.visi')}>
+                            "${appState.school.visi}"
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 h-full">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl"><i class="fas fa-bullseye"></i></div>
+                            <h2 class="text-xl font-bold text-slate-800">Misi Sekolah</h2>
+                        </div>
+                        <ul class="text-slate-600">
+                            ${misiHTML}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        function renderCalendar() {
+            let calHTML = appState.calendar.map((monthData, mIdx) => {
+                let eventsList = monthData.events.map((ev, eIdx) => {
+                    const badgeColor = ev.type === 'primary' ? 'bg-indigo-500' : ev.type === 'holiday' || ev.type === 'danger' ? 'bg-rose-500' : ev.type === 'warning' ? 'bg-amber-500' : ev.type === 'success' ? 'bg-emerald-500' : 'bg-sky-500';
+                    return `
+                    <div class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100 group">
+                        <div class="w-2 h-2 mt-2 rounded-full ${badgeColor} flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <p class="font-bold text-slate-700 text-sm" ${getEditableAttr(`calendar.${mIdx}.events.${eIdx}.date`)}>${ev.date}</p>
+                            <p class="text-slate-600 text-sm mt-0.5" ${getEditableAttr(`calendar.${mIdx}.events.${eIdx}.name`)}>${ev.name}</p>
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+
+                return `
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 break-inside-avoid mb-6">
+                    <h3 class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-3 mb-3 uppercase tracking-wider" ${getEditableAttr(`calendar.${mIdx}.month`)}>
+                        <i class="far fa-calendar-alt text-primary mr-2"></i>${monthData.month}
+                    </h3>
+                    <div class="space-y-1">
+                        ${eventsList}
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            return `
+            <div class="fade-in">
+                <div class="mb-6 flex justify-between items-center no-print">
+                    <p class="text-slate-500">Mengacu pada kalender pendidikan Semester Ganjil 2026/2027.</p>
+                </div>
+                <div class="columns-1 md:columns-2 lg:columns-3 gap-6">
+                    ${calHTML}
+                </div>
+            </div>
+            `;
+        }
+
+        function renderSchedule() {
+            let trMapel = appState.jadwal.map((row, i) => `
+                <tr class="${i%2===0?'bg-white':'bg-slate-50'} hover:bg-indigo-50 transition border-b border-slate-100 text-sm text-center">
+                    <td class="py-3 px-2 font-medium text-slate-600">${row.jam}</td>
+                    <td class="py-3 px-2 whitespace-nowrap text-xs bg-slate-100" ${getEditableAttr(`jadwal.${i}.waktu`)}>${row.waktu}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.s.0`)}>${row.s[0]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.s.1`)}>${row.s[1]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.s.2`)}>${row.s[2]}</td>
+                    
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.sel.0`)}>${row.sel[0]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.sel.1`)}>${row.sel[1]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.sel.2`)}>${row.sel[2]}</td>
+                    
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.r.0`)}>${row.r[0]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.r.1`)}>${row.r[1]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.r.2`)}>${row.r[2]}</td>
+                    
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.k.0`)}>${row.k[0]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.k.1`)}>${row.k[1]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.k.2`)}>${row.k[2]}</td>
+                    
+                    <td class="py-3 px-2 whitespace-nowrap text-xs bg-slate-100" ${getEditableAttr(`jadwal.${i}.jm`)}>${row.jm}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.j.0`)}>${row.j[0]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.j.1`)}>${row.j[1]}</td>
+                    <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.j.2`)}>${row.j[2]}</td>
+                </tr>
+            `).join('');
+
+            let trEkstra = appState.ekstra.map((row, i) => `
+                <tr class="bg-white border-b border-slate-100 text-sm text-center hover:bg-slate-50 transition">
+                    <td class="py-2 px-2">${i+1}</td>
+                    <td class="py-2 px-2 text-xs" ${getEditableAttr(`ekstra.${i}.waktu`)}>${row.waktu}</td>
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.s`)}>${row.s}</td>
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.sel`)}>${row.sel}</td>
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.r`)}>${row.r}</td>
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.k`)}>${row.k}</td>
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.j`)}>${row.j}</td>
+                    <td class="py-2 px-2 text-xs border-l border-slate-200" ${getEditableAttr(`ekstra.${i}.ws`)}>${row.ws}</td>
+                    <td class="py-2 px-2 font-semibold text-primary" ${getEditableAttr(`ekstra.${i}.sab`)}>${row.sab}</td>
+                    <td class="py-2 px-2 text-xs border-l border-slate-200" ${getEditableAttr(`ekstra.${i}.wm`)}>${row.wm}</td>
+                    <td class="py-2 px-2 font-semibold text-rose-500" ${getEditableAttr(`ekstra.${i}.m`)}>${row.m}</td>
+                </tr>
+            `).join('');
+
+            return `
+            <div class="fade-in space-y-8">
+                <!-- Tabel Mapel -->
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800"><i class="fas fa-table text-primary mr-2"></i>Jadwal Pelajaran Semester Ganjil</h3>
+                            <p class="text-xs text-slate-500 mt-1">Tahun Ajaran 2026/2027</p>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[1200px] border-collapse">
+                            <thead>
+                                <tr class="bg-indigo-600 text-white text-xs uppercase tracking-wider text-center">
+                                    <th rowspan="2" class="py-3 px-2 border-r border-indigo-500 font-semibold w-10">Ke</th>
+                                    <th rowspan="2" class="py-3 px-2 border-r border-indigo-500 font-semibold w-24">Waktu</th>
+                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Senin</th>
+                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Selasa</th>
+                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Rabu</th>
+                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Kamis</th>
+                                    <th rowspan="2" class="py-3 px-2 border-r border-indigo-500 font-semibold w-24">Waktu</th>
+                                    <th colspan="3" class="py-2 px-2 border-b border-indigo-500 font-semibold">Jum'at</th>
+                                </tr>
+                                <tr class="bg-indigo-500 text-white text-xs text-center">
+                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
+                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
+                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
+                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
+                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 font-medium">SMP-B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-amber-50 text-center text-xs font-semibold text-amber-700 border-b border-slate-200">
+                                    <td></td><td>07.30-08.00</td><td colspan="12" class="py-2">Apel / Upacara Bendera</td>
+                                    <td>07.30-08.00</td><td colspan="3">Sholat Dhuha</td>
+                                </tr>
+                                ${trMapel}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tabel Ekstra -->
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden page-break">
+                    <div class="p-6 border-b border-slate-100 bg-slate-50">
+                        <h3 class="text-lg font-bold text-slate-800"><i class="fas fa-futbol text-emerald-500 mr-2"></i>Jadwal Ekstrakurikuler</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[1000px] border-collapse">
+                            <thead>
+                                <tr class="bg-slate-800 text-white text-xs uppercase tracking-wider text-center">
+                                    <th class="py-3 px-2 font-semibold">No</th>
+                                    <th class="py-3 px-2 font-semibold w-24">Waktu</th>
+                                    <th class="py-3 px-2 font-semibold">Senin</th>
+                                    <th class="py-3 px-2 font-semibold">Selasa</th>
+                                    <th class="py-3 px-2 font-semibold">Rabu</th>
+                                    <th class="py-3 px-2 font-semibold">Kamis</th>
+                                    <th class="py-3 px-2 font-semibold">Jum'at</th>
+                                    <th class="py-3 px-2 font-semibold border-l border-slate-600">Waktu</th>
+                                    <th class="py-3 px-2 font-semibold">Sabtu</th>
+                                    <th class="py-3 px-2 font-semibold border-l border-slate-600">Waktu</th>
+                                    <th class="py-3 px-2 font-semibold">Minggu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${trEkstra}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        function renderTeachers() {
+            // Sort guru berdasarkan NIP
+            const sortedTeachers = [...appState.teachers].sort((a,b) => a.nip.localeCompare(b.nip));
+
+            let html = sortedTeachers.map((t, idx) => `
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-lg transition-all transform hover:-translate-y-1 flex flex-col items-center text-center relative group">
+                    ${appState.isEditMode && t.nip !== '198008292014121002' ? `<button onclick="deleteTeacher('${t.nip}')" class="absolute top-4 right-4 w-8 h-8 bg-rose-100 text-rose-600 rounded-full hover:bg-rose-500 hover:text-white transition flex items-center justify-center no-print"><i class="fas fa-trash text-xs"></i></button>` : ''}
+                    
+                    <div class="w-24 h-24 rounded-full p-1 border-2 border-indigo-100 mb-4 overflow-hidden relative">
+                        <img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full">
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg leading-tight mb-1 px-2" ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.name`)}>${t.name}</h3>
+                    <p class="text-sm font-medium text-slate-500 mb-3 tracking-wide">NIP. <span ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.nip`)}>${t.nip}</span></p>
+                    
+                    <div class="w-full mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
+                        <span class="px-3 py-1 bg-indigo-50 text-primary rounded-lg text-xs font-semibold" ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.role`)}>${t.role}</span>
+                        <span class="text-xs text-slate-400 font-medium" ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.classes`)}>${t.classes}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+            <div class="fade-in">
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Direktori Tenaga Pendidik</h2>
+                        <p class="text-sm text-slate-500">Diurutkan berdasarkan NIP</p>
+                    </div>
+                </div>
+                
+                ${appState.isEditMode ? `
+                <div class="bg-indigo-50 rounded-2xl p-6 mb-8 border border-indigo-100 border-dashed no-print">
+                    <h4 class="font-bold text-indigo-800 mb-4"><i class="fas fa-plus-circle mr-2"></i>Tambah Guru Baru</h4>
+                    <form onsubmit="handleAddTeacher(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="text" id="new-g-nip" placeholder="NIP" required class="px-4 py-2 rounded-xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                        <input type="text" id="new-g-name" placeholder="Nama Lengkap & Gelar" required class="px-4 py-2 rounded-xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                        <input type="text" id="new-g-role" placeholder="Jabatan (Mis: Guru Mapel)" required class="px-4 py-2 rounded-xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
+                        <button type="submit" class="bg-primary text-white font-semibold rounded-xl px-4 py-2 hover:bg-indigo-700 transition shadow-sm text-sm">Simpan Data</button>
+                    </form>
+                </div>
+                ` : ''}
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    ${html}
+                </div>
+            </div>
+            `;
+        }
+
+        // Fungi Tambah/Hapus Guru
+        function handleAddTeacher(e) {
+            e.preventDefault();
+            const nip = document.getElementById('new-g-nip').value;
+            const name = document.getElementById('new-g-name').value;
+            const role = document.getElementById('new-g-role').value;
+            
+            if(appState.teachers.some(t => t.nip === nip)) return showToast('NIP sudah terdaftar!', 'error');
+
+            const initials = name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+            const photo = `https://placehold.co/150x150/8b5cf6/ffffff?text=${initials}`;
+            
+            appState.teachers.push({ nip, name, role, classes: "-", photo });
+            saveState();
+            router();
+            showToast('Guru berhasil ditambahkan!');
+        }
+
+        function deleteTeacher(nip) {
+            if(confirm('Yakin ingin menghapus data guru ini?')) {
+                appState.teachers = appState.teachers.filter(t => t.nip !== nip);
+                saveState();
+                router();
+                showToast('Data guru dihapus', 'info');
+            }
+        }
+
+        function renderAdmin() {
+            let trs = appState.adminLinks.length === 0 
+                ? `<tr><td colspan="5" class="py-8 text-center text-slate-400">Belum ada dokumen yang diunggah.</td></tr>` 
+                : appState.adminLinks.map((doc, idx) => `
+                <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
+                    <td class="py-4 px-4 text-sm font-medium text-slate-800">${doc.name} <br><span class="text-xs text-slate-400 font-normal">${doc.nip}</span></td>
+                    <td class="py-4 px-4"><span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs font-medium">${doc.category}</span></td>
+                    <td class="py-4 px-4 text-sm text-slate-700 max-w-xs truncate" title="${doc.title}">${doc.title}</td>
+                    <td class="py-4 px-4 text-sm text-slate-500">${doc.date}</td>
+                    <td class="py-4 px-4 text-center">
+                        <a href="${doc.link}" target="_blank" class="w-8 h-8 inline-flex items-center justify-center bg-indigo-50 text-primary rounded-full hover:bg-primary hover:text-white transition shadow-sm" title="Buka Tautan"><i class="fas fa-external-link-alt text-xs"></i></a>
+                        ${appState.isEditMode || doc.nip === currentUser.nip ? `<button onclick="deleteAdmin(${doc.id})" class="w-8 h-8 inline-flex items-center justify-center bg-rose-50 text-rose-500 rounded-full hover:bg-rose-500 hover:text-white transition shadow-sm ml-1 no-print" title="Hapus"><i class="fas fa-trash text-xs"></i></button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+
+            return `
+            <div class="fade-in space-y-6">
+                <div class="bg-gradient-to-r from-sky-500 to-indigo-500 rounded-3xl p-8 text-white shadow-sm flex flex-col md:flex-row justify-between items-center gap-6 no-print print-shadow-none">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-1"><i class="fab fa-google-drive mr-2"></i>Pusat Administrasi Guru</h2>
+                        <p class="text-sky-100 text-sm">Unggah tautan Google Drive berisi perangkat ajar Anda disini.</p>
+                    </div>
+                </div>
+
+                <!-- Form Upload -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 no-print">
+                    <h3 class="font-bold text-slate-800 mb-4 text-lg">Tambah Dokumen Baru</h3>
+                    <form onsubmit="handleUpload(event)" class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                        <div class="md:col-span-3">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Kategori</label>
+                            <select id="up-cat" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-sm font-medium text-slate-700">
+                                <option value="Modul Ajar / RPP">Modul Ajar / RPP</option>
+                                <option value="Daftar Nilai">Daftar Nilai</option>
+                                <option value="Jurnal Mengajar">Jurnal Mengajar</option>
+                                <option value="Bahan Ajar">Bahan Ajar</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-4">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Judul Dokumen</label>
+                            <input type="text" id="up-title" required placeholder="Cth: Modul IPAS Bab 1" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-sm">
+                        </div>
+                        <div class="md:col-span-3">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Link Google Drive</label>
+                            <input type="url" id="up-link" required placeholder="https://drive.google.com/..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-sm">
+                        </div>
+                        <div class="md:col-span-2 flex items-end">
+                            <button type="submit" class="w-full py-2.5 bg-slate-800 text-white font-semibold rounded-xl hover:bg-black transition shadow-sm text-sm"><i class="fas fa-cloud-upload-alt mr-2"></i>Simpan</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabel Rekap -->
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+                                    <th class="py-4 px-4 font-semibold">Guru Pengunggah</th>
+                                    <th class="py-4 px-4 font-semibold">Kategori</th>
+                                    <th class="py-4 px-4 font-semibold">Judul Dokumen</th>
+                                    <th class="py-4 px-4 font-semibold">Tanggal</th>
+                                    <th class="py-4 px-4 font-semibold text-center no-print">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${trs}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        function handleUpload(e) {
+            e.preventDefault();
+            const cat = document.getElementById('up-cat').value;
+            const title = document.getElementById('up-title').value;
+            const link = document.getElementById('up-link').value;
+            
+            appState.adminLinks.unshift({
+                id: Date.now(),
+                nip: currentUser.nip,
+                name: currentUser.name,
+                category: cat,
+                title: title,
+                link: link,
+                date: new Date().toLocaleDateString('id-ID')
+            });
+            
+            saveState();
+            router();
+            showToast('Tautan administrasi berhasil disimpan!');
+        }
+
+        function deleteAdmin(id) {
+            if(confirm('Hapus dokumen ini?')) {
+                appState.adminLinks = appState.adminLinks.filter(d => d.id !== id);
+                saveState();
+                router();
+            }
+        }
+
+        window.onload = () => {
+            initAuth();
+            
+            // Tutup sidebar di mobile jika klik area luar
+            document.getElementById('main-content').addEventListener('click', (e) => {
+                if(window.innerWidth < 768 && !e.target.closest('#sidebar') && !e.target.closest('header button.md\\:hidden')) {
+                    document.getElementById('sidebar').classList.add('-translate-x-full');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
