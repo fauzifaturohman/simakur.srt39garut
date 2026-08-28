@@ -254,10 +254,12 @@
                 { jam: "1", waktu: "08.00-08.40", s: ["B. Indonesia", "IPA", "PJOK"], sel: ["PJOK", "Seni Budaya", "PAI"], r: ["MTK", "KKA", "B. Indonesia"], k: ["KKA", "B. Inggris", "Pancasila"], jm: "08.00-08.35", j: ["IPAS", "IPS", "B. Indonesia"] },
                 { jam: "2", waktu: "08.40-09.20", s: ["B. Indonesia", "IPA", "PJOK"], sel: ["PJOK", "Seni Budaya", "PAI"], r: ["MTK", "KKA", "B. Indonesia"], k: ["KKA", "B. Inggris", "Pancasila"], jm: "08.35-09.10", j: ["IPAS", "IPS", "B. Indonesia"] },
                 { jam: "3", waktu: "09.20-10.00", s: ["B. Indonesia", "IPA", "PJOK"], sel: ["PJOK", "Prakarya", "IPS"], r: ["MTK", "PJOK", "B. Indonesia"], k: ["B. Indonesia", "MTK", "Pancasila"], jm: "09.10-09.45", j: ["IPAS", "IPS", "B. Indonesia"] },
-                { jam: "I", waktu: "10.00-10.30", s: [<td colspan="3" style="text-align: center;">Istirahat</td>], sel: [<td colspan="3" style="text-align: center;">Istirahat</td>], r: [<td colspan="3" style="text-align: center;">Istirahat</td>], k: [<td colspan="3" style="text-align: center;">Istirahat</td>], jm: "09.45-10.15", j: [<td colspan="3" style="text-align: center;">Istirahat</td>] },
+                // Diperbaiki: Data murni (tanpa tag HTML)
+                { jam: "I", waktu: "10.00-10.30", s: ["Istirahat"], sel: ["Istirahat"], r: ["Istirahat"], k: ["Istirahat"], jm: "09.45-10.15", j: ["Istirahat"] },
                 { jam: "4", waktu: "10.30-11.10", s: ["B. Inggris", "TIK", "IPA"], sel: ["PJOK", "PAI", "IPS"], r: ["BK", "PJOK", "KKA"], k: ["Pancasila", "MTK", "B. Inggris"], jm: "10.15-10.50", j: ["B. Indonesia", "B. Inggris", "BK"] },
                 { jam: "5", waktu: "11.10-11.50", s: ["B. Inggris", "TIK", "IPA"], sel: ["Calistung", "PAI", "IPS"], r: ["Pancasila", "PJOK", "KKA"], k: ["Pancasila", "MTK", "B. Inggris"], jm: "10.50-11.25", j: ["Prakarya", "B. Inggris", "MTK"] },
-                { jam: "I", waktu: "12.00-13.00", s: [<td colspan="3" style="text-align: center;">Istirahat</td>], sel: [<td colspan="3" style="text-align: center;">Istirahat</td>], r: [<td colspan="3" style="text-align: center;">Istirahat</td>], k: [<td colspan="3" style="text-align: center;">Istirahat</td>], jm: "11.25-13.15", j: [<td colspan="3" style="text-align: center;">Istirahat</td>] },
+                // Diperbaiki: Data murni (tanpa tag HTML)
+                { jam: "I", waktu: "12.00-13.00", s: ["Istirahat"], sel: ["Istirahat"], r: ["Istirahat"], k: ["Istirahat"], jm: "11.25-13.15", j: ["Istirahat"] },
                 { jam: "6", waktu: "13.00-13.40", s: ["IPAS", "B. Indonesia", "IPA"], sel: ["Calistung", "B. Indonesia", "Seni Budaya"], r: ["TIK", "IPS", "MTK"], k: ["MTK", "Pancasila", "IPS"], jm: "13.15-13.50", j: ["Seni Budaya", "BK", "MTK"] },
                 { jam: "7", waktu: "13.40-14.20", s: ["IPAS", "B. Indonesia", "TIK"], sel: ["PAI", "B. Indonesia", "Seni Budaya"], r: ["TIK", "IPA", "MTK"], k: ["MTK", "Pancasila", "IPA"], jm: "13.50-14.25", j: ["Seni Budaya", "MTK", "B. Inggris"] },
                 { jam: "8", waktu: "14.20-15.00", s: ["IPAS", "B. Indonesia", "TIK"], sel: ["PAI", "B. Indonesia", "Prakarya"], r: ["Pancasila", "IPA", "MTK"], k: ["MTK", "Pancasila", "IPA"], jm: "14.25-15.00", j: ["Seni Budaya", "MTK", "B. Inggris"] },
@@ -546,9 +548,7 @@
                             <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl"><i class="fas fa-eye"></i></div>
                             <h2 class="text-xl font-bold text-slate-800">Visi Sekolah</h2>
                         </div>
-                        <p class="text-slate-600 leading-relaxed font-medium p-4 bg-slate-50 rounded-2xl italic text-center" ${getEditableAttr('school.visi')}>
-                            "${appState.school.visi}"
-                        </p>
+                        <p class="text-slate-600 leading-relaxed font-medium p-4 bg-slate-50 rounded-2xl italic text-center" ${getEditableAttr('school.visi')}>"${appState.school.visi}"</p>
                     </div>
                     
                     <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 h-full">
@@ -556,7 +556,7 @@
                             <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl"><i class="fas fa-bullseye"></i></div>
                             <h2 class="text-xl font-bold text-slate-800">Misi Sekolah</h2>
                         </div>
-                        <ul class="text-slate-600">
+                        <ul class="text-slate-600 space-y-2">
                             ${misiHTML}
                         </ul>
                     </div>
@@ -566,46 +566,58 @@
         }
 
         function renderCalendar() {
-            let calHTML = appState.calendar.map((monthData, mIdx) => {
-                let eventsList = monthData.events.map((ev, eIdx) => {
-                    const badgeColor = ev.type === 'primary' ? 'bg-indigo-500' : ev.type === 'holiday' || ev.type === 'danger' ? 'bg-rose-500' : ev.type === 'warning' ? 'bg-amber-500' : ev.type === 'success' ? 'bg-emerald-500' : 'bg-sky-500';
+            let html = '<div class="fade-in space-y-6 grid grid-cols-1 md:grid-cols-2 gap-6">';
+            appState.calendar.forEach((month, idx) => {
+                let events = month.events.map(ev => {
+                    const colors = {
+                        primary: 'border-blue-500 bg-blue-50 text-blue-700',
+                        info: 'border-cyan-500 bg-cyan-50 text-cyan-700',
+                        success: 'border-emerald-500 bg-emerald-50 text-emerald-700',
+                        warning: 'border-amber-500 bg-amber-50 text-amber-700',
+                        danger: 'border-rose-500 bg-rose-50 text-rose-700'
+                    };
                     return `
-                    <div class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100 group">
-                        <div class="w-2 h-2 mt-2 rounded-full ${badgeColor} flex-shrink-0"></div>
-                        <div class="flex-1">
-                            <p class="font-bold text-slate-700 text-sm" ${getEditableAttr(`calendar.${mIdx}.events.${eIdx}.date`)}>${ev.date}</p>
-                            <p class="text-slate-600 text-sm mt-0.5" ${getEditableAttr(`calendar.${mIdx}.events.${eIdx}.name`)}>${ev.name}</p>
+                        <div class="flex items-center gap-3 p-3 rounded-xl border-l-4 ${colors[ev.type]}">
+                            <div class="font-bold whitespace-nowrap min-w-[70px]">${ev.date}</div>
+                            <div class="font-medium text-sm border-l border-slate-200 pl-3">${ev.name}</div>
                         </div>
-                    </div>
                     `;
                 }).join('');
 
-                return `
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 break-inside-avoid mb-6">
-                    <h3 class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-3 mb-3 uppercase tracking-wider" ${getEditableAttr(`calendar.${mIdx}.month`)}>
-                        <i class="far fa-calendar-alt text-primary mr-2"></i>${monthData.month}
-                    </h3>
-                    <div class="space-y-1">
-                        ${eventsList}
+                html += `
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2 flex items-center gap-2"><i class="fas fa-calendar text-primary"></i> ${month.month}</h3>
+                    <div class="space-y-3">
+                        ${events || '<p class="text-slate-400 text-sm italic text-center py-4">Tidak ada agenda</p>'}
                     </div>
                 </div>
                 `;
-            }).join('');
-
-            return `
-            <div class="fade-in">
-                <div class="mb-6 flex justify-between items-center no-print">
-                    <p class="text-slate-500">Mengacu pada kalender pendidikan Semester Ganjil 2026/2027.</p>
-                </div>
-                <div class="columns-1 md:columns-2 lg:columns-3 gap-6">
-                    ${calHTML}
-                </div>
-            </div>
-            `;
+            });
+            html += '</div>';
+            return html;
         }
 
         function renderSchedule() {
-            let trMapel = appState.jadwal.map((row, i) => `
+            // Modifikasi bagian pembuatan baris (tr) Mapel agar merender kolom istirahat sesuai format HTML yang benar.
+            let trMapel = appState.jadwal.map((row, i) => {
+                // Pengecekan kondisi istirahat
+                if(row.jam === "I") {
+                    return `
+                    <tr class="bg-slate-100 hover:bg-indigo-50 transition border-b border-slate-200 text-sm text-center font-bold text-slate-600">
+                        <td class="py-3 px-2">${row.jam}</td>
+                        <td class="py-3 px-2 whitespace-nowrap text-xs bg-slate-200" ${getEditableAttr(`jadwal.${i}.waktu`)}>${row.waktu}</td>
+                        <td colspan="3" class="py-3 px-2 tracking-widest text-emerald-600" ${getEditableAttr(`jadwal.${i}.s.0`)}>${row.s[0]}</td>
+                        <td colspan="3" class="py-3 px-2 tracking-widest text-emerald-600" ${getEditableAttr(`jadwal.${i}.sel.0`)}>${row.sel[0]}</td>
+                        <td colspan="3" class="py-3 px-2 tracking-widest text-emerald-600" ${getEditableAttr(`jadwal.${i}.r.0`)}>${row.r[0]}</td>
+                        <td colspan="3" class="py-3 px-2 tracking-widest text-emerald-600" ${getEditableAttr(`jadwal.${i}.k.0`)}>${row.k[0]}</td>
+                        <td class="py-3 px-2 whitespace-nowrap text-xs bg-slate-200" ${getEditableAttr(`jadwal.${i}.jm`)}>${row.jm}</td>
+                        <td colspan="3" class="py-3 px-2 tracking-widest text-emerald-600" ${getEditableAttr(`jadwal.${i}.j.0`)}>${row.j[0]}</td>
+                    </tr>
+                    `;
+                }
+
+                // Kondisi Baris Mata Pelajaran Normal
+                return `
                 <tr class="${i%2===0?'bg-white':'bg-slate-50'} hover:bg-indigo-50 transition border-b border-slate-100 text-sm text-center">
                     <td class="py-3 px-2 font-medium text-slate-600">${row.jam}</td>
                     <td class="py-3 px-2 whitespace-nowrap text-xs bg-slate-100" ${getEditableAttr(`jadwal.${i}.waktu`)}>${row.waktu}</td>
@@ -630,91 +642,79 @@
                     <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.j.1`)}>${row.j[1]}</td>
                     <td class="py-3 px-2" ${getEditableAttr(`jadwal.${i}.j.2`)}>${row.j[2]}</td>
                 </tr>
-            `).join('');
+                `;
+            }).join('');
 
             let trEkstra = appState.ekstra.map((row, i) => `
-                <tr class="bg-white border-b border-slate-100 text-sm text-center hover:bg-slate-50 transition">
-                    <td class="py-2 px-2">${i+1}</td>
-                    <td class="py-2 px-2 text-xs" ${getEditableAttr(`ekstra.${i}.waktu`)}>${row.waktu}</td>
+                <tr class="${i%2===0?'bg-white':'bg-slate-50'} border-b border-slate-100 text-sm text-center">
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.waktu`)}>${row.waktu}</td>
                     <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.s`)}>${row.s}</td>
                     <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.sel`)}>${row.sel}</td>
                     <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.r`)}>${row.r}</td>
                     <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.k`)}>${row.k}</td>
                     <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.j`)}>${row.j}</td>
-                    <td class="py-2 px-2 text-xs border-l border-slate-200" ${getEditableAttr(`ekstra.${i}.ws`)}>${row.ws}</td>
-                    <td class="py-2 px-2 font-semibold text-primary" ${getEditableAttr(`ekstra.${i}.sab`)}>${row.sab}</td>
-                    <td class="py-2 px-2 text-xs border-l border-slate-200" ${getEditableAttr(`ekstra.${i}.wm`)}>${row.wm}</td>
-                    <td class="py-2 px-2 font-semibold text-rose-500" ${getEditableAttr(`ekstra.${i}.m`)}>${row.m}</td>
+                    <td class="py-2 px-2 bg-slate-100 text-xs" ${getEditableAttr(`ekstra.${i}.ws`)}>${row.ws}</td>
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.sab`)}>${row.sab}</td>
+                    <td class="py-2 px-2 bg-slate-100 text-xs" ${getEditableAttr(`ekstra.${i}.wm`)}>${row.wm}</td>
+                    <td class="py-2 px-2" ${getEditableAttr(`ekstra.${i}.m`)}>${row.m}</td>
                 </tr>
             `).join('');
 
             return `
             <div class="fade-in space-y-8">
-                <!-- Tabel Mapel -->
+                <!-- Jadwal Pelajaran -->
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-                    <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-800"><i class="fas fa-table text-primary mr-2"></i>Jadwal Pelajaran Semester Ganjil</h3>
-                            <p class="text-xs text-slate-500 mt-1">Tahun Ajaran 2026/2027</p>
-                        </div>
+                    <div class="p-6 bg-gradient-to-r from-indigo-50 to-white border-b border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-800"><i class="fas fa-clock text-primary mr-2"></i> Jadwal Pelajaran</h3>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-[1200px] border-collapse">
+                    <div class="overflow-x-auto p-4">
+                        <table class="w-full text-left border-collapse min-w-[1200px]">
                             <thead>
-                                <tr class="bg-indigo-600 text-white text-xs uppercase tracking-wider text-center">
-                                    <th rowspan="2" class="py-3 px-2 border-r border-indigo-500 font-semibold w-10">Ke</th>
-                                    <th rowspan="2" class="py-3 px-2 border-r border-indigo-500 font-semibold w-24">Waktu</th>
-                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Senin</th>
-                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Selasa</th>
-                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Rabu</th>
-                                    <th colspan="3" class="py-2 px-2 border-r border-b border-indigo-500 font-semibold">Kamis</th>
-                                    <th rowspan="2" class="py-3 px-2 border-r border-indigo-500 font-semibold w-24">Waktu</th>
-                                    <th colspan="3" class="py-2 px-2 border-b border-indigo-500 font-semibold">Jum'at</th>
+                                <tr class="bg-slate-800 text-white text-xs uppercase tracking-wider text-center">
+                                    <th rowspan="2" class="py-3 px-2 rounded-tl-xl">Jam Ke</th>
+                                    <th rowspan="2" class="py-3 px-2">Waktu (Sen-Kam)</th>
+                                    <th colspan="3" class="py-2 px-2 border-b border-slate-700 bg-indigo-900">Senin</th>
+                                    <th colspan="3" class="py-2 px-2 border-b border-slate-700">Selasa</th>
+                                    <th colspan="3" class="py-2 px-2 border-b border-slate-700 bg-indigo-900">Rabu</th>
+                                    <th colspan="3" class="py-2 px-2 border-b border-slate-700">Kamis</th>
+                                    <th rowspan="2" class="py-3 px-2">Waktu (Jum'at)</th>
+                                    <th colspan="3" class="py-2 px-2 border-b border-slate-700 bg-emerald-700 rounded-tr-xl">Jum'at</th>
                                 </tr>
-                                <tr class="bg-indigo-500 text-white text-xs text-center">
-                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
-                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
-                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
-                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 border-r border-indigo-600 font-medium">SMP-B</th>
-                                    <th class="py-1 px-1 border-r border-indigo-400 font-medium">SRD</th><th class="py-1 px-1 border-r border-indigo-400 font-medium">SMP-A</th><th class="py-1 px-1 font-medium">SMP-B</th>
+                                <tr class="bg-slate-700 text-slate-200 text-xs text-center">
+                                    <th class="py-2 px-1 border-r border-slate-600 bg-indigo-800">VII</th><th class="py-2 px-1 border-r border-slate-600 bg-indigo-800">VIII</th><th class="py-2 px-1 bg-indigo-800">IX</th>
+                                    <th class="py-2 px-1 border-r border-slate-600">VII</th><th class="py-2 px-1 border-r border-slate-600">VIII</th><th class="py-2 px-1">IX</th>
+                                    <th class="py-2 px-1 border-r border-slate-600 bg-indigo-800">VII</th><th class="py-2 px-1 border-r border-slate-600 bg-indigo-800">VIII</th><th class="py-2 px-1 bg-indigo-800">IX</th>
+                                    <th class="py-2 px-1 border-r border-slate-600">VII</th><th class="py-2 px-1 border-r border-slate-600">VIII</th><th class="py-2 px-1">IX</th>
+                                    <th class="py-2 px-1 border-r border-emerald-600 bg-emerald-600">VII</th><th class="py-2 px-1 border-r border-emerald-600 bg-emerald-600">VIII</th><th class="py-2 px-1 bg-emerald-600">IX</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="bg-amber-50 text-center text-xs font-semibold text-amber-700 border-b border-slate-200">
-                                    <td></td><td>07.30-08.00</td><td colspan="12" class="py-2">Apel / Upacara Bendera</td>
-                                    <td>07.30-08.00</td><td colspan="3">Sholat Dhuha</td>  
-                                </tr>
-                                ${trMapel}
-                            </tbody>
+                            <tbody>${trMapel}</tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Tabel Ekstra -->
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden page-break">
-                    <div class="p-6 border-b border-slate-100 bg-slate-50">
-                        <h3 class="text-lg font-bold text-slate-800"><i class="fas fa-futbol text-emerald-500 mr-2"></i>Jadwal Ekstrakurikuler</h3>
+                <!-- Jadwal Ekstrakurikuler -->
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="p-6 bg-gradient-to-r from-emerald-50 to-white border-b border-slate-100">
+                        <h3 class="text-xl font-bold text-slate-800"><i class="fas fa-futbol text-emerald-600 mr-2"></i> Jadwal Ekstrakurikuler</h3>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-[1000px] border-collapse">
+                    <div class="overflow-x-auto p-4">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
                             <thead>
-                                <tr class="bg-slate-800 text-white text-xs uppercase tracking-wider text-center">
-                                    <th class="py-3 px-2 font-semibold">No</th>
-                                    <th class="py-3 px-2 font-semibold w-24">Waktu</th>
-                                    <th class="py-3 px-2 font-semibold">Senin</th>
-                                    <th class="py-3 px-2 font-semibold">Selasa</th>
-                                    <th class="py-3 px-2 font-semibold">Rabu</th>
-                                    <th class="py-3 px-2 font-semibold">Kamis</th>
-                                    <th class="py-3 px-2 font-semibold">Jum'at</th>
-                                    <th class="py-3 px-2 font-semibold border-l border-slate-600">Waktu</th>
-                                    <th class="py-3 px-2 font-semibold">Sabtu</th>
-                                    <th class="py-3 px-2 font-semibold border-l border-slate-600">Waktu</th>
-                                    <th class="py-3 px-2 font-semibold">Minggu</th>
+                                <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider text-center border-b-2 border-slate-200">
+                                    <th class="py-3 px-2 rounded-tl-xl">Waktu</th>
+                                    <th class="py-3 px-2">Senin</th>
+                                    <th class="py-3 px-2">Selasa</th>
+                                    <th class="py-3 px-2">Rabu</th>
+                                    <th class="py-3 px-2">Kamis</th>
+                                    <th class="py-3 px-2">Jum'at</th>
+                                    <th class="py-3 px-2 bg-slate-200">Waktu Sab</th>
+                                    <th class="py-3 px-2">Sabtu</th>
+                                    <th class="py-3 px-2 bg-slate-200">Waktu Min</th>
+                                    <th class="py-3 px-2 rounded-tr-xl">Minggu</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                ${trEkstra}
-                            </tbody>
+                            <tbody>${trEkstra}</tbody>
                         </table>
                     </div>
                 </div>
@@ -723,149 +723,123 @@
         }
 
         function renderTeachers() {
-            // Sort guru berdasarkan NIP
-            const sortedTeachers = [...appState.teachers].sort((a,b) => a.nip.localeCompare(b.nip));
-
-            let html = sortedTeachers.map((t, idx) => `
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-lg transition-all transform hover:-translate-y-1 flex flex-col items-center text-center relative group">
-                    ${appState.isEditMode && t.nip !== '198008292014121002' ? `<button onclick="deleteTeacher('${t.nip}')" class="absolute top-4 right-4 w-8 h-8 bg-rose-100 text-rose-600 rounded-full hover:bg-rose-500 hover:text-white transition flex items-center justify-center no-print"><i class="fas fa-trash text-xs"></i></button>` : ''}
-                    
-                    <div class="w-24 h-24 rounded-full p-1 border-2 border-indigo-100 mb-4 overflow-hidden relative">
-                        <img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full">
-                    </div>
-                    <h3 class="font-bold text-slate-800 text-lg leading-tight mb-1 px-2" ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.name`)}>${t.name}</h3>
-                    <p class="text-sm font-medium text-slate-500 mb-3 tracking-wide">NIP. <span ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.nip`)}>${t.nip}</span></p>
-                    
-                    <div class="w-full mt-auto pt-4 border-t border-slate-100 flex justify-between items-center">
-                        <span class="px-3 py-1 bg-indigo-50 text-primary rounded-lg text-xs font-semibold" ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.role`)}>${t.role}</span>
-                        <span class="text-xs text-slate-400 font-medium" ${getEditableAttr(`teachers.${appState.teachers.findIndex(x=>x.nip===t.nip)}.classes`)}>${t.classes}</span>
-                    </div>
-                </div>
-            `).join('');
-
-            return `
+            let html = `
             <div class="fade-in">
-                <div class="flex justify-between items-end mb-6">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800">Direktori Tenaga Pendidik</h2>
-                        <p class="text-sm text-slate-500">Diurutkan berdasarkan NIP</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            `;
+            
+            appState.teachers.forEach((t, i) => {
+                html += `
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="w-full h-24 bg-gradient-to-r from-indigo-500 to-purple-600 absolute top-0 left-0"></div>
+                    <img src="${t.photo}" alt="${t.name}" class="w-24 h-24 rounded-full border-4 border-white shadow-md relative z-10 mt-6 mb-4 bg-white object-cover group-hover:scale-105 transition-transform">
+                    <h3 class="text-lg font-bold text-slate-800 leading-tight mb-1" ${getEditableAttr(`teachers.${i}.name`)}>${t.name}</h3>
+                    <p class="text-sm font-semibold text-primary mb-3" ${getEditableAttr(`teachers.${i}.role`)}>${t.role}</p>
+                    
+                    <div class="w-full bg-slate-50 rounded-xl p-3 text-left mt-auto border border-slate-100">
+                        <div class="flex items-center gap-2 mb-1">
+                            <i class="fas fa-id-badge text-slate-400 text-xs"></i>
+                            <span class="text-xs text-slate-500 font-medium">NIP/NUPTK:</span>
+                        </div>
+                        <p class="text-sm text-slate-700 font-mono mb-2 truncate" ${getEditableAttr(`teachers.${i}.nip`)}>${t.nip}</p>
+                        
+                        <div class="flex items-center gap-2 mb-1">
+                            <i class="fas fa-chalkboard text-slate-400 text-xs"></i>
+                            <span class="text-xs text-slate-500 font-medium">Mengajar Kelas:</span>
+                        </div>
+                        <p class="text-sm text-slate-700 truncate" ${getEditableAttr(`teachers.${i}.classes`)}>${t.classes}</p>
                     </div>
                 </div>
-                
-                ${appState.isEditMode ? `
-                <div class="bg-indigo-50 rounded-2xl p-6 mb-8 border border-indigo-100 border-dashed no-print">
-                    <h4 class="font-bold text-indigo-800 mb-4"><i class="fas fa-plus-circle mr-2"></i>Tambah Guru Baru</h4>
-                    <form onsubmit="handleAddTeacher(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <input type="text" id="new-g-nip" placeholder="NIP" required class="px-4 py-2 rounded-xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
-                        <input type="text" id="new-g-name" placeholder="Nama Lengkap & Gelar" required class="px-4 py-2 rounded-xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
-                        <input type="text" id="new-g-role" placeholder="Jabatan (Mis: Guru Mapel)" required class="px-4 py-2 rounded-xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-primary text-sm">
-                        <button type="submit" class="bg-primary text-white font-semibold rounded-xl px-4 py-2 hover:bg-indigo-700 transition shadow-sm text-sm">Simpan Data</button>
-                    </form>
-                </div>
-                ` : ''}
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    ${html}
-                </div>
-            </div>
-            `;
-        }
-
-        // Fungi Tambah/Hapus Guru
-        function handleAddTeacher(e) {
-            e.preventDefault();
-            const nip = document.getElementById('new-g-nip').value;
-            const name = document.getElementById('new-g-name').value;
-            const role = document.getElementById('new-g-role').value;
+                `;
+            });
             
-            if(appState.teachers.some(t => t.nip === nip)) return showToast('NIP sudah terdaftar!', 'error');
-
-            const initials = name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-            const photo = `https://placehold.co/150x150/8b5cf6/ffffff?text=${initials}`;
-            
-            appState.teachers.push({ nip, name, role, classes: "-", photo });
-            saveState();
-            router();
-            showToast('Guru berhasil ditambahkan!');
-        }
-
-        function deleteTeacher(nip) {
-            if(confirm('Yakin ingin menghapus data guru ini?')) {
-                appState.teachers = appState.teachers.filter(t => t.nip !== nip);
-                saveState();
-                router();
-                showToast('Data guru dihapus', 'info');
-            }
+            html += `</div></div>`;
+            return html;
         }
 
         function renderAdmin() {
-            let trs = appState.adminLinks.length === 0 
-                ? `<tr><td colspan="5" class="py-8 text-center text-slate-400">Belum ada dokumen yang diunggah.</td></tr>` 
-                : appState.adminLinks.map((doc, idx) => `
-                <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
-                    <td class="py-4 px-4 text-sm font-medium text-slate-800">${doc.name} <br><span class="text-xs text-slate-400 font-normal">${doc.nip}</span></td>
-                    <td class="py-4 px-4"><span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs font-medium">${doc.category}</span></td>
-                    <td class="py-4 px-4 text-sm text-slate-700 max-w-xs truncate" title="${doc.title}">${doc.title}</td>
-                    <td class="py-4 px-4 text-sm text-slate-500">${doc.date}</td>
-                    <td class="py-4 px-4 text-center">
-                        <a href="${doc.link}" target="_blank" class="w-8 h-8 inline-flex items-center justify-center bg-indigo-50 text-primary rounded-full hover:bg-primary hover:text-white transition shadow-sm" title="Buka Tautan"><i class="fas fa-external-link-alt text-xs"></i></a>
-                        ${appState.isEditMode || doc.nip === currentUser.nip ? `<button onclick="deleteAdmin(${doc.id})" class="w-8 h-8 inline-flex items-center justify-center bg-rose-50 text-rose-500 rounded-full hover:bg-rose-500 hover:text-white transition shadow-sm ml-1 no-print" title="Hapus"><i class="fas fa-trash text-xs"></i></button>` : ''}
+            let tableRows = appState.adminLinks.map(link => `
+                <tr class="border-b border-slate-100 hover:bg-slate-50 transition">
+                    <td class="py-3 px-4 text-sm font-medium text-slate-700">${link.name}</td>
+                    <td class="py-3 px-4 text-sm"><span class="px-2 py-1 bg-indigo-50 text-indigo-700 rounded-md text-xs font-semibold">${link.category}</span></td>
+                    <td class="py-3 px-4 text-sm text-slate-600">${link.title}</td>
+                    <td class="py-3 px-4 text-sm text-slate-400">${link.date}</td>
+                    <td class="py-3 px-4 text-sm text-center">
+                        <a href="${link.link}" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xs font-medium transition shadow-sm">
+                            <i class="fas fa-external-link-alt"></i> Buka Link
+                        </a>
                     </td>
                 </tr>
             `).join('');
 
             return `
             <div class="fade-in space-y-6">
-                <div class="bg-gradient-to-r from-sky-500 to-indigo-500 rounded-3xl p-8 text-white shadow-sm flex flex-col md:flex-row justify-between items-center gap-6 no-print print-shadow-none">
-                    <div>
-                        <h2 class="text-2xl font-bold mb-1"><i class="fab fa-google-drive mr-2"></i>Pusat Administrasi Guru</h2>
-                        <p class="text-sky-100 text-sm">Unggah tautan Google Drive berisi perangkat ajar Anda disini.</p>
-                    </div>
-                </div>
-
                 <!-- Form Upload -->
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 no-print">
-                    <h3 class="font-bold text-slate-800 mb-4 text-lg">Tambah Dokumen Baru</h3>
-                    <form onsubmit="handleUpload(event)" class="grid grid-cols-1 md:grid-cols-12 gap-4">
-                        <div class="md:col-span-3">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Kategori</label>
-                            <select id="up-cat" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-sm font-medium text-slate-700">
-                                <option value="Modul Ajar / RPP">Modul Ajar / RPP</option>
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 no-print">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i class="fas fa-cloud-upload-alt text-primary"></i> Form Setor Link Administrasi</h3>
+                    <form id="admin-form" onsubmit="handleAdminSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Nama Guru</label>
+                            <input type="text" value="${currentUser.name}" disabled class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Kategori Dokumen</label>
+                            <select id="admin-category" required class="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-primary focus:border-primary sm:text-sm bg-white">
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="Modul Ajar">Modul Ajar (MA/RPP)</option>
+                                <option value="CP/ATP">CP / ATP / Silabus</option>
+                                <option value="Program Tahunan">Program Tahunan</option>
+                                <option value="Program Semester">Program Semester</option>
+                                <option value="Jurnal Harian">Jurnal Harian Guru</option>
                                 <option value="Daftar Nilai">Daftar Nilai</option>
-                                <option value="Jurnal Mengajar">Jurnal Mengajar</option>
-                                <option value="Bahan Ajar">Bahan Ajar</option>
                                 <option value="Lainnya">Lainnya</option>
                             </select>
                         </div>
-                        <div class="md:col-span-4">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Judul Dokumen</label>
-                            <input type="text" id="up-title" required placeholder="Cth: Modul IPAS Bab 1" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-sm">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Judul Dokumen</label>
+                            <input type="text" id="admin-title" required placeholder="Contoh: Modul Ajar Matematika Kelas VII Bab 1" class="block w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-primary focus:border-primary sm:text-sm">
                         </div>
-                        <div class="md:col-span-3">
-                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Link Google Drive</label>
-                            <input type="url" id="up-link" required placeholder="https://drive.google.com/..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-sm">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Link Google Drive / Tautan (Pastikan akses diset ke 'Anyone with the link')</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-link text-slate-400"></i>
+                                </div>
+                                <input type="url" id="admin-link" required placeholder="https://drive.google.com/..." class="block w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-primary focus:border-primary sm:text-sm">
+                            </div>
                         </div>
-                        <div class="md:col-span-2 flex items-end">
-                            <button type="submit" class="w-full py-2.5 bg-slate-800 text-white font-semibold rounded-xl hover:bg-black transition shadow-sm text-sm"><i class="fas fa-cloud-upload-alt mr-2"></i>Simpan</button>
+                        <div class="md:col-span-2 flex justify-end">
+                            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-indigo-700 hover:to-blue-600 text-white rounded-xl shadow-md text-sm font-semibold transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fas fa-paper-plane"></i> Simpan Link Administrasi
+                            </button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Tabel Rekap -->
+                <!-- Tabel Riwayat -->
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="p-6 bg-slate-50 border-b border-slate-100 flex justify-between items-center flex-wrap gap-4">
+                        <h3 class="text-xl font-bold text-slate-800"><i class="fas fa-folder-open text-primary mr-2"></i> Rekap Dokumen Administrasi</h3>
+                        <div class="relative">
+                            <input type="text" id="search-admin" onkeyup="filterAdmin()" placeholder="Cari dokumen..." class="block w-full md:w-64 pl-10 pr-4 py-2 border border-slate-300 rounded-full focus:ring-primary focus:border-primary sm:text-sm">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-slate-400"></i>
+                            </div>
+                        </div>
+                    </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
-                                    <th class="py-4 px-4 font-semibold">Guru Pengunggah</th>
+                        <table class="w-full text-left" id="admin-table">
+                            <thead class="bg-white border-b-2 border-slate-100 text-slate-500 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="py-4 px-4 font-semibold">Nama Guru</th>
                                     <th class="py-4 px-4 font-semibold">Kategori</th>
                                     <th class="py-4 px-4 font-semibold">Judul Dokumen</th>
-                                    <th class="py-4 px-4 font-semibold">Tanggal</th>
-                                    <th class="py-4 px-4 font-semibold text-center no-print">Aksi</th>
+                                    <th class="py-4 px-4 font-semibold">Tanggal Setor</th>
+                                    <th class="py-4 px-4 font-semibold text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${trs}
+                                ${tableRows || '<tr><td colspan="5" class="py-8 text-center text-slate-400 italic">Belum ada data administrasi</td></tr>'}
                             </tbody>
                         </table>
                     </div>
@@ -874,13 +848,14 @@
             `;
         }
 
-        function handleUpload(e) {
+        // Fungsi Submit Link Admin
+        window.handleAdminSubmit = function(e) {
             e.preventDefault();
-            const cat = document.getElementById('up-cat').value;
-            const title = document.getElementById('up-title').value;
-            const link = document.getElementById('up-link').value;
+            const cat = document.getElementById('admin-category').value;
+            const title = document.getElementById('admin-title').value;
+            const link = document.getElementById('admin-link').value;
             
-            appState.adminLinks.unshift({
+            const newData = {
                 id: Date.now(),
                 nip: currentUser.nip,
                 name: currentUser.name,
@@ -888,31 +863,40 @@
                 title: title,
                 link: link,
                 date: new Date().toLocaleDateString('id-ID')
-            });
-            
+            };
+
+            appState.adminLinks.unshift(newData); // Tambah ke atas
             saveState();
-            router();
-            showToast('Tautan administrasi berhasil disimpan!');
+            
+            showToast('Dokumen Administrasi berhasil ditambahkan!');
+            router(); // Refresh halaman administrasi
         }
 
-        function deleteAdmin(id) {
-            if(confirm('Hapus dokumen ini?')) {
-                appState.adminLinks = appState.adminLinks.filter(d => d.id !== id);
-                saveState();
-                router();
+        // Fungsi Filter/Search Admin
+        window.filterAdmin = function() {
+            let input = document.getElementById("search-admin").value.toLowerCase();
+            let table = document.getElementById("admin-table");
+            let tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) { // Skip header (index 0)
+                let showRow = false;
+                let tds = tr[i].getElementsByTagName("td");
+                for(let j=0; j < tds.length - 1; j++) { // Skip kolom aksi
+                    if(tds[j]) {
+                        if (tds[j].textContent.toLowerCase().indexOf(input) > -1) {
+                            showRow = true;
+                            break;
+                        }
+                    }
+                }
+                tr[i].style.display = showRow ? "" : "none";
             }
         }
 
-        window.onload = () => {
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
             initAuth();
-            
-            // Tutup sidebar di mobile jika klik area luar
-            document.getElementById('main-content').addEventListener('click', (e) => {
-                if(window.innerWidth < 768 && !e.target.closest('#sidebar') && !e.target.closest('header button.md\\:hidden')) {
-                    document.getElementById('sidebar').classList.add('-translate-x-full');
-                }
-            });
-        };
+        });
     </script>
 </body>
 </html>
