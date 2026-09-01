@@ -1866,4 +1866,64 @@
                     ['15.30-Selesai', 'OSIS', 'Literasi & Numerasi', 'Futsal', 'Paskibra', 'Hadroh', '09.00-Selesai',
                         'Pramuka', '15.30-Selesai', 'Paskibra'
                     ],
-                    ['', 'English Club', 'Karya Ilmiah Remaja', 'J
+                    ['', 'English Club', 'Karya Ilmiah Remaja', 'Jurnalistik', 'Silat', 'UKS', '', '', '', ''],
+                    ['', '', 'Computer Club', 'Sahabat Literasi', '', '', '', '', '', '']
+                ];
+                const ws5 = XLSX.utils.aoa_to_sheet(ekstraTemplate);
+                XLSX.utils.book_append_sheet(wb, ws5, 'Ekstrakurikuler');
+
+                // Template Kalender
+                const calTemplate = [
+                    ['Bulan', 'Tanggal', 'Event', 'Tipe'],
+                    ['Juli 2026', '6 Jul', 'Hari Pertama Sekolah', 'primary'],
+                    ['Juli 2026', '6-10 Jul', 'MPLS / Asesmen Diagnostik', 'info'],
+                    ['Agustus 2026', '17 Agu', 'Hari Kemerdekaan RI', 'danger'],
+                    ['September 2026', '7-11 Sep', 'Penilaian Sumatif Tengah Semester', 'warning'],
+                    ['Desember 2026', '18 Des', 'Pembagian Rapor', 'info']
+                ];
+                const ws6 = XLSX.utils.aoa_to_sheet(calTemplate);
+                XLSX.utils.book_append_sheet(wb, ws6, 'Kalender');
+
+                // Template Administrasi
+                const adminTemplate = [
+                    ['NIP', 'Nama', 'Kategori', 'Judul', 'Link', 'Tanggal'],
+                    ['199409082025211128', 'Fauzi Faturohman', 'Modul Ajar', 'Modul Ajar PPKn Kelas VII',
+                        'https://example.com', new Date().toLocaleDateString('id-ID')
+                    ]
+                ];
+                const ws7 = XLSX.utils.aoa_to_sheet(adminTemplate);
+                XLSX.utils.book_append_sheet(wb, ws7, 'Administrasi');
+
+                // Export
+                const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([wbout], { type: 'application/octet-stream' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `template_data_srt39.xlsx`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('Template Excel berhasil diunduh!', 'success');
+            } catch (err) {
+                showToast('Gagal unduh template: ' + err.message, 'error');
+            }
+        }
+
+
+        // ================================================================
+        // INIT
+        // ================================================================
+
+        window.onload = function() {
+            initAuth();
+            document.getElementById('main-content')?.addEventListener('click', (e) => {
+                const sidebar = document.getElementById('sidebar');
+                if (window.innerWidth < 768 && sidebar && !sidebar.contains(e.target) && !e.target.closest(
+                        'header button')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
