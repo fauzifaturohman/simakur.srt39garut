@@ -220,35 +220,39 @@
             gap: 2px;
         }
         .calendar-grid .day-header {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.7rem;
             text-transform: uppercase;
             text-align: center;
             padding: 0.5rem 0;
-            color: #64748b;
+            color: #475569;
+            background: #f1f5f9;
+            border-radius: 6px;
         }
         .calendar-grid .day-cell {
             background: white;
             border-radius: 8px;
-            min-height: 70px;
+            min-height: 80px;
             padding: 0.25rem;
-            font-size: 0.75rem;
-            border: 1px solid #f1f5f9;
+            font-size: 0.7rem;
+            border: 1px solid #eef2f6;
             transition: 0.2s;
             position: relative;
         }
         .calendar-grid .day-cell:hover {
             border-color: #94a3b8;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
         .calendar-grid .day-cell .date-num {
             font-weight: 700;
             color: #0f172a;
-            padding: 0.25rem 0.5rem;
+            padding: 0.2rem 0.4rem;
+            font-size: 0.8rem;
+            display: inline-block;
         }
         .calendar-grid .day-cell .event-badge {
-            background: #e0e7ff;
-            color: #1e40af;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             padding: 0.1rem 0.3rem;
             border-radius: 4px;
             margin: 0.1rem 0.2rem;
@@ -257,21 +261,65 @@
             text-overflow: ellipsis;
             display: block;
             cursor: default;
-        }
-        .calendar-grid .day-cell .event-badge.danger {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-        .calendar-grid .day-cell .event-badge.warning {
-            background: #fef3c7;
-            color: #92400e;
+            font-weight: 500;
         }
         .calendar-grid .day-cell .event-badge.primary {
             background: #dbeafe;
             color: #1e40af;
+            border-left: 3px solid #1e40af;
+        }
+        .calendar-grid .day-cell .event-badge.danger {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 3px solid #dc2626;
+        }
+        .calendar-grid .day-cell .event-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 3px solid #f59e0b;
+        }
+        .calendar-grid .day-cell .event-badge.info {
+            background: #e0f2fe;
+            color: #0369a1;
+            border-left: 3px solid #0ea5e9;
+        }
+        .calendar-grid .day-cell .event-badge.success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 3px solid #10b981;
         }
         .calendar-grid .day-cell.other-month .date-num {
             color: #94a3b8;
+        }
+        .calendar-grid .day-cell .more-indicator {
+            font-size: 0.55rem;
+            color: #64748b;
+            padding: 0.1rem 0.3rem;
+            font-weight: 600;
+        }
+
+        /* Ekstrakurikuler table */
+        .ekskul-table th {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 0.6rem 0.3rem;
+        }
+        .ekskul-table td {
+            padding: 0.5rem 0.3rem;
+            font-size: 0.8rem;
+            vertical-align: middle;
+        }
+        .ekskul-table .penanggung-jawab {
+            font-size: 0.7rem;
+            color: #475569;
+        }
+        .ekskul-table .pj-label {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
         }
 
         /* AI Chat */
@@ -628,25 +676,47 @@
                 { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia",
                     classes: "SRMP" }
             ],
-            calendar: [
-                { month: "Juli 2026", events: [{ date: "6 Jul", name: "Hari Pertama Sekolah", type: "primary" },
-                    { date: "6-10 Jul", name: "MPLS / Asesmen", type: "info" }] },
-                { month: "Agustus 2026", events: [{ date: "17 Agu", name: "Hari Kemerdekaan RI", type: "danger" },
-                    { date: "25-26 Agu", name: "Maulid Nabi", type: "warning" }] },
-                { month: "September 2026", events: [{ date: "7-11 Sep", name: "PTS Ganjil", type: "warning" },
-                    { date: "30 Sep", name: "HUT SRT 39", type: "primary" }] },
-                { month: "Desember 2026", events: [{ date: "7-11 Des", name: "PAS Ganjil", type: "warning" },
-                    { date: "18 Des", name: "Pembagian Rapor", type: "info" }, { date: "21-31 Des",
-                        name: "Libur Semester", type: "danger" }] },
-                { month: "Januari 2027", events: [{ date: "4 Jan", name: "Awal Semester Genap", type: "primary" },
-                    { date: "4-8 Jan", name: "Asesmen Diagnostik", type: "info" }, { date: "18 Jan",
-                        name: "Pemilihan Ketua OSIS", type: "info" }] },
-                { month: "Maret 2027", events: [{ date: "8-12 Mar", name: "PTS Genap", type: "warning" },
-                    { date: "15-26 Mar", name: "Libur Idul Fitri", type: "danger" }] },
-                { month: "Juni 2027", events: [{ date: "7-11 Jun", name: "PAT", type: "warning" },
-                    { date: "25 Jun", name: "Pembagian Rapor", type: "info" }, { date: "28 Jun - 9 Jul",
-                        name: "Libur Kenaikan Kelas", type: "danger" }] }
-            ],
+            // ===== KALENDER PENDIDIKAN SESUAI FILE =====
+            calendar: [{
+                month: "Juli 2026",
+                events: [
+                    { date: "1-30", name: "Libur Semester Genap (Siswa Eksisting)", type: "danger" },
+                    { date: "2", name: "Rapat Dinas Bulanan", type: "info" },
+                    { date: "14-31", name: "MPLS (Siswa Baru)", type: "primary" }
+                ]
+            }, {
+                month: "Agustus 2026",
+                events: [
+                    { date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
+                    { date: "24", name: "Hari Pertama Masuk Sekolah", type: "primary" }
+                ]
+            }, {
+                month: "September 2026",
+                events: [
+                    { date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
+                    { date: "1-30", name: "Rentang Supervisi II (GTK)", type: "warning" },
+                    { date: "30", name: "Ulang Tahun SRT 39 Garut (Open House)", type: "primary" }
+                ]
+            }, {
+                month: "Oktober 2026",
+                events: [
+                    { date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
+                    { date: "1-31", name: "Kegiatan Sumatif", type: "warning" }
+                ]
+            }, {
+                month: "November 2026",
+                events: [
+                    { date: "3", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
+                    { date: "1-30", name: "Class Meeting & Remedial", type: "warning" }
+                ]
+            }, {
+                month: "Desember 2026",
+                events: [
+                    { date: "3", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
+                    { date: "18", name: "Pembagian Raport", type: "success" },
+                    { date: "27-31", name: "Awal Libur Semester", type: "danger" }
+                ]
+            }],
             jadwal: [
                 { jam: "1", waktu: "08.00 - 08.40", s: ["B. Indonesia", "IPA", "Matematika"], sel: ["PJOK", "PAI",
                         "KKA"
@@ -691,14 +761,68 @@
                 jumat: ["Mochamad Hoky Aldiansyah, S.Pd., Gr.", "Lufi Feriansyah, S.Pd., Gr."],
                 kordinator: ["Fauzi Faturohman, S.Pd., Gr."]
             },
-            ekstra: [
-                { waktu: "15.30-Selesai", s: "OSIS", sel: "Literasi & Numerasi", r: "Futsal", k: "Paskibra",
-                    j: "Hadroh", ws: "09.00-Selesai", sab: "Pramuka", wm: "15.30-Selesai", m: "Paskibra" },
-                { waktu: "", s: "English Club", sel: "Karya Ilmiah Remaja", r: "Jurnalistik", k: "Silat", j: "UKS",
-                    ws: "", sab: "", wm: "", m: "" },
-                { waktu: "", s: "", sel: "Computer Club", r: "Sahabat Literasi", k: "", j: "", ws: "", sab: "",
-                    wm: "", m: "" }
-            ],
+            // ===== EKSTRAKURIKULER SESUAI FILE Jadwal_Ekskul_Revisi =====
+            ekstra: [{
+                waktu: "15.30 - Selesai",
+                senin: "OSIS",
+                selasa: "Literasi dan Numerasi",
+                rabu: "Futsal",
+                kamis: "Paskibra",
+                jumat: "Hadroh",
+                waktu_sabtu: "09.00 - Selesai",
+                sabtu: "Pramuka",
+                waktu_minggu: "15.30 - Selesai",
+                minggu: "Paskibra",
+                penanggung: {
+                    senin: ["Fauzi Faturohman, S.Pd., Gr.", "Meliana Dwi Rahmawati, S.Pd., Gr."],
+                    selasa: ["Maha Ikhlas Sulfitrah, S.Pd., Gr.", "Lufi Feriansyah, S.Pd., Gr."],
+                    rabu: ["Mochamad Hoky Aldiansyah, S.Pd., Gr.", "Youtrin Fadila, S.Pd., Gr."],
+                    kamis: ["Syifa Nurlathifah Al Azmi, S.Pd., Gr.", "Mitha Amalia, S.Pd., Gr."],
+                    jumat: ["Pelatih Tamu", "Mitha Amalia, S.Pd., Gr."],
+                    sabtu: ["Rukman", "-"],
+                    minggu: ["Syifa Nurlathifah Al Azmi, S.Pd., Gr.", "-"]
+                }
+            }, {
+                waktu: "",
+                senin: "English Club",
+                selasa: "Karya Ilmiah Remaja",
+                rabu: "Jurnalistik",
+                kamis: "Silat",
+                jumat: "UKS",
+                waktu_sabtu: "",
+                sabtu: "",
+                waktu_minggu: "",
+                minggu: "",
+                penanggung: {
+                    senin: ["-", "Sarah Nur Fazriah, S.Pd., Gr."],
+                    selasa: ["-", "-"],
+                    rabu: ["Yulistina, S.Pd., Gr.", "-"],
+                    kamis: ["-", "-"],
+                    jumat: ["-", "-"],
+                    sabtu: ["-", "-"],
+                    minggu: ["-", "-"]
+                }
+            }, {
+                waktu: "",
+                senin: "-",
+                selasa: "Computer Club",
+                rabu: "Sahabat Literasi",
+                kamis: "-",
+                jumat: "-",
+                waktu_sabtu: "",
+                sabtu: "",
+                waktu_minggu: "",
+                minggu: "",
+                penanggung: {
+                    senin: ["-", "-"],
+                    selasa: ["-", "-"],
+                    rabu: ["-", "-"],
+                    kamis: ["-", "-"],
+                    jumat: ["-", "-"],
+                    sabtu: ["-", "-"],
+                    minggu: ["-", "-"]
+                }
+            }],
             students: [
                 { id: 1, name: "ADE MUSTOPA", nisn: "3139453861", school: "SRDT 39 Garut", level: "SD", gender: "L",
                     rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
@@ -1017,12 +1141,11 @@
         window.addEventListener('hashchange', router);
 
         // ================================================================
-        // DELETE DATA FUNCTION
+        // DELETE DATA
         // ================================================================
 
         function deleteData(type, id) {
             if (!confirm('Yakin ingin menghapus data ini?')) return;
-
             if (type === 'student') {
                 appState.students = appState.students.filter(s => s.id !== id);
             } else if (type === 'admin') {
@@ -1052,30 +1175,19 @@
             const body = document.getElementById('ai-chat-body');
             const text = input.value.trim();
             if (!text) return;
-
-            // Add user message
             const userMsg = document.createElement('div');
             userMsg.className = 'ai-msg user';
             userMsg.innerText = text;
             body.appendChild(userMsg);
-
             input.value = '';
             body.scrollTop = body.scrollHeight;
-
-            // Simulate AI thinking
             const botMsg = document.createElement('div');
             botMsg.className = 'ai-msg bot';
             botMsg.innerText = '⏳ Sedang memproses...';
             body.appendChild(botMsg);
             body.scrollTop = body.scrollHeight;
 
-            // --- INTEGRASI DEEPSEEK AI ---
-            // Ganti URL dan API Key sesuai kebutuhan Anda
-            // const API_KEY = 'YOUR_DEEPSEEK_API_KEY';
-            // const API_URL = 'https://api.deepseek.com/v1/chat/completions';
-
             setTimeout(() => {
-                // Simulasi respons AI (tanpa API key)
                 const lower = text.toLowerCase();
                 let reply = 'Maaf, saya belum bisa memproses permintaan itu. Silakan hubungkan dengan API DeepSeek untuk fungsi penuh.';
                 if (lower.includes('siswa') || lower.includes('murid')) {
@@ -1093,33 +1205,8 @@
                     reply =
                         `Saya siap membantu! Tanyakan tentang data siswa, guru, jadwal, atau RKT. Saat ini dalam mode simulasi. Hubungkan dengan API DeepSeek untuk jawaban real-time.`;
                 }
-
                 botMsg.innerText = reply;
                 body.scrollTop = body.scrollHeight;
-
-                // Contoh kode untuk API DeepSeek (di-comment):
-                /*
-                fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: "deepseek-chat",
-                        messages: [{ role: "user", content: text }],
-                        stream: false
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    botMsg.innerText = data.choices[0].message.content;
-                    body.scrollTop = body.scrollHeight;
-                })
-                .catch(err => {
-                    botMsg.innerText = 'Error: ' + err.message;
-                });
-                */
             }, 600);
         }
 
@@ -1237,12 +1324,24 @@
         }
 
         // ================================================================
-        // KALENDER GRID
+        // KALENDER GRID — Sesuai file KALENDER,PROTA,PROMES
         // ================================================================
 
         function renderCalendarGrid() {
             const months = appState.calendar;
             let output = '<div class="fade-in space-y-8">';
+
+            // Legenda
+            output += `
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap gap-4 items-center text-xs">
+                <span class="font-semibold text-slate-600 mr-2">Legenda:</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-blue-100 border-l-4 border-blue-600"></span> Kegiatan Awal</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-yellow-100 border-l-4 border-yellow-500"></span> Kegiatan Akademik</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-red-100 border-l-4 border-red-600"></span> Libur / Cuti</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-sky-100 border-l-4 border-sky-500"></span> Rapat Dinas</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-100 border-l-4 border-emerald-500"></span> Pembagian Rapor</span>
+            </div>
+            `;
 
             months.forEach(monthData => {
                 const [monthName, year] = monthData.month.split(' ');
@@ -1260,9 +1359,9 @@
                 monthData.events.forEach(ev => {
                     const dateStr = ev.date;
                     if (dateStr.includes('-')) {
-                        const [start, end] = dateStr.split('-');
-                        const startDay = parseInt(start);
-                        const endDay = parseInt(end);
+                        const parts = dateStr.split('-');
+                        const startDay = parseInt(parts[0]);
+                        const endDay = parseInt(parts[1]);
                         for (let d = startDay; d <= endDay; d++) {
                             const key = `${d}`;
                             if (!eventMap[key]) eventMap[key] = [];
@@ -1293,13 +1392,32 @@
                         if (ev.type === 'danger') cls += ' danger';
                         else if (ev.type === 'warning') cls += ' warning';
                         else if (ev.type === 'primary') cls += ' primary';
+                        else if (ev.type === 'success') cls += ' success';
+                        else cls += ' info';
                         return `<span class="${cls}" title="${ev.name}">${ev.name}</span>`;
                     }).join('');
+
+                    // Jika terlalu banyak event, tampilkan +N
+                    let displayBadges = eventBadges;
+                    if (events.length > 2) {
+                        const visible = events.slice(0, 2);
+                        const remaining = events.length - 2;
+                        displayBadges = visible.map(ev => {
+                            let cls = 'event-badge';
+                            if (ev.type === 'danger') cls += ' danger';
+                            else if (ev.type === 'warning') cls += ' warning';
+                            else if (ev.type === 'primary') cls += ' primary';
+                            else if (ev.type === 'success') cls += ' success';
+                            else cls += ' info';
+                            return `<span class="${cls}" title="${ev.name}">${ev.name}</span>`;
+                        }).join('');
+                        displayBadges += `<span class="more-indicator">+${remaining} lagi</span>`;
+                    }
 
                     gridHTML += `
                         <div class="day-cell">
                             <div class="date-num">${d}</div>
-                            ${eventBadges}
+                            ${displayBadges}
                         </div>
                     `;
                 }
@@ -1313,7 +1431,10 @@
 
                 output += `
                     <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
-                        <h3 class="text-xl font-bold text-dark mb-4 border-b border-slate-100 pb-3">${monthData.month}</h3>
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
+                            <h3 class="text-xl font-bold text-dark">${monthData.month}</h3>
+                            <span class="text-xs text-slate-400">${daysInMonth} hari</span>
+                        </div>
                         <div class="calendar-grid">
                             ${gridHTML}
                         </div>
@@ -1324,6 +1445,7 @@
             output += '</div>';
             return output;
         }
+
 
         // ================================================================
         // JADWAL INTRAKURIKULER
@@ -1437,65 +1559,53 @@
             </div>`;
         }
 
+
         // ================================================================
-        // JADWAL EKSTRAKURIKULER (REDESIGN)
+        // JADWAL EKSTRAKURIKULER — SESUAI FILE Jadwal_Ekskul_Revisi
         // ================================================================
 
         function renderEkstra() {
-            // Build a 2D mapping for better display
-            const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-            const timeSlots = [
-                { label: 'Sesi 1', time: '15.30 - Selesai' },
-                { label: 'Sesi 2', time: '15.30 - Selesai' },
-                { label: 'Sesi 3', time: '09.00 - Selesai' }
-            ];
+            // Build data dari appState.ekstra yang sudah sesuai file
+            const rows = appState.ekstra;
+            let tableRows = '';
 
-            // Map existing data to a structured table
-            // ekstra[0] is the first row (OSIS, Literasi, Futsal, Paskibra, Hadroh, Pramuka, Paskibra)
-            // ekstra[1] is second row (English Club, KIR, Jurnalistik, Silat, UKS)
-            // ekstra[2] is third row (Computer Club, Sahabat Literasi)
+            rows.forEach((row, idx) => {
+                const isFirst = idx === 0;
+                // Tampilkan nomor urut hanya untuk baris pertama, sisanya kosong atau " - "
+                const rowNum = isFirst ? '1' : '';
 
-            let rows = [];
-            // Row 1
-            let r1 = [
-                'OSIS', 'Literasi & Numerasi', 'Futsal', 'Paskibra', 'Hadroh', 'Pramuka', 'Paskibra'
-            ];
-            // Row 2
-            let r2 = [
-                'English Club', 'Karya Ilmiah Remaja', 'Jurnalistik', 'Silat', 'UKS', '', ''
-            ];
-            // Row 3
-            let r3 = [
-                '', 'Computer Club', 'Sahabat Literasi', '', '', '', ''
-            ];
+                // Waktu: tampilkan hanya jika berbeda
+                const waktuDisplay = row.waktu || '';
+                const waktuSabtu = row.waktu_sabtu || '';
+                const waktuMinggu = row.waktu_minggu || '';
 
-            // Time mapping for each row
-            const times = ['15.30 - Selesai', '15.30 - Selesai', '09.00 - Selesai'];
-
-            const combined = [r1, r2, r3];
-
-            let tableHTML = '';
-            combined.forEach((row, idx) => {
-                tableHTML += `<tr class="border-b border-slate-200 hover:bg-slate-50 transition text-sm">`;
-                tableHTML += `<td class="py-3 px-2 text-center font-bold text-slate-700">${idx+1}</td>`;
-                tableHTML +=
-                    `<td class="py-3 px-2 text-center whitespace-nowrap text-xs bg-slate-50 font-semibold">${times[idx]}</td>`;
-                row.forEach(cell => {
-                    if (cell) {
-                        let color = 'bg-indigo-50 text-indigo-800 border-indigo-200';
-                        if (cell.includes('Pramuka') || cell.includes('Paskibra')) color =
-                            'bg-blue-50 text-blue-800 border-blue-200';
-                        else if (cell.includes('OSIS')) color = 'bg-purple-50 text-purple-800 border-purple-200';
-                        else if (cell.includes('Futsal') || cell.includes('Silat')) color =
-                            'bg-rose-50 text-rose-800 border-rose-200';
-                        tableHTML +=
-                            `<td class="py-3 px-2 text-center border border-slate-100 rounded ${color} font-medium">${cell}</td>`;
-                    } else {
-                        tableHTML += `<td class="py-3 px-2 text-center text-slate-300">-</td>`;
-                    }
-                });
-                tableHTML += `</tr>`;
+                tableRows += `
+                <tr class="border-b border-slate-100 hover:bg-slate-50 transition text-sm">
+                    <td class="py-3 px-2 text-center font-bold text-slate-700 ${isFirst ? '' : 'text-slate-300'}">${rowNum}</td>
+                    <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuDisplay}</td>
+                    <td class="py-3 px-2 text-center">${row.senin || '-'}</td>
+                    <td class="py-3 px-2 text-center">${row.selasa || '-'}</td>
+                    <td class="py-3 px-2 text-center">${row.rabu || '-'}</td>
+                    <td class="py-3 px-2 text-center">${row.kamis || '-'}</td>
+                    <td class="py-3 px-2 text-center">${row.jumat || '-'}</td>
+                    <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuSabtu}</td>
+                    <td class="py-3 px-2 text-center">${row.sabtu || '-'}</td>
+                    <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuMinggu}</td>
+                    <td class="py-3 px-2 text-center">${row.minggu || '-'}</td>
+                </tr>`;
             });
+
+            // Penanggung jawab per hari
+            const pj = appState.ekstra[0]?.penanggung || {};
+            const pjMap = {
+                senin: pj.senin || ['-', '-'],
+                selasa: pj.selasa || ['-', '-'],
+                rabu: pj.rabu || ['-', '-'],
+                kamis: pj.kamis || ['-', '-'],
+                jumat: pj.jumat || ['-', '-'],
+                sabtu: pj.sabtu || ['-', '-'],
+                minggu: pj.minggu || ['-', '-']
+            };
 
             return `
             <div class="fade-in">
@@ -1505,28 +1615,52 @@
                         <h2 class="text-lg font-bold text-dark uppercase">${appState.school.name}</h2>
                         <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
                     </div>
-                    <table class="w-full min-w-[900px] border-collapse bg-white">
-                        <thead>
-                            <tr class="bg-[#1e40af] text-white text-sm uppercase text-center border-b border-slate-300">
-                                <th class="py-3 px-2 border-r border-slate-400 w-12">No</th>
-                                <th class="py-3 px-2 border-r border-slate-400 w-32">Waktu</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Senin</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Selasa</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Rabu</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Kamis</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Jum'at</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Sabtu</th>
-                                <th class="py-3 px-2">Minggu</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${tableHTML}
-                        </tbody>
-                    </table>
-                    <div class="p-3 bg-slate-50 text-xs text-slate-500 border-t border-slate-200 flex justify-between items-center">
-                        <span><span class="font-semibold">Koordinator:</span> Fauzi Faturohman</span>
-                        <button onclick="if(confirm('Hapus semua data ekstrakurikuler?')){ appState.ekstra=[]; saveState(); router(); showToast('Data ekstrakurikuler dihapus!'); }" class="text-rose-500 hover:text-rose-700 font-medium text-xs flex items-center gap-1 no-print">
-                            <i class="fas fa-trash-alt"></i> Hapus Semua
+
+                    <!-- Tabel Utama -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[1000px] border-collapse bg-white ekskul-table">
+                            <thead>
+                                <tr class="bg-[#1e40af] text-white text-xs uppercase text-center border-b border-slate-300">
+                                    <th class="py-3 px-2 border-r border-slate-400 w-12">No</th>
+                                    <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
+                                    <th class="py-3 px-2 border-r border-slate-400">Senin</th>
+                                    <th class="py-3 px-2 border-r border-slate-400">Selasa</th>
+                                    <th class="py-3 px-2 border-r border-slate-400">Rabu</th>
+                                    <th class="py-3 px-2 border-r border-slate-400">Kamis</th>
+                                    <th class="py-3 px-2 border-r border-slate-400">Jum'at</th>
+                                    <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
+                                    <th class="py-3 px-2 border-r border-slate-400">Sabtu</th>
+                                    <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
+                                    <th class="py-3 px-2">Minggu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Penanggung Jawab -->
+                    <div class="p-4 bg-slate-50 border-t border-slate-200">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-user-tie mr-2 text-primary"></i>Penanggung Jawab</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-1 text-xs text-slate-600">
+                            <div><span class="font-semibold">Senin:</span> ${pjMap.senin[0]} ${pjMap.senin[1] ? '& ' + pjMap.senin[1] : ''}</div>
+                            <div><span class="font-semibold">Selasa:</span> ${pjMap.selasa[0]} ${pjMap.selasa[1] ? '& ' + pjMap.selasa[1] : ''}</div>
+                            <div><span class="font-semibold">Rabu:</span> ${pjMap.rabu[0]} ${pjMap.rabu[1] ? '& ' + pjMap.rabu[1] : ''}</div>
+                            <div><span class="font-semibold">Kamis:</span> ${pjMap.kamis[0]} ${pjMap.kamis[1] ? '& ' + pjMap.kamis[1] : ''}</div>
+                            <div><span class="font-semibold">Jum'at:</span> ${pjMap.jumat[0]} ${pjMap.jumat[1] ? '& ' + pjMap.jumat[1] : ''}</div>
+                            <div><span class="font-semibold">Sabtu:</span> ${pjMap.sabtu[0]} ${pjMap.sabtu[1] ? '& ' + pjMap.sabtu[1] : ''}</div>
+                            <div><span class="font-semibold">Minggu:</span> ${pjMap.minggu[0]} ${pjMap.minggu[1] ? '& ' + pjMap.minggu[1] : ''}</div>
+                        </div>
+                        <div class="mt-2 text-xs text-slate-400 border-t border-slate-200 pt-2">
+                            <span class="font-semibold">Koordinator:</span> Fauzi Faturohman, S.Pd., Gr.
+                        </div>
+                    </div>
+
+                    <!-- Tombol Hapus -->
+                    <div class="p-3 bg-white border-t border-slate-200 flex justify-end no-print">
+                        <button onclick="if(confirm('Hapus semua data ekstrakurikuler?')){ appState.ekstra=[]; saveState(); router(); showToast('Data ekstrakurikuler dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium flex items-center gap-1">
+                            <i class="fas fa-trash-alt"></i> Hapus Semua Data
                         </button>
                     </div>
                 </div>
@@ -1623,7 +1757,7 @@
         }
 
         // ================================================================
-        // GRADE MODAL (with Promotion Status)
+        // GRADE MODAL
         // ================================================================
 
         function openGradeModal(studentId) {
@@ -1652,7 +1786,6 @@
             });
             document.getElementById('grade-inputs-container').innerHTML = inputsHTML;
 
-            // Set promotion status
             const select = document.getElementById('promotion-status-select');
             select.value = student.promotionStatus || 'Belum Ditentukan';
 
@@ -1676,15 +1809,12 @@
                     if (key.startsWith('grade_')) newGrades[key.replace('grade_', '')] = val ? parseInt(val) : 0;
                 }
                 appState.students[idx].grades = newGrades;
-
-                // Save promotion status
                 const statusSelect = document.getElementById('promotion-status-select');
                 appState.students[idx].promotionStatus = statusSelect.value;
-
                 saveState();
                 closeGradeModal();
                 showToast(`Data ${appState.students[idx].name} berhasil disimpan!`);
-                router(); // Re-render to update status badge
+                router();
             }
         }
 
@@ -1711,7 +1841,7 @@
         }
 
         // ================================================================
-        // RENDER ADMINISTRASI (with delete)
+        // RENDER ADMINISTRASI
         // ================================================================
 
         function renderAdmin() {
@@ -1969,7 +2099,6 @@
             try {
                 const wb = XLSX.utils.book_new();
 
-                // Sheet 1: Sekolah
                 const schoolData = [
                     ['Properti', 'Nilai'],
                     ['Nama Sekolah', appState.school.name],
@@ -1991,19 +2120,16 @@
                 const ws1 = XLSX.utils.aoa_to_sheet(schoolData);
                 XLSX.utils.book_append_sheet(wb, ws1, 'Sekolah');
 
-                // Sheet 2: Misi
                 const misiData = appState.school.misi.map((m, i) => [i + 1, m]);
                 misiData.unshift(['No', 'Misi']);
                 const ws2 = XLSX.utils.aoa_to_sheet(misiData);
                 XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
 
-                // Sheet 3: Guru
                 const guruData = appState.teachers.map(t => [t.nip, t.name, t.role, t.classes]);
                 guruData.unshift(['NIP', 'Nama', 'Jabatan', 'Kelas']);
                 const ws3 = XLSX.utils.aoa_to_sheet(guruData);
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
 
-                // Sheet 4: Siswa
                 const siswaData = appState.students.map(s => [s.id, s.name, s.nisn, s.school, s.level, s.gender, s.rombel, s
                     .promotionStatus || 'Belum Ditentukan'
                 ]);
@@ -2011,15 +2137,15 @@
                 const ws4 = XLSX.utils.aoa_to_sheet(siswaData);
                 XLSX.utils.book_append_sheet(wb, ws4, 'Siswa');
 
-                // Sheet 5: Ekstrakurikuler
-                const ekstraData = appState.ekstra.map(e => [e.waktu, e.s, e.sel, e.r, e.k, e.j, e.ws, e.sab, e.wm, e.m]);
-                ekstraData.unshift(['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', 'Sabtu', 'Waktu Minggu',
-                    'Minggu'
+                const ekstraData = appState.ekstra.map(e => [e.waktu, e.senin, e.selasa, e.rabu, e.kamis, e.jumat, e
+                    .waktu_sabtu, e.sabtu, e.waktu_minggu, e.minggu
+                ]);
+                ekstraData.unshift(['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', 'Sabtu',
+                    'Waktu Minggu', 'Minggu'
                 ]);
                 const ws5 = XLSX.utils.aoa_to_sheet(ekstraData);
                 XLSX.utils.book_append_sheet(wb, ws5, 'Ekstrakurikuler');
 
-                // Sheet 6: Kalender
                 const calData = [];
                 calData.push(['Bulan', 'Tanggal', 'Event', 'Tipe']);
                 appState.calendar.forEach(m => {
@@ -2030,13 +2156,11 @@
                 const ws6 = XLSX.utils.aoa_to_sheet(calData);
                 XLSX.utils.book_append_sheet(wb, ws6, 'Kalender');
 
-                // Sheet 7: Administrasi
                 const adminData = appState.adminLinks.map(d => [d.nip, d.name, d.category, d.title, d.link, d.date]);
                 adminData.unshift(['NIP', 'Nama', 'Kategori', 'Judul', 'Link', 'Tanggal']);
                 const ws7 = XLSX.utils.aoa_to_sheet(adminData);
                 XLSX.utils.book_append_sheet(wb, ws7, 'Administrasi');
 
-                // Export
                 const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
                 const blob = new Blob([wbout], { type: 'application/octet-stream' });
                 const url = URL.createObjectURL(blob);
@@ -2054,14 +2178,12 @@
         function importExcel(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const data = new Uint8Array(e.target.result);
                     const workbook = XLSX.read(data, { type: 'array' });
 
-                    // Baca sheet Sekolah
                     const wsSchool = workbook.Sheets['Sekolah'];
                     if (wsSchool) {
                         const rows = XLSX.utils.sheet_to_json(wsSchool, { header: 1 });
@@ -2097,7 +2219,6 @@
                         });
                     }
 
-                    // Baca sheet Misi
                     const wsMisi = workbook.Sheets['Misi'];
                     if (wsMisi) {
                         const rows = XLSX.utils.sheet_to_json(wsMisi, { header: 1 });
@@ -2108,7 +2229,6 @@
                         if (misiNew.length > 0) appState.school.misi = misiNew;
                     }
 
-                    // Baca sheet Guru
                     const wsGuru = workbook.Sheets['Guru'];
                     if (wsGuru) {
                         const rows = XLSX.utils.sheet_to_json(wsGuru, { header: 1 });
@@ -2125,7 +2245,6 @@
                         });
                         if (guruNew.length > 0) {
                             appState.teachers = guruNew;
-                            // Regenerate avatar
                             appState.teachers.forEach(t => {
                                 const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(
                                     n => n[0]).join('').toUpperCase();
@@ -2138,7 +2257,6 @@
                         }
                     }
 
-                    // Baca sheet Siswa
                     const wsSiswa = workbook.Sheets['Siswa'];
                     if (wsSiswa) {
                         const rows = XLSX.utils.sheet_to_json(wsSiswa, { header: 1 });
@@ -2161,7 +2279,6 @@
                         if (siswaNew.length > 0) appState.students = siswaNew;
                     }
 
-                    // Baca sheet Ekstrakurikuler
                     const wsEkstra = workbook.Sheets['Ekstrakurikuler'];
                     if (wsEkstra) {
                         const rows = XLSX.utils.sheet_to_json(wsEkstra, { header: 1 });
@@ -2170,22 +2287,30 @@
                             if (idx > 0) {
                                 ekstraNew.push({
                                     waktu: row[0] || '',
-                                    s: row[1] || '',
-                                    sel: row[2] || '',
-                                    r: row[3] || '',
-                                    k: row[4] || '',
-                                    j: row[5] || '',
-                                    ws: row[6] || '',
-                                    sab: row[7] || '',
-                                    wm: row[8] || '',
-                                    m: row[9] || ''
+                                    senin: row[1] || '',
+                                    selasa: row[2] || '',
+                                    rabu: row[3] || '',
+                                    kamis: row[4] || '',
+                                    jumat: row[5] || '',
+                                    waktu_sabtu: row[6] || '',
+                                    sabtu: row[7] || '',
+                                    waktu_minggu: row[8] || '',
+                                    minggu: row[9] || '',
+                                    penanggung: {
+                                        senin: ['-', '-'],
+                                        selasa: ['-', '-'],
+                                        rabu: ['-', '-'],
+                                        kamis: ['-', '-'],
+                                        jumat: ['-', '-'],
+                                        sabtu: ['-', '-'],
+                                        minggu: ['-', '-']
+                                    }
                                 });
                             }
                         });
                         if (ekstraNew.length > 0) appState.ekstra = ekstraNew;
                     }
 
-                    // Baca sheet Kalender
                     const wsCal = workbook.Sheets['Kalender'];
                     if (wsCal) {
                         const rows = XLSX.utils.sheet_to_json(wsCal, { header: 1 });
@@ -2206,7 +2331,6 @@
                         }));
                     }
 
-                    // Baca sheet Administrasi
                     const wsAdmin = workbook.Sheets['Administrasi'];
                     if (wsAdmin) {
                         const rows = XLSX.utils.sheet_to_json(wsAdmin, { header: 1 });
@@ -2243,7 +2367,6 @@
             try {
                 const wb = XLSX.utils.book_new();
 
-                // Template Sekolah
                 const schoolTemplate = [
                     ['Properti', 'Nilai'],
                     ['Nama Sekolah', 'Sekolah Rakyat Terintegrasi 39 Garut'],
@@ -2265,7 +2388,6 @@
                 const ws1 = XLSX.utils.aoa_to_sheet(schoolTemplate);
                 XLSX.utils.book_append_sheet(wb, ws1, 'Sekolah');
 
-                // Template Misi
                 const misiTemplate = [
                     ['No', 'Misi'],
                     [1, 'Menanamkan kedisiplinan dimanapun berada'],
@@ -2278,7 +2400,6 @@
                 const ws2 = XLSX.utils.aoa_to_sheet(misiTemplate);
                 XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
 
-                // Template Guru
                 const guruTemplate = [
                     ['NIP', 'Nama', 'Jabatan', 'Kelas'],
                     ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wakasek Kurikulum', 'SRD & SRMP'],
@@ -2287,7 +2408,6 @@
                 const ws3 = XLSX.utils.aoa_to_sheet(guruTemplate);
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
 
-                // Template Siswa (dengan status)
                 const siswaTemplate = [
                     ['ID', 'Nama', 'NISN', 'Sekolah', 'Jenjang', 'Gender', 'Rombel', 'Status Kenaikan'],
                     [1, 'ADE MUSTOPA', '3139453861', 'SRDT 39 Garut', 'SD', 'L', 'SD', 'Belum Ditentukan'],
@@ -2296,13 +2416,12 @@
                 const ws4 = XLSX.utils.aoa_to_sheet(siswaTemplate);
                 XLSX.utils.book_append_sheet(wb, ws4, 'Siswa');
 
-                // Template Ekstra
                 const ekstraTemplate = [
                     ['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', 'Sabtu', 'Waktu Minggu',
                         'Minggu'
                     ],
-                    ['15.30-Selesai', 'OSIS', 'Literasi & Numerasi', 'Futsal', 'Paskibra', 'Hadroh', '09.00-Selesai',
-                        'Pramuka', '15.30-Selesai', 'Paskibra'
+                    ['15.30 - Selesai', 'OSIS', 'Literasi dan Numerasi', 'Futsal', 'Paskibra', 'Hadroh',
+                        '09.00 - Selesai', 'Pramuka', '15.30 - Selesai', 'Paskibra'
                     ],
                     ['', 'English Club', 'Karya Ilmiah Remaja', 'Jurnalistik', 'Silat', 'UKS', '', '', '', ''],
                     ['', '', 'Computer Club', 'Sahabat Literasi', '', '', '', '', '', '']
@@ -2310,19 +2429,21 @@
                 const ws5 = XLSX.utils.aoa_to_sheet(ekstraTemplate);
                 XLSX.utils.book_append_sheet(wb, ws5, 'Ekstrakurikuler');
 
-                // Template Kalender
                 const calTemplate = [
                     ['Bulan', 'Tanggal', 'Event', 'Tipe'],
-                    ['Juli 2026', '6 Jul', 'Hari Pertama Sekolah', 'primary'],
-                    ['Juli 2026', '6-10 Jul', 'MPLS / Asesmen', 'info'],
-                    ['Agustus 2026', '17 Agu', 'Hari Kemerdekaan RI', 'danger'],
-                    ['September 2026', '7-11 Sep', 'Penilaian Sumatif Tengah Semester', 'warning'],
-                    ['Desember 2026', '18 Des', 'Pembagian Rapor', 'info']
+                    ['Juli 2026', '1-30', 'Libur Semester Genap (Siswa Eksisting)', 'danger'],
+                    ['Juli 2026', '2', 'Rapat Dinas Bulanan', 'info'],
+                    ['Juli 2026', '14-31', 'MPLS (Siswa Baru)', 'primary'],
+                    ['Agustus 2026', '2', 'Rapat Dinas Bulanan (Refleksi)', 'info'],
+                    ['Agustus 2026', '24', 'Hari Pertama Masuk Sekolah', 'primary'],
+                    ['September 2026', '2', 'Rapat Dinas Bulanan (Refleksi)', 'info'],
+                    ['September 2026', '30', 'Ulang Tahun SRT 39 Garut', 'primary'],
+                    ['Desember 2026', '18', 'Pembagian Raport', 'success'],
+                    ['Desember 2026', '27-31', 'Awal Libur Semester', 'danger']
                 ];
                 const ws6 = XLSX.utils.aoa_to_sheet(calTemplate);
                 XLSX.utils.book_append_sheet(wb, ws6, 'Kalender');
 
-                // Template Admin
                 const adminTemplate = [
                     ['NIP', 'Nama', 'Kategori', 'Judul', 'Link', 'Tanggal'],
                     ['199409082025211128', 'Fauzi Faturohman', 'Modul Ajar', 'Modul Ajar PPKn Kelas VII',
@@ -2332,7 +2453,6 @@
                 const ws7 = XLSX.utils.aoa_to_sheet(adminTemplate);
                 XLSX.utils.book_append_sheet(wb, ws7, 'Administrasi');
 
-                // Export
                 const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
                 const blob = new Blob([wbout], { type: 'application/octet-stream' });
                 const url = URL.createObjectURL(blob);
