@@ -327,8 +327,8 @@
             position: fixed;
             bottom: 90px;
             right: 20px;
-            width: 380px;
-            max-height: 500px;
+            width: 420px;
+            max-height: 600px;
             background: white;
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -355,7 +355,7 @@
             padding: 1rem;
             overflow-y: auto;
             flex: 1;
-            max-height: 350px;
+            max-height: 400px;
             background: #f8fafc;
         }
         .ai-chat-footer {
@@ -393,8 +393,11 @@
             margin-bottom: 0.75rem;
             padding: 0.5rem 1rem;
             border-radius: 12px;
-            max-width: 85%;
+            max-width: 90%;
             font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
         .ai-msg.user {
             background: #dbeafe;
@@ -407,6 +410,30 @@
             color: #0f172a;
             border: 1px solid #e2e8f0;
             border-bottom-left-radius: 4px;
+        }
+
+        .role-badge {
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .photo-upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .photo-upload-btn input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -439,6 +466,15 @@
                             <input type="password" id="login-pass" required value="srt2026" class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition text-sm" placeholder="Password" />
                         </div>
                         <p class="text-xs text-slate-400 mt-2"><i class="fas fa-info-circle"></i> Default: <b>srt2026</b> · NIP Wakasek: 199409082025211128</p>
+                    </div>
+                    <div class="text-center text-xs text-slate-500">
+                        <p>Login sebagai:</p>
+                        <div class="flex flex-wrap justify-center gap-2 mt-1">
+                            <span class="px-2 py-0.5 bg-blue-50 text-blue-700 rounded">Admin (NIP: 199409082025211128)</span>
+                            <span class="px-2 py-0.5 bg-green-50 text-green-700 rounded">Wali Kelas SRD (NIP: 199901222025212077)</span>
+                            <span class="px-2 py-0.5 bg-purple-50 text-purple-700 rounded">Wali Kelas SRMP-A (NIP: 200003282025212060)</span>
+                            <span class="px-2 py-0.5 bg-amber-50 text-amber-700 rounded">Wali Kelas SRMP-B (NIP: 199409082025211128)</span>
+                        </div>
                     </div>
                     <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
                         Masuk <i class="fas fa-arrow-right text-sm"></i>
@@ -501,9 +537,10 @@
             <div class="p-4 border-t border-slate-800">
                 <div class="bg-slate-800/60 rounded-xl p-3 flex items-center gap-3">
                     <img id="user-avatar" src="" alt="User" class="w-9 h-9 rounded-full border-2 border-primary object-cover" />
-                    <div class="overflow-hidden">
+                    <div class="overflow-hidden flex-1">
                         <p id="user-name" class="text-sm font-semibold truncate">User</p>
                         <p id="user-role" class="text-[11px] text-slate-400 truncate">Role</p>
+                        <p id="user-access" class="text-[10px] text-slate-500 truncate"></p>
                     </div>
                 </div>
             </div>
@@ -606,14 +643,23 @@
     </button>
     <div id="ai-chat-window" class="ai-chat-window no-print">
         <div class="ai-chat-header">
-            <span><i class="fas fa-robot mr-2"></i>Asisten AI (DeepSeek)</span>
+            <span><i class="fas fa-robot mr-2"></i>Asisten AI SRT 39</span>
             <button onclick="toggleAI()" class="text-white/80 hover:text-white"><i class="fas fa-times"></i></button>
         </div>
         <div id="ai-chat-body" class="ai-chat-body">
-            <div class="ai-msg bot">Halo! Saya asisten AI berbasis DeepSeek. Saya siap membantu Anda mengelola data kurikulum SRT 39 Garut. Tanyakan apa saja tentang data siswa, jadwal, atau RKT.</div>
+            <div class="ai-msg bot">👋 Halo! Saya asisten AI SRT 39 Garut yang siap membantu Anda.<br><br>
+            <b>Saya dapat menjawab pertanyaan tentang:</b><br>
+            📊 <b>Data Siswa</b> - Total, jenjang SD/SMP, nama, NISN, rombel<br>
+            👨‍🏫 <b>Data Guru</b> - Nama, NIP, jabatan, kelas yang diampu<br>
+            📅 <b>Kalender Akademik</b> - Jadwal kegiatan, libur, rapat<br>
+            📚 <b>Jadwal Intrakurikuler</b> - Mata pelajaran per hari dan kelas<br>
+            ⚽ <b>Ekstrakurikuler</b> - Kegiatan, penanggung jawab, waktu<br>
+            📄 <b>RKT & KSP</b> - Visi, misi, program kerja, kurikulum<br>
+            <br>
+            <i>Cukup tanyakan apapun tentang data di aplikasi ini!</i></div>
         </div>
         <div class="ai-chat-footer">
-            <input type="text" id="ai-input" placeholder="Tanyakan sesuatu..." onkeydown="if(event.key==='Enter') sendAIMessage()" />
+            <input type="text" id="ai-input" placeholder="Tanyakan tentang data SRT 39..." onkeydown="if(event.key==='Enter') sendAIMessage()" />
             <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
@@ -623,7 +669,7 @@
     <!-- ============================================================ -->
     <script>
         // ================================================================
-        // DATA MASTER — Lengkap dari file yang diupload + Extra Fields
+        // DATA MASTER — Lengkap dari file yang diupload
         // ================================================================
 
         const defaultData = {
@@ -654,27 +700,29 @@
             },
             teachers: [
                 { nip: "198008292014121002", name: "Andi Yasir Habibi, S.Sos., S.Pd.", role: "Kepala Sekolah",
-                    classes: "-" },
-                { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wakasek Kurikulum / PPKn",
-                    classes: "SRD & SRMP" },
-                { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Guru Kelas",
-                    classes: "SRD" },
+                    classes: "-", photo: "" },
+                { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wakasek Kurikulum / Wali Kelas SRMP-B",
+                    classes: "SRMP-B", photo: "" },
+                { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Guru Kelas / Wali Kelas SRD",
+                    classes: "SRD", photo: "" },
                 { nip: "199908182025212101", name: "Sarah Nur Faziah, S.Pd., Gr.", role: "Guru TIK",
-                    classes: "SRD & SRMP" },
+                    classes: "SRD & SRMP", photo: "" },
                 { nip: "200002282025211064", name: "Lufi Feriansyah, S.Pd., Gr.", role: "Guru Matematika",
-                    classes: "SRMP" },
-                { nip: "200003112025212061", name: "Mitha Amalia, S.Pd., Gr.", role: "Guru IPA", classes: "SRMP" },
-                { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Guru B. Inggris",
-                    classes: "SRD & SRMP" },
-                { nip: "200004272025212059", name: "Youtrin Fadila, S.Pd., Gr.", role: "Guru IPS", classes: "SRMP" },
+                    classes: "SRMP", photo: "" },
+                { nip: "200003112025212061", name: "Mitha Amalia, S.Pd., Gr.", role: "Guru IPA", classes: "SRMP",
+                    photo: "" },
+                { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Guru B. Inggris / Wali Kelas SRMP-A",
+                    classes: "SRMP-A", photo: "" },
+                { nip: "200004272025212059", name: "Youtrin Fadila, S.Pd., Gr.", role: "Guru IPS", classes: "SRMP",
+                    photo: "" },
                 { nip: "200006022025212083", name: "Navika Putri Dwi Lestari, S.Pd., Gr.", role: "Guru Seni Budaya",
-                    classes: "SRD & SRMP" },
+                    classes: "SRD & SRMP", photo: "" },
                 { nip: "200009152025211042", name: "Mochamad Hoky Aldiansyah, S.Pd., Gr.", role: "Guru PJOK",
-                    classes: "SRD & SRMP" },
+                    classes: "SRD & SRMP", photo: "" },
                 { nip: "200102142025212047", name: "Syifa Nurlathifah Al Azmi, S.Pd., Gr.", role: "Guru KKA",
-                    classes: "SRD & SRMP" },
+                    classes: "SRD & SRMP", photo: "" },
                 { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia",
-                    classes: "SRMP" }
+                    classes: "SRMP", photo: "" }
             ],
             // ===== KALENDER PENDIDIKAN SESUAI FILE =====
             calendar: [{
@@ -761,7 +809,7 @@
                 jumat: ["Mochamad Hoky Aldiansyah, S.Pd., Gr.", "Lufi Feriansyah, S.Pd., Gr."],
                 kordinator: ["Fauzi Faturohman, S.Pd., Gr."]
             },
-            // ===== EKSTRAKURIKULER SESUAI FILE Jadwal_Ekskul_Revisi =====
+            // ===== EKSTRAKURIKULER SESUAI FILE =====
             ekstra: [{
                 waktu: "15.30 - Selesai",
                 senin: "OSIS",
@@ -823,158 +871,102 @@
                     minggu: ["-", "-"]
                 }
             }],
-            students: [
-                { id: 1, name: "ADE MUSTOPA", nisn: "3139453861", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 2, name: "AGUS RAMDANI", nisn: "0104915906", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 3, name: "AHMAD PADILAH", nisn: "3137836817", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 4, name: "AI SITI NUROHMAH", nisn: "3158260386", school: "SRDT 39 Garut", level: "SD",
-                    gender: "P", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 5, name: "ANDIKA NUROHMAN", nisn: "0141419382", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 6, name: "ANISA SAPUTRI", nisn: "0123595071", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 7, name: "ARDIANSYAH SAPUTRA", nisn: "3162522983", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 8, name: "ARIF FIRMANSYAH", nisn: "3120690349", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 9, name: "ARMAN MAULANA", nisn: "3132152714", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 10, name: "DE PAHRI PUTRA RAMADAN", nisn: "3111636292", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 11, name: "DERI MUHAMMAD", nisn: "3122527422", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 12, name: "DEWANGGA NUGRAHA", nisn: "3124835417", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 13, name: "DEWI TANIA", nisn: "3124764226", school: "SRDT 39 Garut", level: "SD", gender: "P",
-                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 14, name: "ELSA SABILA NURHALIMAH", nisn: "3130228888", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 15, name: "EVA FAUZIAH", nisn: "0094884752", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 16, name: "FANESA ANASTASYA", nisn: "0106857181", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 17, name: "FEBI", nisn: "0129226857", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 18, name: "HISMA HOLIPATUL PADILAH", nisn: "0113316745", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 19, name: "IHSAN MAULANA", nisn: "3126090468", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 20, name: "INDRIA DELIA PUTRI", nisn: "97311050", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 21, name: "IRNA RAODOTUL ZANAH", nisn: "3133143373", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 22, name: "IRSAL KHAERUNA", nisn: "3146716444", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 23, name: "LESTI JULIANTI", nisn: "3128365677", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 24, name: "M RIZKY MAULANA", nisn: "3159241108", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 25, name: "M. FATIR", nisn: "0135531105", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 26, name: "MOCH AKBAR TRI HERMAWAN", nisn: "0107125765", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 27, name: "MOH PAISAL APRILIANSAH", nisn: "0125649737", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 28, name: "MUHAMAD FATTAN SAPUTRA", nisn: "3162907074", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 29, name: "MUHAMAD HANIF ALIYUDIN", nisn: "0104784680", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 30, name: "MUHAMAD HASANUDIN", nisn: "0113191027", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 31, name: "MUHAMAD REHAN NURUL JANAH", nisn: "0111987988", school: "SRMPT 39 Garut",
-                    level: "SMP", gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 32, name: "MUHAMAD RISKI ABDULLOH", nisn: "3161059263", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 33, name: "MUHAMAD RIVAL ALFARIZI", nisn: "3169279715", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 34, name: "MUHAMAD SAMIN NUGRAHA", nisn: "0119673298", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 35, name: "MUHAMAD SANDI", nisn: "0115109325", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 36, name: "MUHAMMAD IDRUS PAHMI JAHARSAH", nisn: "0115015547", school: "SRMPT 39 Garut",
-                    level: "SMP", gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 37, name: "MUHAMMAD RAEHAN", nisn: "3094108589", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 38, name: "MUHAMMAD ZAKI ARIPIN", nisn: "0127300770", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 39, name: "MUSNAN FIRDAUS", nisn: "3108593390", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 40, name: "NAZHAN", nisn: "0102332909", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 41, name: "NOVI RAHMADANI", nisn: "0127825608", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 42, name: "PARHAN HERIYANSAH", nisn: "3137252816", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 43, name: "PERDIANSAH PRATAMA", nisn: "0128988677", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 44, name: "PIRMANSYAH RAMDANI", nisn: "3108187441", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 45, name: "PONI YULIA", nisn: "0124893928", school: "SRDT 39 Garut", level: "SD", gender: "P",
-                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 46, name: "RAIHAN SAPUTRA", nisn: "0119552685", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 47, name: "RAISA AURELIA PUTRI", nisn: "3142169447", school: "SRDT 39 Garut", level: "SD",
-                    gender: "P", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 48, name: "RAISYA NURPADILAH", nisn: "0104449370", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 49, name: "RANI", nisn: "3128636723", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 50, name: "RAYAA RAFSANJANI", nisn: "3151327926", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 51, name: "REGI", nisn: "0092815396", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 52, name: "REHAN", nisn: "0098060608", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 53, name: "REZA HANAFIYAH", nisn: "3129196277", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 54, name: "RINA", nisn: "3129604730", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 55, name: "RISKY", nisn: "0103304248", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 56, name: "RIYAD FADILAH", nisn: "0131133087", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 57, name: "RIYAN AGUNG FAUZI", nisn: "3129425558", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 58, name: "RIZKI MIRAJ NAWAWI", nisn: "3120958649", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 59, name: "SABIT MAULANA", nisn: "3117684281", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 60, name: "SALMAN SAEPUL BAGRI", nisn: "0115635878", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 61, name: "SALSA BILA", nisn: "0124232598", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 62, name: "SALWA AULIA ZAKIAWAN", nisn: "0109385868", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 63, name: "SELLI KHAIRUNNISA", nisn: "3124008773", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 64, name: "SIFA NURAINI", nisn: "0103955647", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 65, name: "SITI FADILAH", nisn: "3154325333", school: "SRDT 39 Garut", level: "SD",
-                    gender: "P", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 66, name: "SITIMASITOH", nisn: "3125474904", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 67, name: "SITIPASWA", nisn: "3131493765", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 68, name: "SRIMULYANI", nisn: "0108334564", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 69, name: "SUDIRMAN", nisn: "0119440168", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 70, name: "SYIFANURHAYATI", nisn: "0103927661", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 71, name: "YAN YAN ABDUL HADI", nisn: "0106183939", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 72, name: "YANA MULYANA", nisn: "3138754482", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 73, name: "YUSUP AWALUDIN", nisn: "0114870689", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 74, name: "ZAKI MUHAMAD KUSUMAH", nisn: "3133946425", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
-                { id: 75, name: "ZIDAN ABDUL JAILANI", nisn: "3169526039", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" }
-            ],
+            students: (function() {
+                const names = ["ADE MUSTOPA", "AGUS RAMDANI", "AHMAD PADILAH", "AI SITI NUROHMAH", "ANDIKA NUROHMAN",
+                    "ANISA SAPUTRI", "ARDIANSYAH SAPUTRA", "ARIF FIRMANSYAH", "ARMAN MAULANA",
+                    "DE PAHRI PUTRA RAMADAN", "DERI MUHAMMAD", "DEWANGGA NUGRAHA", "DEWI TANIA",
+                    "ELSA SABILA NURHALIMAH", "EVA FAUZIAH", "FANESA ANASTASYA", "FEBI",
+                    "HISMA HOLIPATUL PADILAH", "IHSAN MAULANA", "INDRIA DELIA PUTRI", "IRNA RAODOTUL ZANAH",
+                    "IRSAL KHAERUNA", "LESTI JULIANTI", "M RIZKY MAULANA", "M. FATIR",
+                    "MOCH AKBAR TRI HERMAWAN", "MOH PAISAL APRILIANSAH", "MUHAMAD FATTAN SAPUTRA",
+                    "MUHAMAD HANIF ALIYUDIN", "MUHAMAD HASANUDIN", "MUHAMAD REHAN NURUL JANAH",
+                    "MUHAMAD RISKI ABDULLOH", "MUHAMAD RIVAL ALFARIZI", "MUHAMAD SAMIN NUGRAHA", "MUHAMAD SANDI",
+                    "MUHAMMAD IDRUS PAHMI JAHARSAH", "MUHAMMAD RAEHAN", "MUHAMMAD ZAKI ARIPIN",
+                    "MUSNAN FIRDAUS", "NAZHAN", "NOVI RAHMADANI", "PARHAN HERIYANSAH", "PERDIANSAH PRATAMA",
+                    "PIRMANSYAH RAMDANI", "PONI YULIA", "RAIHAN SAPUTRA", "RAISA AURELIA PUTRI",
+                    "RAISYA NURPADILAH", "RANI", "RAYAA RAFSANJANI", "REGI", "REHAN", "REZA HANAFIYAH",
+                    "RINA", "RISKY", "RIYAD FADILAH", "RIYAN AGUNG FAUZI", "RIZKI MIRAJ NAWAWI",
+                    "SABIT MAULANA", "SALMAN SAEPUL BAGRI", "SALSA BILA", "SALWA AULIA ZAKIAWAN",
+                    "SELLI KHAIRUNNISA", "SIFA NURAINI", "SITI FADILAH", "SITIMASITOH", "SITIPASWA",
+                    "SRIMULYANI", "SUDIRMAN", "SYIFANURHAYATI", "YAN YAN ABDUL HADI", "YANA MULYANA",
+                    "YUSUP AWALUDIN", "ZAKI MUHAMAD KUSUMAH", "ZIDAN ABDUL JAILANI"
+                ];
+                const nisnList = ["3139453861", "0104915906", "3137836817", "3158260386", "0141419382",
+                    "0123595071", "3162522983", "3120690349", "3132152714", "3111636292",
+                    "3122527422", "3124835417", "3124764226", "3130228888", "0094884752",
+                    "0106857181", "0129226857", "0113316745", "3126090468", "97311050",
+                    "3133143373", "3146716444", "3128365677", "3159241108", "0135531105",
+                    "0107125765", "0125649737", "3162907074", "0104784680", "0113191027",
+                    "0111987988", "3161059263", "3169279715", "0119673298", "0115109325",
+                    "0115015547", "3094108589", "0127300770", "3108593390", "0102332909",
+                    "0127825608", "3137252816", "0128988677", "3108187441", "0124893928",
+                    "0119552685", "3142169447", "0104449370", "3128636723", "3151327926",
+                    "0092815396", "0098060608", "3129196277", "3129604730", "0103304248",
+                    "0131133087", "3129425558", "3120958649", "3117684281", "0115635878",
+                    "0124232598", "0109385868", "3124008773", "0103955647", "3154325333",
+                    "3125474904", "3131493765", "0108334564", "0119440168", "0103927661",
+                    "0106183939", "3138754482", "0114870689", "3133946425", "3169526039"
+                ];
+                const schools = [
+                    "SRDT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut",
+                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
+                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
+                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
+                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRDT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
+                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
+                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut"
+                ];
+                const levels = ["SD", "SMP", "SD", "SD", "SD", "SMP", "SD", "SD", "SMP", "SMP",
+                    "SMP", "SMP", "SD", "SMP", "SMP", "SMP", "SD", "SMP", "SMP", "SMP",
+                    "SMP", "SD", "SMP", "SD", "SMP", "SMP", "SD", "SD", "SMP", "SMP",
+                    "SMP", "SD", "SD", "SMP", "SMP", "SMP", "SMP", "SMP", "SMP", "SD",
+                    "SMP", "SMP", "SMP", "SMP", "SD", "SMP", "SD", "SMP", "SMP", "SD",
+                    "SMP", "SMP", "SMP", "SMP", "SMP", "SD", "SD", "SD", "SMP", "SMP",
+                    "SMP", "SMP", "SMP", "SMP", "SD", "SMP", "SMP", "SMP", "SMP", "SMP",
+                    "SMP", "SD", "SMP", "SD", "SD"
+                ];
+                const genders = ["L", "L", "L", "P", "L", "P", "L", "L", "L", "L",
+                    "L", "L", "P", "P", "P", "P", "L", "P", "L", "P",
+                    "P", "L", "P", "L", "L", "L", "L", "L", "L", "L",
+                    "L", "L", "L", "L", "L", "L", "L", "L", "L", "L",
+                    "P", "L", "L", "L", "P", "L", "P", "P", "P", "L",
+                    "L", "L", "L", "P", "L", "L", "L", "L", "L", "L",
+                    "P", "P", "P", "P", "P", "P", "P", "P", "L", "P",
+                    "L", "L", "L", "L", "L"
+                ];
+                const rombels = ["SD", "7B", "SD", "SD", "SD", "7A", "SD", "SD", "7A", "7B",
+                    "7B", "7B", "SD", "7B", "7B", "7B", "SD", "7A", "7A", "7B",
+                    "7B", "SD", "7B", "SD", "7A", "7B", "SD", "SD", "7B", "7B",
+                    "7A", "SD", "SD", "7B", "7B", "7B", "7B", "7A", "7B", "SD",
+                    "7A", "7A", "7B", "7A", "SD", "7A", "SD", "7A", "7A", "SD",
+                    "7A", "7B", "7A", "7A", "7B", "SD", "SD", "SD", "7A", "7B",
+                    "7A", "7B", "7A", "7A", "SD", "7A", "7A", "7B", "7A", "7B",
+                    "7A", "SD", "7A", "SD", "SD"
+                ];
+                const result = [];
+                for (let i = 0; i < names.length; i++) {
+                    result.push({
+                        id: i + 1,
+                        name: names[i],
+                        nisn: nisnList[i],
+                        school: schools[i],
+                        level: levels[i],
+                        gender: genders[i],
+                        rombel: rombels[i],
+                        grades: {},
+                        promotionStatus: "Belum Ditentukan"
+                    });
+                }
+                return result;
+            })(),
             adminLinks: [
                 { id: Date.now(), nip: "199409082025211128", name: "Fauzi Faturohman", category: "Modul Ajar",
                     title: "Modul Ajar PPKn Kelas VII Ganjil", link: "https://drive.google.com/drive/folders/example1",
@@ -985,14 +977,16 @@
             ]
         };
 
-        // Generate avatar untuk guru
+        // Generate avatar untuk guru yang belum punya foto
         defaultData.teachers.forEach(t => {
-            const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(n => n[0]).join('')
-                .toUpperCase();
-            const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
-            const hash = Array.from(t.nip).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-            t.photo =
-                `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+            if (!t.photo) {
+                const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(n => n[0]).join('')
+                    .toUpperCase();
+                const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
+                const hash = Array.from(t.nip).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                t.photo =
+                    `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+            }
         });
 
         // ================================================================
@@ -1009,6 +1003,27 @@
         try {
             currentUser = JSON.parse(localStorage.getItem('srt39_user'));
         } catch (e) { currentUser = null; }
+
+        // Wali Kelas mapping
+        const waliKelas = {
+            "199901222025212077": { role: "Wali Kelas SRD", rombel: "SD" },
+            "200003282025212060": { role: "Wali Kelas SRMP-A", rombel: "SRMP-A" },
+            "199409082025211128": { role: "Wali Kelas SRMP-B", rombel: "SRMP-B" }
+        };
+
+        function isAdmin() {
+            return currentUser && currentUser.nip === "199409082025211128";
+        }
+
+        function isWaliKelas() {
+            return currentUser && waliKelas[currentUser.nip] !== undefined;
+        }
+
+        function getWaliRombel() {
+            if (!currentUser) return null;
+            const w = waliKelas[currentUser.nip];
+            return w ? w.rombel : null;
+        }
 
         function saveState() {
             localStorage.setItem('srt39_data', JSON.stringify(appState));
@@ -1048,9 +1063,24 @@
                 const avatar = document.getElementById('user-avatar');
                 const nameElem = document.getElementById('user-name');
                 const roleElem = document.getElementById('user-role');
+                const accessElem = document.getElementById('user-access');
                 if (avatar) avatar.src = currentUser.photo;
                 if (nameElem) nameElem.innerText = currentUser.name.split(',')[0];
                 if (roleElem) roleElem.innerText = currentUser.role;
+
+                // Tampilkan akses
+                if (isAdmin()) {
+                    accessElem.innerText = '🔑 Akses: Admin (Full)';
+                    accessElem.className = 'text-[10px] text-emerald-400 truncate';
+                } else if (isWaliKelas()) {
+                    const w = waliKelas[currentUser.nip];
+                    accessElem.innerText = `👨‍🏫 Akses: ${w.role}`;
+                    accessElem.className = 'text-[10px] text-sky-400 truncate';
+                } else {
+                    accessElem.innerText = '👤 Akses: Terbatas';
+                    accessElem.className = 'text-[10px] text-slate-500 truncate';
+                }
+
                 router();
             } else {
                 document.getElementById('login-screen').classList.remove('hidden');
@@ -1095,6 +1125,10 @@
             });
 
             if (!container) return;
+
+            // Cek akses Wali Kelas - hanya bisa melihat data murid yang menjadi walinya
+            const waliRombel = getWaliRombel();
+
             switch (hash) {
                 case '#dashboard':
                     pageTitle.innerText = "Dashboard";
@@ -1118,7 +1152,7 @@
                     break;
                 case '#murid':
                     pageTitle.innerText = "Data & Nilai Murid";
-                    container.innerHTML = renderStudents();
+                    container.innerHTML = renderStudents(waliRombel);
                     setTimeout(() => { const s = document.getElementById('search-murid'); if (s) s.addEventListener(
                             'input', filterStudents); }, 100);
                     break;
@@ -1145,6 +1179,10 @@
         // ================================================================
 
         function deleteData(type, id) {
+            if (!isAdmin()) {
+                showToast('Hanya Admin yang dapat menghapus data!', 'error');
+                return;
+            }
             if (!confirm('Yakin ingin menghapus data ini?')) return;
             if (type === 'student') {
                 appState.students = appState.students.filter(s => s.id !== id);
@@ -1162,7 +1200,38 @@
         }
 
         // ================================================================
-        // AI ASSISTANT
+        // UPLOAD FOTO PROFIL GURU
+        // ================================================================
+
+        function uploadTeacherPhoto(nip) {
+            if (!isAdmin()) {
+                showToast('Hanya Admin yang dapat mengubah foto guru!', 'error');
+                return;
+            }
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    const base64 = ev.target.result;
+                    const teacher = appState.teachers.find(t => t.nip === nip);
+                    if (teacher) {
+                        teacher.photo = base64;
+                        saveState();
+                        router();
+                        showToast('Foto profil berhasil diupdate!');
+                    }
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+
+        // ================================================================
+        // AI ASSISTANT — DENGAN KEMAMPUAN ANALISIS DATA LENGKAP
         // ================================================================
 
         function toggleAI() {
@@ -1175,41 +1244,168 @@
             const body = document.getElementById('ai-chat-body');
             const text = input.value.trim();
             if (!text) return;
+
             const userMsg = document.createElement('div');
             userMsg.className = 'ai-msg user';
             userMsg.innerText = text;
             body.appendChild(userMsg);
             input.value = '';
             body.scrollTop = body.scrollHeight;
+
             const botMsg = document.createElement('div');
             botMsg.className = 'ai-msg bot';
-            botMsg.innerText = '⏳ Sedang memproses...';
+            botMsg.innerText = '⏳ Menganalisis data...';
             body.appendChild(botMsg);
             body.scrollTop = body.scrollHeight;
 
             setTimeout(() => {
-                const lower = text.toLowerCase();
-                let reply = 'Maaf, saya belum bisa memproses permintaan itu. Silakan hubungkan dengan API DeepSeek untuk fungsi penuh.';
-                if (lower.includes('siswa') || lower.includes('murid')) {
-                    reply =
-                        `Total siswa: ${appState.students.length}. SD: ${appState.students.filter(s=>s.level==='SD').length}, SMP: ${appState.students.filter(s=>s.level==='SMP').length}.`;
-                } else if (lower.includes('guru')) {
-                    reply = `Total guru: ${appState.teachers.length}.`;
-                } else if (lower.includes('jadwal')) {
-                    reply =
-                    `Jadwal intrakurikuler memiliki ${appState.jadwal.length} sesi per hari. Ekstrakurikuler: ${appState.ekstra.length} kegiatan utama.`;
-                } else if (lower.includes('rkt') || lower.includes('ksp')) {
-                    reply =
-                        `Dokumen RKT dan KSP tersedia di menu RKT & KSP. Terdapat ${appState.school.misi.length} misi sekolah.`;
-                } else {
-                    reply =
-                        `Saya siap membantu! Tanyakan tentang data siswa, guru, jadwal, atau RKT. Saat ini dalam mode simulasi. Hubungkan dengan API DeepSeek untuk jawaban real-time.`;
-                }
+                const reply = generateAIResponse(text);
                 botMsg.innerText = reply;
                 body.scrollTop = body.scrollHeight;
-            }, 600);
+            }, 400);
         }
 
+        function generateAIResponse(query) {
+            const lower = query.toLowerCase();
+
+            // ===== DATA SISWA =====
+            if (lower.includes('siswa') || lower.includes('murid') || lower.includes('peserta didik')) {
+                const total = appState.students.length;
+                const sd = appState.students.filter(s => s.level === 'SD').length;
+                const smp = appState.students.filter(s => s.level === 'SMP').length;
+                const laki = appState.students.filter(s => s.gender === 'L').length;
+                const perempuan = appState.students.filter(s => s.gender === 'P').length;
+                const naik = appState.students.filter(s => s.promotionStatus === 'Naik Kelas').length;
+                const tidakNaik = appState.students.filter(s => s.promotionStatus === 'Tidak Naik Kelas').length;
+
+                // Cari siswa tertentu
+                let specific = '';
+                const nameMatch = appState.students.find(s => lower.includes(s.name.toLowerCase()) || lower.includes(s
+                    .nisn));
+                if (nameMatch) {
+                    const g = nameMatch.grades || {};
+                    const gradeStr = Object.keys(g).length > 0 ?
+                        Object.entries(g).map(([k, v]) => `${k.replace(/_/g, ' ')}: ${v}`).join(', ') :
+                        'Belum ada nilai';
+                    specific =
+                        `\n\n📋 **${nameMatch.name}** (NISN: ${nameMatch.nisn})\n- Sekolah: ${nameMatch.school}\n- Jenjang: ${nameMatch.level}\n- Rombel: ${nameMatch.rombel}\n- Status: ${nameMatch.promotionStatus || 'Belum Ditentukan'}\n- Nilai: ${gradeStr}`;
+                }
+
+                // Cari berdasarkan rombel
+                let rombelInfo = '';
+                if (lower.includes('7a') || lower.includes('7 a')) {
+                    const siswa7a = appState.students.filter(s => s.rombel === '7A' || s.rombel === 'SRMP-A');
+                    rombelInfo = `\n\n📚 **Siswa 7A (${siswa7a.length} orang):** ${siswa7a.map(s=>s.name).join(', ')}`;
+                } else if (lower.includes('7b') || lower.includes('7 b')) {
+                    const siswa7b = appState.students.filter(s => s.rombel === '7B' || s.rombel === 'SRMP-B');
+                    rombelInfo = `\n\n📚 **Siswa 7B (${siswa7b.length} orang):** ${siswa7b.map(s=>s.name).join(', ')}`;
+                } else if (lower.includes('sd')) {
+                    const siswaSd = appState.students.filter(s => s.level === 'SD');
+                    rombelInfo = `\n\n📚 **Siswa SD (${siswaSd.length} orang):** ${siswaSd.map(s=>s.name).join(', ')}`;
+                }
+
+                return `📊 **Data Siswa SRT 39 Garut**\n\n` +
+                    `Total: ${total} siswa\n` +
+                    `- SD: ${sd} siswa\n` +
+                    `- SMP: ${smp} siswa\n` +
+                    `- Laki-laki: ${laki}\n` +
+                    `- Perempuan: ${perempuan}\n` +
+                    `- Naik Kelas: ${naik}\n` +
+                    `- Tidak Naik: ${tidakNaik}\n` +
+                    `- Belum Ditentukan: ${total - naik - tidakNaik}` +
+                    specific + rombelInfo;
+            }
+
+            // ===== DATA GURU =====
+            if (lower.includes('guru') || lower.includes('tenaga pendidik') || lower.includes('gtk')) {
+                const total = appState.teachers.length;
+                let detail = appState.teachers.map(t =>
+                    `- ${t.name} (${t.role}) - NIP: ${t.nip} - Kelas: ${t.classes}`
+                ).join('\n');
+
+                // Cari guru tertentu
+                let specific = '';
+                const teacherMatch = appState.teachers.find(t => lower.includes(t.name.split(',')[0].toLowerCase()));
+                if (teacherMatch) {
+                    specific =
+                        `\n\n👤 **${teacherMatch.name}**\n- NIP: ${teacherMatch.nip}\n- Jabatan: ${teacherMatch.role}\n- Kelas: ${teacherMatch.classes}`;
+                }
+
+                return `👨‍🏫 **Data Guru SRT 39 Garut**\n\nTotal: ${total} guru\n\n${detail}${specific}`;
+            }
+
+            // ===== JADWAL INTRAKURIKULER =====
+            if (lower.includes('jadwal') && (lower.includes('intra') || lower.includes('pelajaran') || lower.includes(
+                'kbm'))) {
+                let jadwalStr = appState.jadwal.filter(r => !r.isBreak).map(r =>
+                    `Jam ${r.jam} (${r.waktu}):\n  Senin: ${r.s.join(', ')}\n  Selasa: ${r.sel.join(', ')}\n  Rabu: ${r.r.join(', ')}\n  Kamis: ${r.k.join(', ')}\n  Jumat: ${r.j.join(', ')}`
+                ).join('\n\n');
+                return `📚 **Jadwal Intrakurikuler**\n\n${jadwalStr}`;
+            }
+
+            // ===== EKSTRAKURIKULER =====
+            if (lower.includes('ekstra') || lower.includes('ekskul') || lower.includes('extracurricular')) {
+                let ekstraStr = appState.ekstra.map(e =>
+                    `Waktu: ${e.waktu || 'Sesuai jadwal'}\n  Senin: ${e.senin || '-'}\n  Selasa: ${e.selasa || '-'}\n  Rabu: ${e.rabu || '-'}\n  Kamis: ${e.kamis || '-'}\n  Jumat: ${e.jumat || '-'}\n  Sabtu: ${e.sabtu || '-'}\n  Minggu: ${e.minggu || '-'}`
+                ).join('\n\n');
+                return `⚽ **Jadwal Ekstrakurikuler**\n\n${ekstraStr}`;
+            }
+
+            // ===== KALENDER AKADEMIK =====
+            if (lower.includes('kalender') || lower.includes('acara') || lower.includes('event') || lower.includes(
+                'kegiatan')) {
+                let calStr = appState.calendar.map(m =>
+                    `📅 ${m.month}:\n${m.events.map(e => `  - ${e.date}: ${e.name}`).join('\n')}`
+                ).join('\n\n');
+                return `📅 **Kalender Akademik 2026/2027**\n\n${calStr}`;
+            }
+
+            // ===== RKT & KSP =====
+            if (lower.includes('rkt') || lower.includes('rencana kerja') || lower.includes('ksp') || lower.includes(
+                'kurikulum')) {
+                return `📄 **RKT & KSP SRT 39 Garut**\n\n` +
+                    `🏫 **Sekolah:** ${appState.school.name}\n` +
+                    `📌 **Moto:** "${appState.school.moto}"\n` +
+                    `👁️ **Visi:** ${appState.school.visi}\n\n` +
+                    `🎯 **Misi:**\n${appState.school.misi.map((m,i) => `  ${i+1}. ${m}`).join('\n')}\n\n` +
+                    `📊 **Program Unggulan:**\n` +
+                    `- Kompetensi Lulusan (SKL, O2SN, Kreasi Seni)\n` +
+                    `- Kurikulum (KOSP, Bahan Ajar, Asesmen)\n` +
+                    `- Proses Pembelajaran (MPLS, Supervisi, Pengadaan Buku)\n` +
+                    `- Penilaian (PTS, PSAS, PSKK, Remedial)\n` +
+                    `- Pendidik & Tendik (Diklat, MGMP, Bimtek)\n` +
+                    `- Sarana Prasarana (Media, Meja/Kursi, Internet)\n` +
+                    `- Manajemen Sekolah (RKAS, Rapat Dinas, Akreditasi)\n` +
+                    `- Kesiswaan & Ekstrakurikuler (OSIS, Pramuka, UKS, Paskibra, Keagamaan)`;
+            }
+
+            // ===== PROFIL SEKOLAH =====
+            if (lower.includes('profil') || lower.includes('sekolah') || lower.includes('informasi sekolah')) {
+                return `🏫 **Profil ${appState.school.name}**\n\n` +
+                    `📌 NPSN SRD: ${appState.school.npsn_srd}\n` +
+                    `📌 NPSN SRMP: ${appState.school.npsn_srmp}\n` +
+                    `📍 Alamat: ${appState.school.address}\n` +
+                    `👨‍🏫 Kepala Sekolah: ${appState.school.kepsek}\n` +
+                    `📋 Wakasek Kurikulum: ${appState.school.wakakur}\n` +
+                    `📅 Tahun Ajaran: ${appState.school.tahun}\n` +
+                    `🏗️ Luas Tanah: ${appState.school.luasTanah}\n` +
+                    `🏗️ Luas Bangunan: ${appState.school.luasBangunan}\n` +
+                    `📊 Status Tanah: ${appState.school.statusTanah}\n` +
+                    `📆 Tahun Berdiri: ${appState.school.tahunBerdiri}`;
+            }
+
+            // ===== DEFAULT =====
+            return `🤖 Saya siap membantu! Pertanyaan Anda: "${query}"\n\n` +
+                `Saya dapat menjawab tentang:\n` +
+                `📊 Data Siswa (total, jenjang, nama, NISN, rombel)\n` +
+                `👨‍🏫 Data Guru (nama, NIP, jabatan, kelas)\n` +
+                `📅 Kalender Akademik (acara, libur, rapat)\n` +
+                `📚 Jadwal Intrakurikuler (mata pelajaran per hari)\n` +
+                `⚽ Ekstrakurikuler (kegiatan, penanggung jawab)\n` +
+                `📄 RKT & KSP (visi, misi, program kerja)\n` +
+                `🏫 Profil Sekolah (NPSN, alamat, kepala sekolah)\n\n` +
+                `💡 Coba tanyakan: "Siapa wali kelas SRD?" atau "Berapa total siswa SMP?"`;
+        }
 
         // ================================================================
         // RENDER FUNCTIONS
@@ -1220,6 +1416,16 @@
             const sd = appState.students.filter(s => s.level === 'SD').length;
             const smp = appState.students.filter(s => s.level === 'SMP').length;
             const guru = appState.teachers.length;
+            const waliRombel = getWaliRombel();
+            let waliInfo = '';
+            if (isWaliKelas()) {
+                const w = waliKelas[currentUser.nip];
+                waliInfo =
+                    `<div class="bg-sky-50 border border-sky-200 rounded-xl p-4 text-sky-800 text-sm">👨‍🏫 Anda login sebagai <b>${w.role}</b> — hanya dapat melihat data siswa ${w.rombel}.</div>`;
+            } else if (isAdmin()) {
+                waliInfo =
+                    `<div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-emerald-800 text-sm">🔑 Anda login sebagai <b>Admin</b> — memiliki akses penuh ke semua data.</div>`;
+            }
             return `
             <div class="fade-in space-y-6">
                 <div class="bg-gradient-to-br from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
@@ -1230,9 +1436,12 @@
                         <div class="mt-3 flex flex-wrap gap-3">
                             <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-calendar-alt mr-2"></i>TA ${appState.school.tahun}</span>
                             <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-quote-left mr-2"></i>${appState.school.moto}</span>
+                            <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-user-tie mr-2"></i>${isAdmin() ? 'Admin' : 'Wali Kelas'}</span>
                         </div>
                     </div>
                 </div>
+
+                ${waliInfo}
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="stat-card flex items-center gap-4">
@@ -1324,14 +1533,13 @@
         }
 
         // ================================================================
-        // KALENDER GRID — Sesuai file KALENDER,PROTA,PROMES
+        // KALENDER GRID
         // ================================================================
 
         function renderCalendarGrid() {
             const months = appState.calendar;
             let output = '<div class="fade-in space-y-8">';
 
-            // Legenda
             output += `
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap gap-4 items-center text-xs">
                 <span class="font-semibold text-slate-600 mr-2">Legenda:</span>
@@ -1354,7 +1562,6 @@
                 const firstDay = new Date(yearNum, monthIndex, 1).getDay();
                 const daysInMonth = new Date(yearNum, monthIndex + 1, 0).getDate();
 
-                // Parse events
                 const eventMap = {};
                 monthData.events.forEach(ev => {
                     const dateStr = ev.date;
@@ -1375,19 +1582,17 @@
                     }
                 });
 
-                // Build Grid
                 let gridHTML = '';
                 const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
                 gridHTML += dayNames.map(d => `<div class="day-header">${d}</div>`).join('');
 
-                // Empty days before first day
                 for (let i = 0; i < firstDay; i++) {
                     gridHTML += `<div class="day-cell other-month"></div>`;
                 }
 
                 for (let d = 1; d <= daysInMonth; d++) {
                     const events = eventMap[`${d}`] || [];
-                    let eventBadges = events.map(ev => {
+                    let displayBadges = events.map(ev => {
                         let cls = 'event-badge';
                         if (ev.type === 'danger') cls += ' danger';
                         else if (ev.type === 'warning') cls += ' warning';
@@ -1397,8 +1602,6 @@
                         return `<span class="${cls}" title="${ev.name}">${ev.name}</span>`;
                     }).join('');
 
-                    // Jika terlalu banyak event, tampilkan +N
-                    let displayBadges = eventBadges;
                     if (events.length > 2) {
                         const visible = events.slice(0, 2);
                         const remaining = events.length - 2;
@@ -1422,7 +1625,6 @@
                     `;
                 }
 
-                // Fill remaining cells
                 const totalCells = firstDay + daysInMonth;
                 const remaining = (7 - (totalCells % 7)) % 7;
                 for (let i = 0; i < remaining; i++) {
@@ -1561,20 +1763,16 @@
 
 
         // ================================================================
-        // JADWAL EKSTRAKURIKULER — SESUAI FILE Jadwal_Ekskul_Revisi
+        // JADWAL EKSTRAKURIKULER
         // ================================================================
 
         function renderEkstra() {
-            // Build data dari appState.ekstra yang sudah sesuai file
             const rows = appState.ekstra;
             let tableRows = '';
 
             rows.forEach((row, idx) => {
                 const isFirst = idx === 0;
-                // Tampilkan nomor urut hanya untuk baris pertama, sisanya kosong atau " - "
                 const rowNum = isFirst ? '1' : '';
-
-                // Waktu: tampilkan hanya jika berbeda
                 const waktuDisplay = row.waktu || '';
                 const waktuSabtu = row.waktu_sabtu || '';
                 const waktuMinggu = row.waktu_minggu || '';
@@ -1595,7 +1793,6 @@
                 </tr>`;
             });
 
-            // Penanggung jawab per hari
             const pj = appState.ekstra[0]?.penanggung || {};
             const pjMap = {
                 senin: pj.senin || ['-', '-'],
@@ -1616,7 +1813,6 @@
                         <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
                     </div>
 
-                    <!-- Tabel Utama -->
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-[1000px] border-collapse bg-white ekskul-table">
                             <thead>
@@ -1640,7 +1836,6 @@
                         </table>
                     </div>
 
-                    <!-- Penanggung Jawab -->
                     <div class="p-4 bg-slate-50 border-t border-slate-200">
                         <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-user-tie mr-2 text-primary"></i>Penanggung Jawab</h4>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-1 text-xs text-slate-600">
@@ -1657,23 +1852,36 @@
                         </div>
                     </div>
 
-                    <!-- Tombol Hapus -->
+                    ${isAdmin() ? `
                     <div class="p-3 bg-white border-t border-slate-200 flex justify-end no-print">
                         <button onclick="if(confirm('Hapus semua data ekstrakurikuler?')){ appState.ekstra=[]; saveState(); router(); showToast('Data ekstrakurikuler dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium flex items-center gap-1">
                             <i class="fas fa-trash-alt"></i> Hapus Semua Data
                         </button>
                     </div>
+                    ` : ''}
                 </div>
             </div>`;
         }
 
 
         // ================================================================
-        // DATA MURID
+        // DATA MURID — dengan filter Wali Kelas
         // ================================================================
 
-        function renderStudents() {
-            let trs = appState.students.map((m, idx) => {
+        function renderStudents(waliRombel) {
+            // Filter data jika user adalah wali kelas
+            let filteredStudents = appState.students;
+            if (waliRombel) {
+                if (waliRombel === 'SD') {
+                    filteredStudents = appState.students.filter(s => s.level === 'SD');
+                } else if (waliRombel === 'SRMP-A') {
+                    filteredStudents = appState.students.filter(s => s.rombel === '7A' || s.rombel === 'SRMP-A');
+                } else if (waliRombel === 'SRMP-B') {
+                    filteredStudents = appState.students.filter(s => s.rombel === '7B' || s.rombel === 'SRMP-B');
+                }
+            }
+
+            let trs = filteredStudents.map((m, idx) => {
                 const genderBadge = m.gender === 'L' ?
                     `<span class="w-8 h-8 rounded-full border border-blue-200 bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold mx-auto">L</span>` :
                     `<span class="w-8 h-8 rounded-full border border-pink-200 bg-pink-50 text-pink-600 flex items-center justify-center text-xs font-bold mx-auto">P</span>`;
@@ -1687,6 +1895,8 @@
                 else statusBadge =
                     `<span class="px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">-</span>`;
 
+                const showActions = isAdmin() || isWaliKelas();
+
                 return `
                 <tr class="border-b border-slate-50 hover:bg-slate-50 transition student-row">
                     <td class="py-4 px-4 text-sm text-slate-600 text-center">${idx+1}</td>
@@ -1697,18 +1907,24 @@
                     <td class="py-4 px-4 text-center">${genderBadge}</td>
                     <td class="py-4 px-4 text-center">${rombelBadge}</td>
                     <td class="py-4 px-4 text-center">${statusBadge}</td>
+                    ${showActions ? `
                     <td class="py-4 px-4 text-center no-print">
                         <button onclick="openGradeModal(${m.id})" class="px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 mx-auto border border-primary/20">
                             <i class="fas fa-edit"></i> Kelola
                         </button>
                     </td>
                     <td class="py-4 px-4 text-center no-print">
-                        <button onclick="deleteData('student', ${m.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Siswa">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                        ${isAdmin() ? `<button onclick="deleteData('student', ${m.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Siswa"><i class="fas fa-trash-alt"></i></button>` : `<span class="text-slate-300 text-xs">-</span>`}
                     </td>
+                    ` : `
+                    <td class="py-4 px-4 text-center text-slate-400 text-xs">-</td>
+                    <td class="py-4 px-4 text-center text-slate-400 text-xs">-</td>
+                    `}
                 </tr>`;
             }).join('');
+
+            const totalFiltered = filteredStudents.length;
+            const totalAll = appState.students.length;
 
             return `
             <div class="fade-in space-y-6">
@@ -1718,9 +1934,10 @@
                         <input type="text" id="search-murid" class="w-full pl-11 pr-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm bg-slate-50 focus:bg-white transition" placeholder="Cari nama atau NISN..." />
                     </div>
                     <div class="flex gap-2 text-xs flex-wrap">
-                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">Total ${appState.students.length}</span>
-                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full font-medium">SD ${appState.students.filter(s=>s.level==='SD').length}</span>
-                        <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">SMP ${appState.students.filter(s=>s.level==='SMP').length}</span>
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">Total ${totalFiltered}</span>
+                        ${waliRombel ? `<span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full font-medium">📋 ${waliRombel}</span>` : ''}
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full font-medium">SD ${filteredStudents.filter(s=>s.level==='SD').length}</span>
+                        <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">SMP ${filteredStudents.filter(s=>s.level==='SMP').length}</span>
                     </div>
                 </div>
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
@@ -1763,6 +1980,23 @@
         function openGradeModal(studentId) {
             const student = appState.students.find(s => s.id === studentId);
             if (!student) return;
+            // Cek akses wali kelas
+            const waliRombel = getWaliRombel();
+            if (waliRombel) {
+                if (waliRombel === 'SD' && student.level !== 'SD') {
+                    showToast('Anda hanya dapat mengakses data siswa SD!', 'error');
+                    return;
+                }
+                if (waliRombel === 'SRMP-A' && student.rombel !== '7A' && student.rombel !== 'SRMP-A') {
+                    showToast('Anda hanya dapat mengakses data siswa 7A!', 'error');
+                    return;
+                }
+                if (waliRombel === 'SRMP-B' && student.rombel !== '7B' && student.rombel !== 'SRMP-B') {
+                    showToast('Anda hanya dapat mengakses data siswa 7B!', 'error');
+                    return;
+                }
+            }
+
             document.getElementById('grade-student-id').value = student.id;
             document.getElementById('grade-student-name').innerText = student.name;
             document.getElementById('grade-student-nisn').innerText = student.nisn;
@@ -1820,15 +2054,20 @@
 
 
         // ================================================================
-        // RENDER GURU
+        // RENDER GURU — dengan upload foto
         // ================================================================
 
         function renderTeachers() {
             const sorted = [...appState.teachers].sort((a, b) => a.nip.localeCompare(b.nip));
             let html = sorted.map(t => `
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col items-center text-center card-hover">
-                    <div class="w-24 h-24 rounded-full p-1 border-2 border-primary/20 mb-4 overflow-hidden">
-                        <img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full" />
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col items-center text-center card-hover relative">
+                    ${isAdmin() ? `
+                    <button onclick="uploadTeacherPhoto('${t.nip}')" class="absolute top-3 right-3 text-slate-400 hover:text-primary transition text-xs bg-white rounded-full p-1.5 shadow-sm border border-slate-200" title="Upload Foto">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    ` : ''}
+                    <div class="w-24 h-24 rounded-full p-1 border-2 border-primary/20 mb-4 overflow-hidden bg-slate-100">
+                        <img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/150x150/1e40af/ffffff?text=${t.name.replace(/[^a-zA-Z ]/g,'').split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}'" />
                     </div>
                     <h3 class="font-bold text-dark text-base">${t.name}</h3>
                     <p class="text-xs text-slate-500 mb-2">NIP. ${t.nip}</p>
@@ -1836,6 +2075,7 @@
                         <span class="px-3 py-1 bg-primary/10 text-primary rounded-lg text-xs font-semibold">${t.role}</span>
                         <span class="text-xs text-slate-400 bg-slate-50 px-3 py-1 rounded-lg">${t.classes}</span>
                     </div>
+                    ${isWaliKelas() && waliKelas[t.nip] ? `<span class="mt-2 text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">🏅 Wali Kelas</span>` : ''}
                 </div>`).join('');
             return `<div class="fade-in"><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">${html}</div></div>`;
         }
@@ -1855,9 +2095,7 @@
                     <td class="py-3.5 px-4 text-sm text-slate-500">${d.date}</td>
                     <td class="py-3.5 px-4 text-center"><a href="${d.link}" target="_blank" class="w-8 h-8 inline-flex items-center justify-center bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition"><i class="fas fa-external-link-alt text-xs"></i></a></td>
                     <td class="py-3.5 px-4 text-center no-print">
-                        <button onclick="deleteData('admin', ${d.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Dokumen">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                        ${isAdmin() ? `<button onclick="deleteData('admin', ${d.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Dokumen"><i class="fas fa-trash-alt"></i></button>` : `<span class="text-slate-300 text-xs">-</span>`}
                     </td>
                 </tr>`).join('');
             return `
@@ -1865,9 +2103,7 @@
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex justify-between items-center">
                         <h3 class="font-bold text-dark"><i class="fas fa-folder-open text-amber-500 mr-2"></i>Dokumen Administrasi</h3>
-                        <button onclick="if(confirm('Hapus semua dokumen?')){ appState.adminLinks=[]; saveState(); router(); showToast('Semua dokumen dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium no-print">
-                            <i class="fas fa-trash-alt"></i> Hapus Semua
-                        </button>
+                        ${isAdmin() ? `<button onclick="if(confirm('Hapus semua dokumen?')){ appState.adminLinks=[]; saveState(); router(); showToast('Semua dokumen dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium no-print"><i class="fas fa-trash-alt"></i> Hapus Semua</button>` : ''}
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -1886,7 +2122,7 @@
 
 
         // ================================================================
-        // RENDER RKT & KSP (LENGKAP)
+        // RENDER RKT & KSP
         // ================================================================
 
         function renderRKT_KSP() {
@@ -2125,8 +2361,8 @@
                 const ws2 = XLSX.utils.aoa_to_sheet(misiData);
                 XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
 
-                const guruData = appState.teachers.map(t => [t.nip, t.name, t.role, t.classes]);
-                guruData.unshift(['NIP', 'Nama', 'Jabatan', 'Kelas']);
+                const guruData = appState.teachers.map(t => [t.nip, t.name, t.role, t.classes, t.photo || '']);
+                guruData.unshift(['NIP', 'Nama', 'Jabatan', 'Kelas', 'Foto']);
                 const ws3 = XLSX.utils.aoa_to_sheet(guruData);
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
 
@@ -2239,20 +2475,23 @@
                                     nip: row[0] || '',
                                     name: row[1] || '',
                                     role: row[2] || '',
-                                    classes: row[3] || ''
+                                    classes: row[3] || '',
+                                    photo: row[4] || ''
                                 });
                             }
                         });
                         if (guruNew.length > 0) {
                             appState.teachers = guruNew;
                             appState.teachers.forEach(t => {
-                                const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(
-                                    n => n[0]).join('').toUpperCase();
-                                const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
-                                const hash = Array.from(t.nip).reduce((acc, char) => acc + char.charCodeAt(0),
-                                    0);
-                                t.photo =
-                                    `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+                                if (!t.photo) {
+                                    const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2)
+                                        .map(n => n[0]).join('').toUpperCase();
+                                    const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
+                                    const hash = Array.from(t.nip).reduce((acc, char) => acc + char
+                                        .charCodeAt(0), 0);
+                                    t.photo =
+                                        `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+                                }
                             });
                         }
                     }
@@ -2401,9 +2640,11 @@
                 XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
 
                 const guruTemplate = [
-                    ['NIP', 'Nama', 'Jabatan', 'Kelas'],
-                    ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wakasek Kurikulum', 'SRD & SRMP'],
-                    ['', '', '', '']
+                    ['NIP', 'Nama', 'Jabatan', 'Kelas', 'Foto'],
+                    ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wakasek Kurikulum / Wali Kelas SRMP-B',
+                        'SRMP-B', ''
+                    ],
+                    ['', '', '', '', '']
                 ];
                 const ws3 = XLSX.utils.aoa_to_sheet(guruTemplate);
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
