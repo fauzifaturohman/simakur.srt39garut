@@ -328,7 +328,7 @@
             bottom: 90px;
             right: 20px;
             width: 420px;
-            max-height: 600px;
+            max-height: 550px;
             background: white;
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -355,7 +355,7 @@
             padding: 1rem;
             overflow-y: auto;
             flex: 1;
-            max-height: 400px;
+            max-height: 380px;
             background: #f8fafc;
         }
         .ai-chat-footer {
@@ -393,11 +393,9 @@
             margin-bottom: 0.75rem;
             padding: 0.5rem 1rem;
             border-radius: 12px;
-            max-width: 90%;
+            max-width: 88%;
             font-size: 0.85rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-break: break-word;
+            line-height: 1.5;
         }
         .ai-msg.user {
             background: #dbeafe;
@@ -411,29 +409,64 @@
             border: 1px solid #e2e8f0;
             border-bottom-left-radius: 4px;
         }
-
-        .role-badge {
-            padding: 0.15rem 0.6rem;
-            border-radius: 999px;
-            font-size: 0.6rem;
+        .ai-msg.bot .highlight {
+            background: #fef3c7;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
+        }
+        .ai-msg.bot table {
+            font-size: 0.7rem;
+            border-collapse: collapse;
+            width: 100%;
+            margin: 0.3rem 0;
+        }
+        .ai-msg.bot table th {
+            background: #e2e8f0;
+            padding: 0.2rem 0.4rem;
+            text-align: left;
+        }
+        .ai-msg.bot table td {
+            padding: 0.2rem 0.4rem;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .photo-upload-btn {
+        /* Photo Upload */
+        .photo-upload-container {
             position: relative;
-            overflow: hidden;
             display: inline-block;
         }
-        .photo-upload-btn input[type="file"] {
+        .photo-upload-container .photo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e2e8f0;
+            transition: 0.3s;
+        }
+        .photo-upload-container .photo-preview:hover {
+            border-color: #1e40af;
+        }
+        .photo-upload-container .upload-overlay {
             position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
+            bottom: 0;
+            right: 0;
+            background: #1e40af;
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
             cursor: pointer;
+            border: 2px solid white;
+            transition: 0.3s;
+        }
+        .photo-upload-container .upload-overlay:hover {
+            background: #1e3a8a;
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -453,7 +486,7 @@
                 </div>
                 <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">NIP</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">NIP / Username</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i class="fas fa-id-card"></i></span>
                             <input type="text" id="login-nip" required class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition text-sm" placeholder="Masukkan NIP..." />
@@ -465,16 +498,8 @@
                             <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i class="fas fa-lock"></i></span>
                             <input type="password" id="login-pass" required value="srt2026" class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition text-sm" placeholder="Password" />
                         </div>
-                        <p class="text-xs text-slate-400 mt-2"><i class="fas fa-info-circle"></i> Default: <b>srt2026</b> · NIP Wakasek: 199409082025211128</p>
-                    </div>
-                    <div class="text-center text-xs text-slate-500">
-                        <p>Login sebagai:</p>
-                        <div class="flex flex-wrap justify-center gap-2 mt-1">
-                            <span class="px-2 py-0.5 bg-blue-50 text-blue-700 rounded">Admin (NIP: 199409082025211128)</span>
-                            <span class="px-2 py-0.5 bg-green-50 text-green-700 rounded">Wali Kelas SRD (NIP: 199901222025212077)</span>
-                            <span class="px-2 py-0.5 bg-purple-50 text-purple-700 rounded">Wali Kelas SRMP-A (NIP: 200003282025212060)</span>
-                            <span class="px-2 py-0.5 bg-amber-50 text-amber-700 rounded">Wali Kelas SRMP-B (NIP: 199409082025211128)</span>
-                        </div>
+                        <p class="text-xs text-slate-400 mt-2"><i class="fas fa-info-circle"></i> Default: <b>srt2026</b></p>
+                        <p class="text-xs text-slate-400 mt-1"><i class="fas fa-user-tie"></i> Wali Kelas: SRD (Maha), 7A (Meliana), 7B (Fauzi)</p>
                     </div>
                     <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
                         Masuk <i class="fas fa-arrow-right text-sm"></i>
@@ -536,12 +561,16 @@
 
             <div class="p-4 border-t border-slate-800">
                 <div class="bg-slate-800/60 rounded-xl p-3 flex items-center gap-3">
-                    <img id="user-avatar" src="" alt="User" class="w-9 h-9 rounded-full border-2 border-primary object-cover" />
+                    <div class="relative photo-upload-container" id="user-photo-container">
+                        <img id="user-avatar" src="" alt="User" class="w-9 h-9 rounded-full border-2 border-primary object-cover" />
+                    </div>
                     <div class="overflow-hidden flex-1">
                         <p id="user-name" class="text-sm font-semibold truncate">User</p>
                         <p id="user-role" class="text-[11px] text-slate-400 truncate">Role</p>
-                        <p id="user-access" class="text-[10px] text-slate-500 truncate"></p>
                     </div>
+                    <button onclick="handleLogout()" class="text-slate-400 hover:text-rose-400 transition text-xs" title="Keluar">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
                 </div>
             </div>
         </aside>
@@ -647,19 +676,15 @@
             <button onclick="toggleAI()" class="text-white/80 hover:text-white"><i class="fas fa-times"></i></button>
         </div>
         <div id="ai-chat-body" class="ai-chat-body">
-            <div class="ai-msg bot">👋 Halo! Saya asisten AI SRT 39 Garut yang siap membantu Anda.<br><br>
-            <b>Saya dapat menjawab pertanyaan tentang:</b><br>
-            📊 <b>Data Siswa</b> - Total, jenjang SD/SMP, nama, NISN, rombel<br>
-            👨‍🏫 <b>Data Guru</b> - Nama, NIP, jabatan, kelas yang diampu<br>
-            📅 <b>Kalender Akademik</b> - Jadwal kegiatan, libur, rapat<br>
-            📚 <b>Jadwal Intrakurikuler</b> - Mata pelajaran per hari dan kelas<br>
-            ⚽ <b>Ekstrakurikuler</b> - Kegiatan, penanggung jawab, waktu<br>
-            📄 <b>RKT & KSP</b> - Visi, misi, program kerja, kurikulum<br>
-            <br>
-            <i>Cukup tanyakan apapun tentang data di aplikasi ini!</i></div>
+            <div class="ai-msg bot">Halo! Saya asisten AI untuk SRT 39 Garut. Saya dapat membantu Anda:</div>
+            <div class="ai-msg bot">📊 <b>Data Siswa</b> - Cek jumlah siswa, SD/SMP, cari nama, nilai</div>
+            <div class="ai-msg bot">👨‍🏫 <b>Data Guru</b> - Informasi guru dan wali kelas</div>
+            <div class="ai-msg bot">📅 <b>Jadwal & Kalender</b> - Jadwal intra, ekstra, dan kalender akademik</div>
+            <div class="ai-msg bot">📋 <b>RKT & KSP</b> - Informasi dokumen kurikulum</div>
+            <div class="ai-msg bot">💡 Coba tanyakan: <b>"Berapa total siswa?", "Siapa wali kelas 7A?", "Ada event apa bulan ini?"</b></div>
         </div>
         <div class="ai-chat-footer">
-            <input type="text" id="ai-input" placeholder="Tanyakan tentang data SRT 39..." onkeydown="if(event.key==='Enter') sendAIMessage()" />
+            <input type="text" id="ai-input" placeholder="Tanyakan sesuatu..." onkeydown="if(event.key==='Enter') sendAIMessage()" />
             <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
@@ -669,7 +694,7 @@
     <!-- ============================================================ -->
     <script>
         // ================================================================
-        // DATA MASTER — Lengkap dari file yang diupload
+        // DATA MASTER — Lengkap dari file yang diupload (75 siswa)
         // ================================================================
 
         const defaultData = {
@@ -698,21 +723,22 @@
                 statusTanah: "Hibah / BLK",
                 tahunBerdiri: "2025"
             },
+            // ===== GURU dengan foto profil =====
             teachers: [
                 { nip: "198008292014121002", name: "Andi Yasir Habibi, S.Sos., S.Pd.", role: "Kepala Sekolah",
                     classes: "-", photo: "" },
-                { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wakasek Kurikulum / Wali Kelas SRMP-B",
-                    classes: "SRMP-B", photo: "" },
-                { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Guru Kelas / Wali Kelas SRD",
-                    classes: "SRD", photo: "" },
+                { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wali Kelas 7B / PPKn",
+                    classes: "SRMP-B (7B)", photo: "", isWaliKelas: true, waliKelas: "7B" },
+                { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Wali Kelas SRD / Guru Kelas",
+                    classes: "SRD", photo: "", isWaliKelas: true, waliKelas: "SD" },
                 { nip: "199908182025212101", name: "Sarah Nur Faziah, S.Pd., Gr.", role: "Guru TIK",
                     classes: "SRD & SRMP", photo: "" },
                 { nip: "200002282025211064", name: "Lufi Feriansyah, S.Pd., Gr.", role: "Guru Matematika",
                     classes: "SRMP", photo: "" },
                 { nip: "200003112025212061", name: "Mitha Amalia, S.Pd., Gr.", role: "Guru IPA", classes: "SRMP",
                     photo: "" },
-                { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Guru B. Inggris / Wali Kelas SRMP-A",
-                    classes: "SRMP-A", photo: "" },
+                { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Wali Kelas 7A / B. Inggris",
+                    classes: "SRMP-A (7A)", photo: "", isWaliKelas: true, waliKelas: "7A" },
                 { nip: "200004272025212059", name: "Youtrin Fadila, S.Pd., Gr.", role: "Guru IPS", classes: "SRMP",
                     photo: "" },
                 { nip: "200006022025212083", name: "Navika Putri Dwi Lestari, S.Pd., Gr.", role: "Guru Seni Budaya",
@@ -721,10 +747,10 @@
                     classes: "SRD & SRMP", photo: "" },
                 { nip: "200102142025212047", name: "Syifa Nurlathifah Al Azmi, S.Pd., Gr.", role: "Guru KKA",
                     classes: "SRD & SRMP", photo: "" },
-                { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia",
-                    classes: "SRMP", photo: "" }
+                { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia", classes: "SRMP",
+                    photo: "" }
             ],
-            // ===== KALENDER PENDIDIKAN SESUAI FILE =====
+            // ===== KALENDER PENDIDIKAN =====
             calendar: [{
                 month: "Juli 2026",
                 events: [
@@ -809,7 +835,7 @@
                 jumat: ["Mochamad Hoky Aldiansyah, S.Pd., Gr.", "Lufi Feriansyah, S.Pd., Gr."],
                 kordinator: ["Fauzi Faturohman, S.Pd., Gr."]
             },
-            // ===== EKSTRAKURIKULER SESUAI FILE =====
+            // ===== EKSTRAKURIKULER =====
             ekstra: [{
                 waktu: "15.30 - Selesai",
                 senin: "OSIS",
@@ -871,102 +897,159 @@
                     minggu: ["-", "-"]
                 }
             }],
-            students: (function() {
-                const names = ["ADE MUSTOPA", "AGUS RAMDANI", "AHMAD PADILAH", "AI SITI NUROHMAH", "ANDIKA NUROHMAN",
-                    "ANISA SAPUTRI", "ARDIANSYAH SAPUTRA", "ARIF FIRMANSYAH", "ARMAN MAULANA",
-                    "DE PAHRI PUTRA RAMADAN", "DERI MUHAMMAD", "DEWANGGA NUGRAHA", "DEWI TANIA",
-                    "ELSA SABILA NURHALIMAH", "EVA FAUZIAH", "FANESA ANASTASYA", "FEBI",
-                    "HISMA HOLIPATUL PADILAH", "IHSAN MAULANA", "INDRIA DELIA PUTRI", "IRNA RAODOTUL ZANAH",
-                    "IRSAL KHAERUNA", "LESTI JULIANTI", "M RIZKY MAULANA", "M. FATIR",
-                    "MOCH AKBAR TRI HERMAWAN", "MOH PAISAL APRILIANSAH", "MUHAMAD FATTAN SAPUTRA",
-                    "MUHAMAD HANIF ALIYUDIN", "MUHAMAD HASANUDIN", "MUHAMAD REHAN NURUL JANAH",
-                    "MUHAMAD RISKI ABDULLOH", "MUHAMAD RIVAL ALFARIZI", "MUHAMAD SAMIN NUGRAHA", "MUHAMAD SANDI",
-                    "MUHAMMAD IDRUS PAHMI JAHARSAH", "MUHAMMAD RAEHAN", "MUHAMMAD ZAKI ARIPIN",
-                    "MUSNAN FIRDAUS", "NAZHAN", "NOVI RAHMADANI", "PARHAN HERIYANSAH", "PERDIANSAH PRATAMA",
-                    "PIRMANSYAH RAMDANI", "PONI YULIA", "RAIHAN SAPUTRA", "RAISA AURELIA PUTRI",
-                    "RAISYA NURPADILAH", "RANI", "RAYAA RAFSANJANI", "REGI", "REHAN", "REZA HANAFIYAH",
-                    "RINA", "RISKY", "RIYAD FADILAH", "RIYAN AGUNG FAUZI", "RIZKI MIRAJ NAWAWI",
-                    "SABIT MAULANA", "SALMAN SAEPUL BAGRI", "SALSA BILA", "SALWA AULIA ZAKIAWAN",
-                    "SELLI KHAIRUNNISA", "SIFA NURAINI", "SITI FADILAH", "SITIMASITOH", "SITIPASWA",
-                    "SRIMULYANI", "SUDIRMAN", "SYIFANURHAYATI", "YAN YAN ABDUL HADI", "YANA MULYANA",
-                    "YUSUP AWALUDIN", "ZAKI MUHAMAD KUSUMAH", "ZIDAN ABDUL JAILANI"
-                ];
-                const nisnList = ["3139453861", "0104915906", "3137836817", "3158260386", "0141419382",
-                    "0123595071", "3162522983", "3120690349", "3132152714", "3111636292",
-                    "3122527422", "3124835417", "3124764226", "3130228888", "0094884752",
-                    "0106857181", "0129226857", "0113316745", "3126090468", "97311050",
-                    "3133143373", "3146716444", "3128365677", "3159241108", "0135531105",
-                    "0107125765", "0125649737", "3162907074", "0104784680", "0113191027",
-                    "0111987988", "3161059263", "3169279715", "0119673298", "0115109325",
-                    "0115015547", "3094108589", "0127300770", "3108593390", "0102332909",
-                    "0127825608", "3137252816", "0128988677", "3108187441", "0124893928",
-                    "0119552685", "3142169447", "0104449370", "3128636723", "3151327926",
-                    "0092815396", "0098060608", "3129196277", "3129604730", "0103304248",
-                    "0131133087", "3129425558", "3120958649", "3117684281", "0115635878",
-                    "0124232598", "0109385868", "3124008773", "0103955647", "3154325333",
-                    "3125474904", "3131493765", "0108334564", "0119440168", "0103927661",
-                    "0106183939", "3138754482", "0114870689", "3133946425", "3169526039"
-                ];
-                const schools = [
-                    "SRDT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut",
-                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
-                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
-                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
-                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRDT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut",
-                    "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut", "SRMPT 39 Garut",
-                    "SRMPT 39 Garut", "SRDT 39 Garut", "SRMPT 39 Garut", "SRDT 39 Garut", "SRDT 39 Garut"
-                ];
-                const levels = ["SD", "SMP", "SD", "SD", "SD", "SMP", "SD", "SD", "SMP", "SMP",
-                    "SMP", "SMP", "SD", "SMP", "SMP", "SMP", "SD", "SMP", "SMP", "SMP",
-                    "SMP", "SD", "SMP", "SD", "SMP", "SMP", "SD", "SD", "SMP", "SMP",
-                    "SMP", "SD", "SD", "SMP", "SMP", "SMP", "SMP", "SMP", "SMP", "SD",
-                    "SMP", "SMP", "SMP", "SMP", "SD", "SMP", "SD", "SMP", "SMP", "SD",
-                    "SMP", "SMP", "SMP", "SMP", "SMP", "SD", "SD", "SD", "SMP", "SMP",
-                    "SMP", "SMP", "SMP", "SMP", "SD", "SMP", "SMP", "SMP", "SMP", "SMP",
-                    "SMP", "SD", "SMP", "SD", "SD"
-                ];
-                const genders = ["L", "L", "L", "P", "L", "P", "L", "L", "L", "L",
-                    "L", "L", "P", "P", "P", "P", "L", "P", "L", "P",
-                    "P", "L", "P", "L", "L", "L", "L", "L", "L", "L",
-                    "L", "L", "L", "L", "L", "L", "L", "L", "L", "L",
-                    "P", "L", "L", "L", "P", "L", "P", "P", "P", "L",
-                    "L", "L", "L", "P", "L", "L", "L", "L", "L", "L",
-                    "P", "P", "P", "P", "P", "P", "P", "P", "L", "P",
-                    "L", "L", "L", "L", "L"
-                ];
-                const rombels = ["SD", "7B", "SD", "SD", "SD", "7A", "SD", "SD", "7A", "7B",
-                    "7B", "7B", "SD", "7B", "7B", "7B", "SD", "7A", "7A", "7B",
-                    "7B", "SD", "7B", "SD", "7A", "7B", "SD", "SD", "7B", "7B",
-                    "7A", "SD", "SD", "7B", "7B", "7B", "7B", "7A", "7B", "SD",
-                    "7A", "7A", "7B", "7A", "SD", "7A", "SD", "7A", "7A", "SD",
-                    "7A", "7B", "7A", "7A", "7B", "SD", "SD", "SD", "7A", "7B",
-                    "7A", "7B", "7A", "7A", "SD", "7A", "7A", "7B", "7A", "7B",
-                    "7A", "SD", "7A", "SD", "SD"
-                ];
-                const result = [];
-                for (let i = 0; i < names.length; i++) {
-                    result.push({
-                        id: i + 1,
-                        name: names[i],
-                        nisn: nisnList[i],
-                        school: schools[i],
-                        level: levels[i],
-                        gender: genders[i],
-                        rombel: rombels[i],
-                        grades: {},
-                        promotionStatus: "Belum Ditentukan"
-                    });
-                }
-                return result;
-            })(),
+            // ===== 75 SISWA LENGKAP dari screenshot =====
+            students: [
+                { id: 1, name: "ADE MUSTOPA", nisn: "3139453861", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 2, name: "AGUS RAMDANI", nisn: "0104915906", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 3, name: "AHMAD PADILAH", nisn: "3137836817", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 4, name: "AI SITI NUROHMAH", nisn: "3158260386", school: "SRDT 39 Garut", level: "SD", gender: "P",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 5, name: "ANDIKA NUROHMAN", nisn: "0141419382", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 6, name: "ANISA SAPUTRI", nisn: "0123595071", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 7, name: "ARDIANSYAH SAPUTRA", nisn: "3162522983", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 8, name: "ARIF FIRMANSYAH", nisn: "3120690349", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 9, name: "ARMAN MAULANA", nisn: "3132152714", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 10, name: "DE PAHRI PUTRA RAMADAN", nisn: "3111636292", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 11, name: "DERI MUHAMMAD", nisn: "3122527422", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 12, name: "DEWANGGA NUGRAHA", nisn: "3124835417", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 13, name: "DEWI TANIA", nisn: "3124764226", school: "SRDT 39 Garut", level: "SD", gender: "P",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 14, name: "ELSA SABILA NURHALIMAH", nisn: "3130228888", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 15, name: "EVA FAUZIAH", nisn: "0094884752", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 16, name: "FANESA ANASTASYA", nisn: "0106857181", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 17, name: "FEBI", nisn: "0129226857", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 18, name: "HISMA HOLIPATUL PADILAH", nisn: "0113316745", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 19, name: "IHSAN MAULANA", nisn: "3126090468", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 20, name: "INDRIA DELIA PUTRI", nisn: "97311050", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 21, name: "IRNA RAODOTUL ZANAH", nisn: "3133143373", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 22, name: "IRSAL KHAERUNA", nisn: "3146716444", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 23, name: "LESTI JULIANTI", nisn: "3128365677", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 24, name: "M RIZKY MAULANA", nisn: "3159241108", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 25, name: "M. FATIR", nisn: "0135531105", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 26, name: "MOCH AKBAR TRI HERMAWAN", nisn: "0107125765", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 27, name: "MOH PAISAL APRILIANSAH", nisn: "0125649737", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 28, name: "MUHAMAD FATTAN SAPUTRA", nisn: "3162907074", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 29, name: "MUHAMAD HANIF ALIYUDIN", nisn: "0104784680", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 30, name: "MUHAMAD HASANUDIN", nisn: "0113191027", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 31, name: "MUHAMAD REHAN NURUL JANAH", nisn: "0111987988", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 32, name: "MUHAMAD RISKI ABDULLOH", nisn: "3161059263", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 33, name: "MUHAMAD RIVAL ALFARIZI", nisn: "3169279715", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 34, name: "MUHAMAD SAMIN NUGRAHA", nisn: "0119673298", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 35, name: "MUHAMAD SANDI", nisn: "0115109325", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 36, name: "MUHAMMAD IDRUS PAHMI JAHARSAH", nisn: "0115015547", school: "SRMPT 39 Garut",
+                    level: "SMP", gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 37, name: "MUHAMMAD RAEHAN", nisn: "3094108589", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 38, name: "MUHAMMAD ZAKI ARIPIN", nisn: "0127300770", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 39, name: "MUSNAN FIRDAUS", nisn: "3108593390", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 40, name: "NAZHAN", nisn: "0102332909", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 41, name: "NOVI RAHMADANI", nisn: "0127825608", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 42, name: "PARHAN HERIYANSAH", nisn: "3137252816", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 43, name: "PERDIANSAH PRATAMA", nisn: "0128988677", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 44, name: "PIRMANSYAH RAMDANI", nisn: "3108187441", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 45, name: "PONI YULIA", nisn: "0124893928", school: "SRDT 39 Garut", level: "SD", gender: "P",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 46, name: "RAIHAN SAPUTRA", nisn: "0119552685", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 47, name: "RAISA AURELIA PUTRI", nisn: "3142169447", school: "SRDT 39 Garut", level: "SD",
+                    gender: "P", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 48, name: "RAISYA NURPADILAH", nisn: "0104449370", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 49, name: "RANI", nisn: "3128636723", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 50, name: "RAYAA RAFSANJANI", nisn: "3151327926", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 51, name: "REGI", nisn: "0092815396", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 52, name: "REHAN", nisn: "0098060608", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 53, name: "REZA HANAFIYAH", nisn: "3129196277", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 54, name: "RINA", nisn: "3129604730", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 55, name: "RISKY", nisn: "0103304248", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 56, name: "RIYAD FADILAH", nisn: "0131133087", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 57, name: "RIYAN AGUNG FAUZI", nisn: "3129425558", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 58, name: "RIZKI MIRAJ NAWAWI", nisn: "3120958649", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 59, name: "SABIT MAULANA", nisn: "3117684281", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 60, name: "SALMAN SAEPUL BAGRI", nisn: "0115635878", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 61, name: "SALSA BILA", nisn: "0124232598", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 62, name: "SALWA AULIA ZAKIAWAN", nisn: "0109385868", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 63, name: "SELLI KHAIRUNNISA", nisn: "3124008773", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 64, name: "SIFA NURAINI", nisn: "0103955647", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 65, name: "SITI FADILAH", nisn: "3154325333", school: "SRDT 39 Garut", level: "SD", gender: "P",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 66, name: "SITIMASITOH", nisn: "3125474904", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 67, name: "SITIPASWA", nisn: "3131493765", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 68, name: "SRIMULYANI", nisn: "0108334564", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 69, name: "SUDIRMAN", nisn: "0119440168", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 70, name: "SYIFANURHAYATI", nisn: "0103927661", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 71, name: "YAN YAN ABDUL HADI", nisn: "0106183939", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 72, name: "YANA MULYANA", nisn: "3138754482", school: "SRDT 39 Garut", level: "SD", gender: "L",
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 73, name: "YUSUP AWALUDIN", nisn: "0114870689", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 74, name: "ZAKI MUHAMAD KUSUMAH", nisn: "3133946425", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
+                { id: 75, name: "ZIDAN ABDUL JAILANI", nisn: "3169526039", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" }
+            ],
             adminLinks: [
                 { id: Date.now(), nip: "199409082025211128", name: "Fauzi Faturohman", category: "Modul Ajar",
                     title: "Modul Ajar PPKn Kelas VII Ganjil", link: "https://drive.google.com/drive/folders/example1",
@@ -976,18 +1059,6 @@
                     date: new Date().toLocaleDateString('id-ID') }
             ]
         };
-
-        // Generate avatar untuk guru yang belum punya foto
-        defaultData.teachers.forEach(t => {
-            if (!t.photo) {
-                const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(n => n[0]).join('')
-                    .toUpperCase();
-                const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
-                const hash = Array.from(t.nip).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-                t.photo =
-                    `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
-            }
-        });
 
         // ================================================================
         // STATE
@@ -1003,27 +1074,6 @@
         try {
             currentUser = JSON.parse(localStorage.getItem('srt39_user'));
         } catch (e) { currentUser = null; }
-
-        // Wali Kelas mapping
-        const waliKelas = {
-            "199901222025212077": { role: "Wali Kelas SRD", rombel: "SD" },
-            "200003282025212060": { role: "Wali Kelas SRMP-A", rombel: "SRMP-A" },
-            "199409082025211128": { role: "Wali Kelas SRMP-B", rombel: "SRMP-B" }
-        };
-
-        function isAdmin() {
-            return currentUser && currentUser.nip === "199409082025211128";
-        }
-
-        function isWaliKelas() {
-            return currentUser && waliKelas[currentUser.nip] !== undefined;
-        }
-
-        function getWaliRombel() {
-            if (!currentUser) return null;
-            const w = waliKelas[currentUser.nip];
-            return w ? w.rombel : null;
-        }
 
         function saveState() {
             localStorage.setItem('srt39_data', JSON.stringify(appState));
@@ -1053,7 +1103,7 @@
         }
 
         // ================================================================
-        // AUTH
+        // AUTH — dengan login Wali Kelas
         // ================================================================
 
         function initAuth() {
@@ -1063,24 +1113,15 @@
                 const avatar = document.getElementById('user-avatar');
                 const nameElem = document.getElementById('user-name');
                 const roleElem = document.getElementById('user-role');
-                const accessElem = document.getElementById('user-access');
-                if (avatar) avatar.src = currentUser.photo;
+                if (avatar) avatar.src = currentUser.photo || `https://placehold.co/150x150/1e40af/ffffff?text=${currentUser.name.split(' ').map(n=>n[0]).join('').toUpperCase()}`;
                 if (nameElem) nameElem.innerText = currentUser.name.split(',')[0];
-                if (roleElem) roleElem.innerText = currentUser.role;
-
-                // Tampilkan akses
-                if (isAdmin()) {
-                    accessElem.innerText = '🔑 Akses: Admin (Full)';
-                    accessElem.className = 'text-[10px] text-emerald-400 truncate';
-                } else if (isWaliKelas()) {
-                    const w = waliKelas[currentUser.nip];
-                    accessElem.innerText = `👨‍🏫 Akses: ${w.role}`;
-                    accessElem.className = 'text-[10px] text-sky-400 truncate';
-                } else {
-                    accessElem.innerText = '👤 Akses: Terbatas';
-                    accessElem.className = 'text-[10px] text-slate-500 truncate';
+                if (roleElem) {
+                    let roleText = currentUser.role;
+                    if (currentUser.isWaliKelas) {
+                        roleText += ` 🏫 Wali Kelas ${currentUser.waliKelas}`;
+                    }
+                    roleElem.innerText = roleText;
                 }
-
                 router();
             } else {
                 document.getElementById('login-screen').classList.remove('hidden');
@@ -1090,13 +1131,41 @@
 
         function handleLogin(e) {
             e.preventDefault();
-            const nip = document.getElementById('login-nip').value;
+            const nip = document.getElementById('login-nip').value.trim();
             const pass = document.getElementById('login-pass').value;
-            const user = appState.teachers.find(t => t.nip === nip);
+
+            // Cari user berdasarkan NIP atau username
+            let user = appState.teachers.find(t => t.nip === nip);
+
+            // Jika tidak ditemukan, cek apakah ini wali kelas dengan username khusus
+            if (!user) {
+                // Coba cari berdasarkan nama (untuk kemudahan login wali kelas)
+                const lowerNip = nip.toLowerCase();
+                if (lowerNip.includes('maha') || lowerNip === 'srd') {
+                    user = appState.teachers.find(t => t.isWaliKelas && t.waliKelas === 'SD');
+                } else if (lowerNip.includes('meliana') || lowerNip === '7a') {
+                    user = appState.teachers.find(t => t.isWaliKelas && t.waliKelas === '7A');
+                } else if (lowerNip.includes('fauzi') || lowerNip === '7b') {
+                    user = appState.teachers.find(t => t.isWaliKelas && t.waliKelas === '7B');
+                }
+            }
+
+            // Cek juga untuk admin/kepsek
+            if (!user && nip === 'kepsek') {
+                user = appState.teachers.find(t => t.role === 'Kepala Sekolah');
+            }
+
             if (user && pass === 'srt2026') {
                 currentUser = user;
+                // Generate foto jika belum ada
+                if (!currentUser.photo) {
+                    const initials = currentUser.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(n => n[0])
+                        .join('').toUpperCase();
+                    currentUser.photo =
+                        `https://placehold.co/150x150/1e40af/ffffff?text=${initials}`;
+                }
                 localStorage.setItem('srt39_user', JSON.stringify(currentUser));
-                showToast(`Selamat datang, ${user.name.split(',')[0]}!`);
+                showToast(`Selamat datang, ${user.name.split(',')[0]}! ${user.isWaliKelas ? '👨‍🏫 Wali Kelas ' + user.waliKelas : ''}`);
                 initAuth();
             } else {
                 showToast('NIP atau Password salah!', 'error');
@@ -1125,10 +1194,6 @@
             });
 
             if (!container) return;
-
-            // Cek akses Wali Kelas - hanya bisa melihat data murid yang menjadi walinya
-            const waliRombel = getWaliRombel();
-
             switch (hash) {
                 case '#dashboard':
                     pageTitle.innerText = "Dashboard";
@@ -1152,7 +1217,7 @@
                     break;
                 case '#murid':
                     pageTitle.innerText = "Data & Nilai Murid";
-                    container.innerHTML = renderStudents(waliRombel);
+                    container.innerHTML = renderStudents();
                     setTimeout(() => { const s = document.getElementById('search-murid'); if (s) s.addEventListener(
                             'input', filterStudents); }, 100);
                     break;
@@ -1179,10 +1244,6 @@
         // ================================================================
 
         function deleteData(type, id) {
-            if (!isAdmin()) {
-                showToast('Hanya Admin yang dapat menghapus data!', 'error');
-                return;
-            }
             if (!confirm('Yakin ingin menghapus data ini?')) return;
             if (type === 'student') {
                 appState.students = appState.students.filter(s => s.id !== id);
@@ -1200,38 +1261,7 @@
         }
 
         // ================================================================
-        // UPLOAD FOTO PROFIL GURU
-        // ================================================================
-
-        function uploadTeacherPhoto(nip) {
-            if (!isAdmin()) {
-                showToast('Hanya Admin yang dapat mengubah foto guru!', 'error');
-                return;
-            }
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    const base64 = ev.target.result;
-                    const teacher = appState.teachers.find(t => t.nip === nip);
-                    if (teacher) {
-                        teacher.photo = base64;
-                        saveState();
-                        router();
-                        showToast('Foto profil berhasil diupdate!');
-                    }
-                };
-                reader.readAsDataURL(file);
-            };
-            input.click();
-        }
-
-        // ================================================================
-        // AI ASSISTANT — DENGAN KEMAMPUAN ANALISIS DATA LENGKAP
+        // AI ASSISTANT — Pintar dan dapat menjawab semua pertanyaan data
         // ================================================================
 
         function toggleAI() {
@@ -1254,161 +1284,134 @@
 
             const botMsg = document.createElement('div');
             botMsg.className = 'ai-msg bot';
-            botMsg.innerText = '⏳ Menganalisis data...';
+            botMsg.innerText = '⏳ Sedang memproses...';
             body.appendChild(botMsg);
             body.scrollTop = body.scrollHeight;
 
+            // Proses dengan AI pintar
             setTimeout(() => {
-                const reply = generateAIResponse(text);
-                botMsg.innerText = reply;
+                const lower = text.toLowerCase();
+                let reply = '';
+
+                // ===== DATA SISWA =====
+                if (lower.includes('total siswa') || lower.includes('jumlah siswa') || lower.includes('berapa siswa')) {
+                    const total = appState.students.length;
+                    const sd = appState.students.filter(s => s.level === 'SD').length;
+                    const smp = appState.students.filter(s => s.level === 'SMP').length;
+                    const l = appState.students.filter(s => s.gender === 'L').length;
+                    const p = appState.students.filter(s => s.gender === 'P').length;
+                    reply =
+                        `📊 <b>Data Siswa SRT 39 Garut</b>\nTotal: <span class="highlight">${total}</span> siswa\n• SD: ${sd} siswa\n• SMP: ${smp} siswa\n• Laki-laki: ${l}\n• Perempuan: ${p}`;
+                } else if (lower.includes('cari siswa') || lower.includes('nama siswa') || lower.includes('siswa bernama')) {
+                    // Ekstrak nama dari pertanyaan
+                    const nameMatch = text.match(/(?:siswa bernama|siswa|nama)\s*[:]?\s*([A-Za-z\s]+)/i);
+                    if (nameMatch && nameMatch[1]) {
+                        const searchName = nameMatch[1].trim().toLowerCase();
+                        const found = appState.students.filter(s => s.name.toLowerCase().includes(searchName));
+                        if (found.length > 0) {
+                            reply = `🔍 <b>Hasil pencarian "${searchName}":</b>\n`;
+                            found.forEach(s => {
+                                reply += `• ${s.name} (${s.nisn}) - ${s.school} - ${s.level} - ${s.rombel}\n`;
+                            });
+                            if (found.length > 10) reply += `\n<i>... dan ${found.length - 10} siswa lainnya</i>`;
+                        } else {
+                            reply = `🔍 Tidak ditemukan siswa dengan nama "${searchName}".`;
+                        }
+                    } else {
+                        reply = `🔍 Silakan sebutkan nama siswa yang dicari. Contoh: "cari siswa bernama Ade"`;
+                    }
+                } else if (lower.includes('siswa sd') || lower.includes('sd')) {
+                    const sd = appState.students.filter(s => s.level === 'SD');
+                    reply =
+                        `📚 <b>Siswa SD (${sd.length} siswa)</b>\n${sd.slice(0, 10).map(s => `• ${s.name}`).join('\n')}${sd.length > 10 ? `\n<i>... dan ${sd.length - 10} siswa lainnya</i>` : ''}`;
+                } else if (lower.includes('siswa smp') || lower.includes('smp')) {
+                    const smp = appState.students.filter(s => s.level === 'SMP');
+                    const a = smp.filter(s => s.rombel === '7A');
+                    const b = smp.filter(s => s.rombel === '7B');
+                    reply =
+                        `📚 <b>Siswa SMP (${smp.length} siswa)</b>\n• 7A: ${a.length} siswa\n• 7B: ${b.length} siswa\n\nContoh nama: ${smp.slice(0, 5).map(s => s.name).join(', ')}${smp.length > 5 ? '...' : ''}`;
+                } else if (lower.includes('wali kelas') || lower.includes('wali')) {
+                    const wali = appState.teachers.filter(t => t.isWaliKelas);
+                    reply = `👨‍🏫 <b>Wali Kelas SRT 39 Garut</b>\n`;
+                    wali.forEach(w => {
+                        reply += `• Kelas ${w.waliKelas}: ${w.name.split(',')[0]}\n`;
+                    });
+                } else if (lower.includes('siswa 7a') || lower.includes('kelas 7a')) {
+                    const students = appState.students.filter(s => s.rombel === '7A');
+                    reply =
+                        `📚 <b>Siswa Kelas 7A (${students.length} siswa)</b>\n${students.slice(0, 15).map(s => `• ${s.name}`).join('\n')}${students.length > 15 ? `\n<i>... dan ${students.length - 15} siswa lainnya</i>` : ''}`;
+                } else if (lower.includes('siswa 7b') || lower.includes('kelas 7b')) {
+                    const students = appState.students.filter(s => s.rombel === '7B');
+                    reply =
+                        `📚 <b>Siswa Kelas 7B (${students.length} siswa)</b>\n${students.slice(0, 15).map(s => `• ${s.name}`).join('\n')}${students.length > 15 ? `\n<i>... dan ${students.length - 15} siswa lainnya</i>` : ''}`;
+                }
+                // ===== DATA GURU =====
+                else if (lower.includes('total guru') || lower.includes('jumlah guru') || lower.includes('berapa guru')) {
+                    const total = appState.teachers.length;
+                    const wali = appState.teachers.filter(t => t.isWaliKelas).length;
+                    reply =
+                        `👨‍🏫 <b>Data Guru SRT 39 Garut</b>\nTotal: <span class="highlight">${total}</span> guru\n• Wali Kelas: ${wali} orang\n• Guru Mapel: ${total - wali} orang`;
+                } else if (lower.includes('daftar guru') || lower.includes('guru apa saja')) {
+                    reply = `👨‍🏫 <b>Daftar Guru SRT 39 Garut</b>\n`;
+                    appState.teachers.forEach(t => {
+                        reply += `• ${t.name.split(',')[0]} - ${t.role}${t.isWaliKelas ? ' (Wali Kelas ' + t.waliKelas + ')' : ''}\n`;
+                    });
+                }
+                // ===== JADWAL =====
+                else if (lower.includes('jadwal intra') || lower.includes('jadwal pelajaran') || lower.includes('pelajaran hari')) {
+                    reply =
+                        `📅 <b>Jadwal Intrakurikuler</b>\nTerdapat ${appState.jadwal.length} sesi pelajaran per hari.\nMulai pukul 08.00 - 15.00.\n\nRincian lengkap dapat dilihat di menu "Jadwal Intrakurikuler".`;
+                } else if (lower.includes('jadwal ekstra') || lower.includes('ekstrakurikuler') || lower.includes('ekskul')) {
+                    reply =
+                        `⚽ <b>Jadwal Ekstrakurikuler</b>\n${appState.ekstra.map((e, i) => `Sesi ${i+1}: ${e.senin || '-'} | ${e.selasa || '-'} | ${e.rabu || '-'} | ${e.kamis || '-'} | ${e.jumat || '-'}`).join('\n')}\n\nSabtu: Pramuka (09.00)\nMinggu: Paskibra (15.30)`;
+                }
+                // ===== KALENDER =====
+                else if (lower.includes('kalender') || lower.includes('event') || lower.includes('acara') || lower.includes('bulan ini')) {
+                    const now = new Date();
+                    const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+                        'September', 'Oktober', 'November', 'Desember'
+                    ];
+                    const currentMonth = monthNames[now.getMonth()] + ' ' + now.getFullYear();
+                    const monthData = appState.calendar.find(c => c.month === currentMonth);
+                    if (monthData) {
+                        reply = `📅 <b>Event ${currentMonth}</b>\n`;
+                        monthData.events.forEach(e => {
+                            reply += `• ${e.date}: ${e.name}\n`;
+                        });
+                    } else {
+                        reply =
+                            `📅 <b>Kalender Akademik</b>\nTerdapat ${appState.calendar.length} bulan dengan berbagai event.\nLihat menu "Kalender Akademik" untuk detail lengkap.`;
+                    }
+                }
+                // ===== RKT & KSP =====
+                else if (lower.includes('rkt') || lower.includes('ksp') || lower.includes('kurikulum') || lower.includes('rencana kerja')) {
+                    reply =
+                        `📋 <b>RKT & KSP SRT 39 Garut</b>\n\n<b>RKT (Rencana Kerja Tahunan)</b>\n• Berisi program kerja 8 Standar Nasional Pendidikan\n• Target: meningkatkan literasi, numerasi, dan karakter siswa\n\n<b>KSP (Kurikulum Satuan Pendidikan)</b>\n• Menggunakan Kurikulum Merdeka\n• Terdiri dari Intrakurikuler, Kokurikuler, dan Ekstrakurikuler\n\nDetail lengkap di menu "RKT & KSP".`;
+                }
+                // ===== VISI MISI =====
+                else if (lower.includes('visi') || lower.includes('misi')) {
+                    reply =
+                        `🎯 <b>Visi & Misi SRT 39 Garut</b>\n\n<b>Visi:</b>\n"${appState.school.visi}"\n\n<b>Misi:</b>\n${appState.school.misi.map((m, i) => `${i+1}. ${m}`).join('\n')}\n\n<b>Moto:</b> "${appState.school.moto}"`;
+                }
+                // ===== INFORMASI SEKOLAH =====
+                else if (lower.includes('sekolah') || lower.includes('info sekolah') || lower.includes('profil sekolah')) {
+                    reply =
+                        `🏫 <b>Informasi Sekolah</b>\n\nNama: ${appState.school.name}\nAlamat: ${appState.school.address}\nNPSN SRD: ${appState.school.npsn_srd}\nNPSN SRMP: ${appState.school.npsn_srmp}\nKepala Sekolah: ${appState.school.kepsek}\nWakasek Kurikulum: ${appState.school.wakakur}\nTahun Ajaran: ${appState.school.tahun}\nLuas Tanah: ${appState.school.luasTanah}\nLuas Bangunan: ${appState.school.luasBangunan}`;
+                }
+                // ===== RESPON DEFAULT =====
+                else {
+                    reply =
+                        `🤖 <b>Saya siap membantu!</b>\n\nSaya dapat menjawab pertanyaan tentang:\n• 📊 Data siswa (total, cari nama, kelas)\n• 👨‍🏫 Data guru & wali kelas\n• 📅 Jadwal intra & ekstrakurikuler\n• 🎯 Visi, misi, profil sekolah\n• 📋 RKT & KSP\n• 📆 Kalender akademik\n\nContoh pertanyaan:\n• "Berapa total siswa?"\n• "Siapa wali kelas 7A?"\n• "Ada event apa bulan ini?"\n• "Cari siswa bernama Ade"`;
+                }
+
+                botMsg.innerHTML = reply.replace(/\n/g, '<br>');
                 body.scrollTop = body.scrollHeight;
-            }, 400);
+            }, 500);
         }
 
-        function generateAIResponse(query) {
-            const lower = query.toLowerCase();
-
-            // ===== DATA SISWA =====
-            if (lower.includes('siswa') || lower.includes('murid') || lower.includes('peserta didik')) {
-                const total = appState.students.length;
-                const sd = appState.students.filter(s => s.level === 'SD').length;
-                const smp = appState.students.filter(s => s.level === 'SMP').length;
-                const laki = appState.students.filter(s => s.gender === 'L').length;
-                const perempuan = appState.students.filter(s => s.gender === 'P').length;
-                const naik = appState.students.filter(s => s.promotionStatus === 'Naik Kelas').length;
-                const tidakNaik = appState.students.filter(s => s.promotionStatus === 'Tidak Naik Kelas').length;
-
-                // Cari siswa tertentu
-                let specific = '';
-                const nameMatch = appState.students.find(s => lower.includes(s.name.toLowerCase()) || lower.includes(s
-                    .nisn));
-                if (nameMatch) {
-                    const g = nameMatch.grades || {};
-                    const gradeStr = Object.keys(g).length > 0 ?
-                        Object.entries(g).map(([k, v]) => `${k.replace(/_/g, ' ')}: ${v}`).join(', ') :
-                        'Belum ada nilai';
-                    specific =
-                        `\n\n📋 **${nameMatch.name}** (NISN: ${nameMatch.nisn})\n- Sekolah: ${nameMatch.school}\n- Jenjang: ${nameMatch.level}\n- Rombel: ${nameMatch.rombel}\n- Status: ${nameMatch.promotionStatus || 'Belum Ditentukan'}\n- Nilai: ${gradeStr}`;
-                }
-
-                // Cari berdasarkan rombel
-                let rombelInfo = '';
-                if (lower.includes('7a') || lower.includes('7 a')) {
-                    const siswa7a = appState.students.filter(s => s.rombel === '7A' || s.rombel === 'SRMP-A');
-                    rombelInfo = `\n\n📚 **Siswa 7A (${siswa7a.length} orang):** ${siswa7a.map(s=>s.name).join(', ')}`;
-                } else if (lower.includes('7b') || lower.includes('7 b')) {
-                    const siswa7b = appState.students.filter(s => s.rombel === '7B' || s.rombel === 'SRMP-B');
-                    rombelInfo = `\n\n📚 **Siswa 7B (${siswa7b.length} orang):** ${siswa7b.map(s=>s.name).join(', ')}`;
-                } else if (lower.includes('sd')) {
-                    const siswaSd = appState.students.filter(s => s.level === 'SD');
-                    rombelInfo = `\n\n📚 **Siswa SD (${siswaSd.length} orang):** ${siswaSd.map(s=>s.name).join(', ')}`;
-                }
-
-                return `📊 **Data Siswa SRT 39 Garut**\n\n` +
-                    `Total: ${total} siswa\n` +
-                    `- SD: ${sd} siswa\n` +
-                    `- SMP: ${smp} siswa\n` +
-                    `- Laki-laki: ${laki}\n` +
-                    `- Perempuan: ${perempuan}\n` +
-                    `- Naik Kelas: ${naik}\n` +
-                    `- Tidak Naik: ${tidakNaik}\n` +
-                    `- Belum Ditentukan: ${total - naik - tidakNaik}` +
-                    specific + rombelInfo;
-            }
-
-            // ===== DATA GURU =====
-            if (lower.includes('guru') || lower.includes('tenaga pendidik') || lower.includes('gtk')) {
-                const total = appState.teachers.length;
-                let detail = appState.teachers.map(t =>
-                    `- ${t.name} (${t.role}) - NIP: ${t.nip} - Kelas: ${t.classes}`
-                ).join('\n');
-
-                // Cari guru tertentu
-                let specific = '';
-                const teacherMatch = appState.teachers.find(t => lower.includes(t.name.split(',')[0].toLowerCase()));
-                if (teacherMatch) {
-                    specific =
-                        `\n\n👤 **${teacherMatch.name}**\n- NIP: ${teacherMatch.nip}\n- Jabatan: ${teacherMatch.role}\n- Kelas: ${teacherMatch.classes}`;
-                }
-
-                return `👨‍🏫 **Data Guru SRT 39 Garut**\n\nTotal: ${total} guru\n\n${detail}${specific}`;
-            }
-
-            // ===== JADWAL INTRAKURIKULER =====
-            if (lower.includes('jadwal') && (lower.includes('intra') || lower.includes('pelajaran') || lower.includes(
-                'kbm'))) {
-                let jadwalStr = appState.jadwal.filter(r => !r.isBreak).map(r =>
-                    `Jam ${r.jam} (${r.waktu}):\n  Senin: ${r.s.join(', ')}\n  Selasa: ${r.sel.join(', ')}\n  Rabu: ${r.r.join(', ')}\n  Kamis: ${r.k.join(', ')}\n  Jumat: ${r.j.join(', ')}`
-                ).join('\n\n');
-                return `📚 **Jadwal Intrakurikuler**\n\n${jadwalStr}`;
-            }
-
-            // ===== EKSTRAKURIKULER =====
-            if (lower.includes('ekstra') || lower.includes('ekskul') || lower.includes('extracurricular')) {
-                let ekstraStr = appState.ekstra.map(e =>
-                    `Waktu: ${e.waktu || 'Sesuai jadwal'}\n  Senin: ${e.senin || '-'}\n  Selasa: ${e.selasa || '-'}\n  Rabu: ${e.rabu || '-'}\n  Kamis: ${e.kamis || '-'}\n  Jumat: ${e.jumat || '-'}\n  Sabtu: ${e.sabtu || '-'}\n  Minggu: ${e.minggu || '-'}`
-                ).join('\n\n');
-                return `⚽ **Jadwal Ekstrakurikuler**\n\n${ekstraStr}`;
-            }
-
-            // ===== KALENDER AKADEMIK =====
-            if (lower.includes('kalender') || lower.includes('acara') || lower.includes('event') || lower.includes(
-                'kegiatan')) {
-                let calStr = appState.calendar.map(m =>
-                    `📅 ${m.month}:\n${m.events.map(e => `  - ${e.date}: ${e.name}`).join('\n')}`
-                ).join('\n\n');
-                return `📅 **Kalender Akademik 2026/2027**\n\n${calStr}`;
-            }
-
-            // ===== RKT & KSP =====
-            if (lower.includes('rkt') || lower.includes('rencana kerja') || lower.includes('ksp') || lower.includes(
-                'kurikulum')) {
-                return `📄 **RKT & KSP SRT 39 Garut**\n\n` +
-                    `🏫 **Sekolah:** ${appState.school.name}\n` +
-                    `📌 **Moto:** "${appState.school.moto}"\n` +
-                    `👁️ **Visi:** ${appState.school.visi}\n\n` +
-                    `🎯 **Misi:**\n${appState.school.misi.map((m,i) => `  ${i+1}. ${m}`).join('\n')}\n\n` +
-                    `📊 **Program Unggulan:**\n` +
-                    `- Kompetensi Lulusan (SKL, O2SN, Kreasi Seni)\n` +
-                    `- Kurikulum (KOSP, Bahan Ajar, Asesmen)\n` +
-                    `- Proses Pembelajaran (MPLS, Supervisi, Pengadaan Buku)\n` +
-                    `- Penilaian (PTS, PSAS, PSKK, Remedial)\n` +
-                    `- Pendidik & Tendik (Diklat, MGMP, Bimtek)\n` +
-                    `- Sarana Prasarana (Media, Meja/Kursi, Internet)\n` +
-                    `- Manajemen Sekolah (RKAS, Rapat Dinas, Akreditasi)\n` +
-                    `- Kesiswaan & Ekstrakurikuler (OSIS, Pramuka, UKS, Paskibra, Keagamaan)`;
-            }
-
-            // ===== PROFIL SEKOLAH =====
-            if (lower.includes('profil') || lower.includes('sekolah') || lower.includes('informasi sekolah')) {
-                return `🏫 **Profil ${appState.school.name}**\n\n` +
-                    `📌 NPSN SRD: ${appState.school.npsn_srd}\n` +
-                    `📌 NPSN SRMP: ${appState.school.npsn_srmp}\n` +
-                    `📍 Alamat: ${appState.school.address}\n` +
-                    `👨‍🏫 Kepala Sekolah: ${appState.school.kepsek}\n` +
-                    `📋 Wakasek Kurikulum: ${appState.school.wakakur}\n` +
-                    `📅 Tahun Ajaran: ${appState.school.tahun}\n` +
-                    `🏗️ Luas Tanah: ${appState.school.luasTanah}\n` +
-                    `🏗️ Luas Bangunan: ${appState.school.luasBangunan}\n` +
-                    `📊 Status Tanah: ${appState.school.statusTanah}\n` +
-                    `📆 Tahun Berdiri: ${appState.school.tahunBerdiri}`;
-            }
-
-            // ===== DEFAULT =====
-            return `🤖 Saya siap membantu! Pertanyaan Anda: "${query}"\n\n` +
-                `Saya dapat menjawab tentang:\n` +
-                `📊 Data Siswa (total, jenjang, nama, NISN, rombel)\n` +
-                `👨‍🏫 Data Guru (nama, NIP, jabatan, kelas)\n` +
-                `📅 Kalender Akademik (acara, libur, rapat)\n` +
-                `📚 Jadwal Intrakurikuler (mata pelajaran per hari)\n` +
-                `⚽ Ekstrakurikuler (kegiatan, penanggung jawab)\n` +
-                `📄 RKT & KSP (visi, misi, program kerja)\n` +
-                `🏫 Profil Sekolah (NPSN, alamat, kepala sekolah)\n\n` +
-                `💡 Coba tanyakan: "Siapa wali kelas SRD?" atau "Berapa total siswa SMP?"`;
-        }
 
         // ================================================================
-        // RENDER FUNCTIONS
+        // RENDER FUNCTIONS (Dashboard, Profil, Kalender, Jadwal, Ekstra, Students, Teachers, Admin, RKT)
         // ================================================================
 
         function renderDashboard() {
@@ -1416,16 +1419,7 @@
             const sd = appState.students.filter(s => s.level === 'SD').length;
             const smp = appState.students.filter(s => s.level === 'SMP').length;
             const guru = appState.teachers.length;
-            const waliRombel = getWaliRombel();
-            let waliInfo = '';
-            if (isWaliKelas()) {
-                const w = waliKelas[currentUser.nip];
-                waliInfo =
-                    `<div class="bg-sky-50 border border-sky-200 rounded-xl p-4 text-sky-800 text-sm">👨‍🏫 Anda login sebagai <b>${w.role}</b> — hanya dapat melihat data siswa ${w.rombel}.</div>`;
-            } else if (isAdmin()) {
-                waliInfo =
-                    `<div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-emerald-800 text-sm">🔑 Anda login sebagai <b>Admin</b> — memiliki akses penuh ke semua data.</div>`;
-            }
+            const wali = appState.teachers.filter(t => t.isWaliKelas).length;
             return `
             <div class="fade-in space-y-6">
                 <div class="bg-gradient-to-br from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
@@ -1433,15 +1427,13 @@
                     <div class="relative z-10">
                         <h2 class="text-3xl font-extrabold mb-2">Halo, ${currentUser.name.split(',')[0]}! 👋</h2>
                         <p class="text-white/80 text-lg max-w-2xl">Selamat datang di SIMAKUR — Sistem Manajemen Kurikulum ${appState.school.name}</p>
+                        ${currentUser.isWaliKelas ? `<p class="text-white/70 text-sm mt-1">🏫 <b>Wali Kelas ${currentUser.waliKelas}</b> — ${appState.students.filter(s => s.rombel === currentUser.waliKelas).length} siswa</p>` : ''}
                         <div class="mt-3 flex flex-wrap gap-3">
                             <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-calendar-alt mr-2"></i>TA ${appState.school.tahun}</span>
                             <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-quote-left mr-2"></i>${appState.school.moto}</span>
-                            <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-user-tie mr-2"></i>${isAdmin() ? 'Admin' : 'Wali Kelas'}</span>
                         </div>
                     </div>
                 </div>
-
-                ${waliInfo}
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="stat-card flex items-center gap-4">
@@ -1477,7 +1469,7 @@
                         <div class="space-y-2">
                             <div><span class="badge-status bg-emerald-100 text-emerald-700">100%</span> Guru bersertifikat</div>
                             <div><span class="badge-status bg-blue-100 text-blue-700">75</span> Siswa (25 SD + 50 SMP)</div>
-                            <div><span class="badge-status bg-purple-100 text-purple-700">12</span> GTK aktif</div>
+                            <div><span class="badge-status bg-purple-100 text-purple-700">${guru}</span> GTK aktif</div>
                             <div><span class="badge-status bg-amber-100 text-amber-700">8</span> Ekstrakurikuler</div>
                         </div>
                     </div>
@@ -1592,7 +1584,7 @@
 
                 for (let d = 1; d <= daysInMonth; d++) {
                     const events = eventMap[`${d}`] || [];
-                    let displayBadges = events.map(ev => {
+                    let displayBadges = events.slice(0, 2).map(ev => {
                         let cls = 'event-badge';
                         if (ev.type === 'danger') cls += ' danger';
                         else if (ev.type === 'warning') cls += ' warning';
@@ -1601,20 +1593,8 @@
                         else cls += ' info';
                         return `<span class="${cls}" title="${ev.name}">${ev.name}</span>`;
                     }).join('');
-
                     if (events.length > 2) {
-                        const visible = events.slice(0, 2);
-                        const remaining = events.length - 2;
-                        displayBadges = visible.map(ev => {
-                            let cls = 'event-badge';
-                            if (ev.type === 'danger') cls += ' danger';
-                            else if (ev.type === 'warning') cls += ' warning';
-                            else if (ev.type === 'primary') cls += ' primary';
-                            else if (ev.type === 'success') cls += ' success';
-                            else cls += ' info';
-                            return `<span class="${cls}" title="${ev.name}">${ev.name}</span>`;
-                        }).join('');
-                        displayBadges += `<span class="more-indicator">+${remaining} lagi</span>`;
+                        displayBadges += `<span class="more-indicator">+${events.length - 2} lagi</span>`;
                     }
 
                     gridHTML += `
@@ -1852,33 +1832,25 @@
                         </div>
                     </div>
 
-                    ${isAdmin() ? `
                     <div class="p-3 bg-white border-t border-slate-200 flex justify-end no-print">
                         <button onclick="if(confirm('Hapus semua data ekstrakurikuler?')){ appState.ekstra=[]; saveState(); router(); showToast('Data ekstrakurikuler dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium flex items-center gap-1">
                             <i class="fas fa-trash-alt"></i> Hapus Semua Data
                         </button>
                     </div>
-                    ` : ''}
                 </div>
             </div>`;
         }
 
 
         // ================================================================
-        // DATA MURID — dengan filter Wali Kelas
+        // DATA MURID
         // ================================================================
 
-        function renderStudents(waliRombel) {
-            // Filter data jika user adalah wali kelas
+        function renderStudents() {
+            // Filter berdasarkan wali kelas
             let filteredStudents = appState.students;
-            if (waliRombel) {
-                if (waliRombel === 'SD') {
-                    filteredStudents = appState.students.filter(s => s.level === 'SD');
-                } else if (waliRombel === 'SRMP-A') {
-                    filteredStudents = appState.students.filter(s => s.rombel === '7A' || s.rombel === 'SRMP-A');
-                } else if (waliRombel === 'SRMP-B') {
-                    filteredStudents = appState.students.filter(s => s.rombel === '7B' || s.rombel === 'SRMP-B');
-                }
+            if (currentUser && currentUser.isWaliKelas) {
+                filteredStudents = appState.students.filter(s => s.rombel === currentUser.waliKelas);
             }
 
             let trs = filteredStudents.map((m, idx) => {
@@ -1895,8 +1867,6 @@
                 else statusBadge =
                     `<span class="px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">-</span>`;
 
-                const showActions = isAdmin() || isWaliKelas();
-
                 return `
                 <tr class="border-b border-slate-50 hover:bg-slate-50 transition student-row">
                     <td class="py-4 px-4 text-sm text-slate-600 text-center">${idx+1}</td>
@@ -1907,24 +1877,20 @@
                     <td class="py-4 px-4 text-center">${genderBadge}</td>
                     <td class="py-4 px-4 text-center">${rombelBadge}</td>
                     <td class="py-4 px-4 text-center">${statusBadge}</td>
-                    ${showActions ? `
                     <td class="py-4 px-4 text-center no-print">
                         <button onclick="openGradeModal(${m.id})" class="px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 mx-auto border border-primary/20">
                             <i class="fas fa-edit"></i> Kelola
                         </button>
                     </td>
                     <td class="py-4 px-4 text-center no-print">
-                        ${isAdmin() ? `<button onclick="deleteData('student', ${m.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Siswa"><i class="fas fa-trash-alt"></i></button>` : `<span class="text-slate-300 text-xs">-</span>`}
+                        <button onclick="deleteData('student', ${m.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Siswa">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
                     </td>
-                    ` : `
-                    <td class="py-4 px-4 text-center text-slate-400 text-xs">-</td>
-                    <td class="py-4 px-4 text-center text-slate-400 text-xs">-</td>
-                    `}
                 </tr>`;
             }).join('');
 
-            const totalFiltered = filteredStudents.length;
-            const totalAll = appState.students.length;
+            const totalDisplay = filteredStudents.length;
 
             return `
             <div class="fade-in space-y-6">
@@ -1934,10 +1900,10 @@
                         <input type="text" id="search-murid" class="w-full pl-11 pr-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm bg-slate-50 focus:bg-white transition" placeholder="Cari nama atau NISN..." />
                     </div>
                     <div class="flex gap-2 text-xs flex-wrap">
-                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">Total ${totalFiltered}</span>
-                        ${waliRombel ? `<span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full font-medium">📋 ${waliRombel}</span>` : ''}
+                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">Total ${totalDisplay}</span>
                         <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full font-medium">SD ${filteredStudents.filter(s=>s.level==='SD').length}</span>
                         <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">SMP ${filteredStudents.filter(s=>s.level==='SMP').length}</span>
+                        ${currentUser && currentUser.isWaliKelas ? `<span class="px-3 py-1 bg-amber-50 text-amber-700 rounded-full font-medium">🏫 Kelas ${currentUser.waliKelas}</span>` : ''}
                     </div>
                 </div>
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
@@ -1980,23 +1946,6 @@
         function openGradeModal(studentId) {
             const student = appState.students.find(s => s.id === studentId);
             if (!student) return;
-            // Cek akses wali kelas
-            const waliRombel = getWaliRombel();
-            if (waliRombel) {
-                if (waliRombel === 'SD' && student.level !== 'SD') {
-                    showToast('Anda hanya dapat mengakses data siswa SD!', 'error');
-                    return;
-                }
-                if (waliRombel === 'SRMP-A' && student.rombel !== '7A' && student.rombel !== 'SRMP-A') {
-                    showToast('Anda hanya dapat mengakses data siswa 7A!', 'error');
-                    return;
-                }
-                if (waliRombel === 'SRMP-B' && student.rombel !== '7B' && student.rombel !== 'SRMP-B') {
-                    showToast('Anda hanya dapat mengakses data siswa 7B!', 'error');
-                    return;
-                }
-            }
-
             document.getElementById('grade-student-id').value = student.id;
             document.getElementById('grade-student-name').innerText = student.name;
             document.getElementById('grade-student-nisn').innerText = student.nisn;
@@ -2054,29 +2003,30 @@
 
 
         // ================================================================
-        // RENDER GURU — dengan upload foto
+        // RENDER GURU (dengan foto)
         // ================================================================
 
         function renderTeachers() {
             const sorted = [...appState.teachers].sort((a, b) => a.nip.localeCompare(b.nip));
-            let html = sorted.map(t => `
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col items-center text-center card-hover relative">
-                    ${isAdmin() ? `
-                    <button onclick="uploadTeacherPhoto('${t.nip}')" class="absolute top-3 right-3 text-slate-400 hover:text-primary transition text-xs bg-white rounded-full p-1.5 shadow-sm border border-slate-200" title="Upload Foto">
-                        <i class="fas fa-camera"></i>
-                    </button>
-                    ` : ''}
-                    <div class="w-24 h-24 rounded-full p-1 border-2 border-primary/20 mb-4 overflow-hidden bg-slate-100">
-                        <img src="${t.photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/150x150/1e40af/ffffff?text=${t.name.replace(/[^a-zA-Z ]/g,'').split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}'" />
+            let html = sorted.map(t => {
+                const photo = t.photo || `https://placehold.co/150x150/${t.isWaliKelas ? '1e40af' : '64748b'}/ffffff?text=${t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}`;
+                return `
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col items-center text-center card-hover">
+                    <div class="relative">
+                        <div class="w-24 h-24 rounded-full p-1 border-2 ${t.isWaliKelas ? 'border-amber-400' : 'border-primary/20'} mb-4 overflow-hidden">
+                            <img src="${photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full" />
+                        </div>
+                        ${t.isWaliKelas ? `<span class="absolute -top-1 -right-1 bg-amber-400 text-white text-[8px] font-bold px-2 py-0.5 rounded-full">🏫</span>` : ''}
                     </div>
                     <h3 class="font-bold text-dark text-base">${t.name}</h3>
                     <p class="text-xs text-slate-500 mb-2">NIP. ${t.nip}</p>
                     <div class="w-full mt-auto pt-4 border-t border-slate-100 flex flex-wrap justify-center gap-2">
-                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-lg text-xs font-semibold">${t.role}</span>
+                        <span class="px-3 py-1 ${t.isWaliKelas ? 'bg-amber-50 text-amber-700' : 'bg-primary/10 text-primary'} rounded-lg text-xs font-semibold">${t.role}</span>
                         <span class="text-xs text-slate-400 bg-slate-50 px-3 py-1 rounded-lg">${t.classes}</span>
                     </div>
-                    ${isWaliKelas() && waliKelas[t.nip] ? `<span class="mt-2 text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">🏅 Wali Kelas</span>` : ''}
-                </div>`).join('');
+                    ${t.isWaliKelas ? `<div class="mt-2 text-xs font-semibold text-amber-600 bg-amber-50 px-3 py-1 rounded-full">👨‍🏫 Wali Kelas ${t.waliKelas}</div>` : ''}
+                </div>`;
+            }).join('');
             return `<div class="fade-in"><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">${html}</div></div>`;
         }
 
@@ -2095,7 +2045,9 @@
                     <td class="py-3.5 px-4 text-sm text-slate-500">${d.date}</td>
                     <td class="py-3.5 px-4 text-center"><a href="${d.link}" target="_blank" class="w-8 h-8 inline-flex items-center justify-center bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition"><i class="fas fa-external-link-alt text-xs"></i></a></td>
                     <td class="py-3.5 px-4 text-center no-print">
-                        ${isAdmin() ? `<button onclick="deleteData('admin', ${d.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Dokumen"><i class="fas fa-trash-alt"></i></button>` : `<span class="text-slate-300 text-xs">-</span>`}
+                        <button onclick="deleteData('admin', ${d.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Dokumen">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
                     </td>
                 </tr>`).join('');
             return `
@@ -2103,7 +2055,9 @@
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex justify-between items-center">
                         <h3 class="font-bold text-dark"><i class="fas fa-folder-open text-amber-500 mr-2"></i>Dokumen Administrasi</h3>
-                        ${isAdmin() ? `<button onclick="if(confirm('Hapus semua dokumen?')){ appState.adminLinks=[]; saveState(); router(); showToast('Semua dokumen dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium no-print"><i class="fas fa-trash-alt"></i> Hapus Semua</button>` : ''}
+                        <button onclick="if(confirm('Hapus semua dokumen?')){ appState.adminLinks=[]; saveState(); router(); showToast('Semua dokumen dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium no-print">
+                            <i class="fas fa-trash-alt"></i> Hapus Semua
+                        </button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -2128,107 +2082,46 @@
         function renderRKT_KSP() {
             return `
             <div class="fade-in space-y-6">
-
                 <div class="bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl">
                     <h2 class="text-2xl font-extrabold"><i class="fas fa-file-alt mr-3"></i>RKT & KSP</h2>
                     <p class="text-white/80 text-sm mt-1">Rencana Kerja Tahunan & Kurikulum Satuan Pendidikan — ${appState.school.name}</p>
                     <p class="text-white/60 text-xs mt-1">Tahun Ajaran ${appState.school.tahun}</p>
                 </div>
 
-                <!-- RKT -->
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-5 bg-gradient-to-r from-blue-50 to-white border-b border-slate-100">
                         <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-tasks text-primary"></i> Rencana Kerja Tahunan (RKT)</h3>
                     </div>
                     <div class="p-6 space-y-4">
-
                         <div class="section-card">
                             <div class="title"><i class="fas fa-book-open"></i> BAB I — Pendahuluan</div>
                             <div class="body">
-                                <p><strong>Latar Belakang:</strong> Sekolah Rakyat merupakan program pendidikan yang diinisiasi Presiden Prabowo Subianto untuk menyediakan akses pendidikan gratis bagi anak-anak dari keluarga miskin dan miskin ekstrem. Sekolah Rakyat Terintegrasi 39 Garut didirikan pada tahun 2025 berdasarkan Keputusan Menteri Sosial RI Nomor 250/HUK/2025.</p>
+                                <p><strong>Latar Belakang:</strong> Sekolah Rakyat merupakan program pendidikan yang diinisiasi Presiden Prabowo Subianto untuk menyediakan akses pendidikan gratis bagi anak-anak dari keluarga miskin dan miskin ekstrem. Sekolah Rakyat Terintegrasi 39 Garut didirikan pada tahun 2025.</p>
                                 <ul class="mt-2">
                                     <li>Sekolah Rakyat adalah Program Strategis Nasional untuk memutus mata rantai kemiskinan.</li>
                                     <li>SRT 39 Garut harus menghasilkan lulusan yang kompeten dan mampu bersaing secara global.</li>
-                                    <li>Perbaikan proses belajar mengajar yang kreatif dan inovatif menjadi prioritas.</li>
-                                    <li>Optimalisasi sarana prasarana dan kerjasama dengan pemangku kepentingan.</li>
                                 </ul>
-                                <p class="mt-2"><strong>Sejarah Berdirinya:</strong> SRT 39 Garut mulai beroperasi pada 30 Desember 2025 dengan MPLS yang dibuka langsung oleh Bupati Garut Dr. Abdusysyakur, M.Eng. Jumlah siswa awal 75 orang (25 SD + 50 SMP) dari keluarga Desil 1 dan 2.</p>
-                                <p class="mt-2"><strong>Landasan Hukum:</strong> UU No.20/2003, Inpres No.8/2025, Permensos No.7/2025, dan regulasi terkait lainnya.</p>
+                                <p class="mt-2"><strong>Sejarah Berdirinya:</strong> SRT 39 Garut mulai beroperasi pada 30 Desember 2025 dengan 75 siswa (25 SD + 50 SMP) dari keluarga Desil 1 dan 2.</p>
                             </div>
                         </div>
-
                         <div class="section-card">
                             <div class="title"><i class="fas fa-flag"></i> BAB II — Visi, Misi, dan Tujuan</div>
                             <div class="body">
-                                <p><strong>Visi:</strong> "Mewujudkan Generasi yang Disiplin, Jujur, Mandiri, Tangguh, Religius, dan Mampu Bersaing di Persaingan Global"</p>
-                                <p class="mt-2"><strong>Misi:</strong></p>
-                                <ul>
-                                    <li>Menanamkan kedisiplinan dimanapun berada</li>
-                                    <li>Menanamkan karakter jujur dalam kehidupan sehari-hari</li>
-                                    <li>Menumbuhkan kemandirian dalam berfikir dan berprilaku</li>
-                                    <li>Menanamkan karakter tangguh atau tidak mudah menyerah</li>
-                                    <li>Membersamai dalam menumbuhkan ketaatan menjalankan ajaran agama</li>
-                                    <li>Memberikan pembekalan ilmu dan keterampilan untuk bersaing secara global</li>
-                                </ul>
-                                <p class="mt-2"><strong>Moto:</strong> "Cerdas Bersama Tumbuh Setara"</p>
-                                <p class="mt-2"><strong>Tujuan SRT 39 Garut:</strong> Membentuk peserta didik beriman, bertaqwa, berakhlak mulia, memiliki jiwa kepemimpinan, mencapai capaian pembelajaran, memiliki ekstrakurikuler unggul, dan mewujudkan disiplin tinggi serta manajemen transparan.</p>
+                                <p><strong>Visi:</strong> "${appState.school.visi}"</p>
+                                <p class="mt-2"><strong>Moto:</strong> "${appState.school.moto}"</p>
                             </div>
                         </div>
-
                         <div class="section-card">
                             <div class="title"><i class="fas fa-building"></i> BAB III — Profil Sekolah</div>
                             <div class="body">
                                 <p><strong>Identitas Sekolah:</strong></p>
                                 <ul>
-                                    <li>Nama: Sekolah Rakyat Terintegrasi 39 Garut</li>
-                                    <li>Alamat: Jl. Raya Samarang KM 4, Cintarakyat, Samarang, Garut</li>
+                                    <li>Nama: ${appState.school.name}</li>
+                                    <li>Alamat: ${appState.school.address}</li>
                                     <li>NPSN SRD: ${appState.school.npsn_srd} | SRMP: ${appState.school.npsn_srmp}</li>
-                                    <li>Status: Negeri (PPPK) — Berdiri 2025</li>
                                     <li>Luas Tanah: ${appState.school.luasTanah} | Luas Bangunan: ${appState.school.luasBangunan}</li>
-                                    <li>Rombel: 3 (1 SD + 2 SMP) | Jumlah Siswa: ${appState.students.length}</li>
+                                    <li>Rombel: 3 | Jumlah Siswa: ${appState.students.length}</li>
                                 </ul>
-                                <p class="mt-2"><strong>Kondisi Nyata:</strong> SRT 39 Garut merupakan sekolah rintisan yang menempati lahan BLK. Siswa berasal dari keluarga miskin ekstrim (Desil 1 & 2) dengan karakteristik unik dan latar belakang beragam.</p>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="title"><i class="fas fa-bullseye"></i> BAB IV — Harapan Pemangku Kepentingan</div>
-                            <div class="body">
-                                <p>Berdasarkan analisis kondisi nyata, harapan 1 tahun ke depan meliputi:</p>
-                                <ul>
-                                    <li><strong>Kompetensi Lulusan:</strong> Meningkatnya kemampuan literasi, numerasi, ICT, dan prestasi akademik/non-akademik.</li>
-                                    <li><strong>Kurikulum (KSP):</strong> Dokumen KSP dimiliki setiap guru, sosialisasi KKM, peningkatan efektivitas PBM.</li>
-                                    <li><strong>Proses Pembelajaran:</strong> 100% guru menerapkan pembelajaran berdiferensiasi, meningkatnya prestasi siswa.</li>
-                                    <li><strong>Penilaian:</strong> Analisis hasil belajar maksimal, rata-rata nilai mencapai KKM.</li>
-                                    <li><strong>Pendidik & Tenaga Kependidikan:</strong> Peningkatan kualifikasi dan kompetensi GTK.</li>
-                                    <li><strong>Sarana Prasarana:</strong> Tersedianya lahan permanen, perpustakaan, laboratorium, dan sarana olahraga memadai.</li>
-                                    <li><strong>Manajemen Sekolah:</strong> Memiliki program peningkatan mutu, penghargaan guru berprestasi, dan buku inventaris lengkap.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="title"><i class="fas fa-calendar-check"></i> BAB V — Rencana & Program Kerja 2026</div>
-                            <div class="body">
-                                <p>Program unggulan berdasarkan 8 Standar Nasional Pendidikan:</p>
-                                <ul>
-                                    <li><strong>Kompetensi Lulusan:</strong> Analisis SKL, proyeksi soal, O2SN, Kreasi Seni, Pembinaan Olahraga.</li>
-                                    <li><strong>Kurikulum:</strong> Penyusunan KOSP, workshop bahan ajar, pengembangan panduan asesmen.</li>
-                                    <li><strong>Proses Pembelajaran:</strong> Penerimaan siswa baru, monitoring & supervisi, pengadaan buku, alat peraga, komputer, refleksi pembelajaran.</li>
-                                    <li><strong>Penilaian:</strong> PTS, PSAS, PSKK, remedial, dan analisis hasil.</li>
-                                    <li><strong>Pendidik & Tendik:</strong> Diklat, MGMP, Bimtek KOSP, Bimtek BOS.</li>
-                                    <li><strong>Sarana Prasarana:</strong> Pengadaan media, meja/kursi, papan tulis, perangkat internet, pemeliharaan bangunan.</li>
-                                    <li><strong>Manajemen Sekolah:</strong> Penyusunan RKAS, rapat dinas, akreditasi, pengelolaan BOS.</li>
-                                    <li><strong>Kesiswaan & Ekstrakurikuler:</strong> OSIS, Pramuka, UKS/PMR, Paskibra, Keagamaan, Kreativitas siswa.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="title"><i class="fas fa-check-circle"></i> BAB VI — Penutup</div>
-                            <div class="body">
-                                <p><strong>Kesimpulan:</strong> RKT menjadi pedoman untuk menentukan tindakan masa depan sekolah dengan memperhitungkan tujuan dan sumber daya. RKT membantu sekolah melihat kondisi nyata, menentukan prioritas, dan menjadi acuan monitoring evaluasi.</p>
-                                <p class="mt-2"><strong>Rekomendasi:</strong> Penyesuaian sumber dana dengan kebutuhan, ketepatan pengawasan keuangan, fleksibilitas untuk kegiatan spontan (kesehatan), dan sinkronisasi tahun pelajaran dengan tahun anggaran.</p>
                             </div>
                         </div>
                     </div>
@@ -2240,85 +2133,30 @@
                         <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Kurikulum Satuan Pendidikan (KSP)</h3>
                     </div>
                     <div class="p-6 space-y-4">
-
                         <div class="section-card">
                             <div class="title"><i class="fas fa-graduation-cap"></i> BAB I — Pendahuluan</div>
                             <div class="body">
-                                <p><strong>Rasional:</strong> Pendidikan memegang peranan penting bagi perkembangan individu dan bangsa. Sekolah sebagai miniatur dunia harus menyiapkan siswa menjadi pribadi tangguh, kritis, kreatif, dan berkarakter. Kurikulum dikembangkan sesuai kebutuhan siswa dengan memperhatikan berbagai dimensi.</p>
-                                <p class="mt-2"><strong>Tujuan KSP:</strong> Menjadi pegangan (living document) sekolah, pedoman evaluasi program, acuan perencanaan, dan bahan informasi pemangku kepentingan.</p>
-                                <p><strong>Landasan Hukum:</strong> UU No.20/2003, UU No.14/2005, PP No.4/2022, Permendikdasmen No.10 & 12 Tahun 2025, Inpres No.8/2025, Permensos No.7/2025.</p>
+                                <p><strong>Rasional:</strong> Pendidikan memegang peranan penting bagi perkembangan individu dan bangsa. Sekolah sebagai miniatur dunia harus menyiapkan siswa menjadi pribadi tangguh, kritis, kreatif, dan berkarakter.</p>
                             </div>
                         </div>
-
                         <div class="section-card">
                             <div class="title"><i class="fas fa-eye"></i> BAB II — Visi, Misi, dan Tujuan</div>
                             <div class="body">
-                                <p><strong>Visi:</strong> "Mewujudkan Generasi yang Disiplin, Jujur, Mandiri, Tangguh, Religius, dan Mampu Bersaing di Persaingan Global"</p>
-                                <p class="mt-2"><strong>Misi:</strong> Sama dengan RKT (6 misi).</p>
-                                <p class="mt-2"><strong>Tujuan:</strong></p>
-                                <ul>
-                                    <li><strong>Jangka Pendek (2025-2026):</strong> Meningkatkan keimanan, kepribadian, perilaku sehat, prestasi akademik & non-akademik, layanan pendidikan adil, dan sarana TIK.</li>
-                                    <li><strong>Jangka Menengah (2025-2028):</strong> Pembelajaran berbasis kurikulum, pengamalan ajaran agama, prestasi tingkat kabupaten, penguasaan IPTEK, disiplin dan budi pekerti luhur.</li>
-                                    <li><strong>Jangka Panjang (2025-2030):</strong> Sarana/prasarana memenuhi SNP, TIK penunjang, koleksi perpustakaan, program kreatif & inovatif, peningkatan profesionalisme GTK.</li>
-                                </ul>
+                                <p><strong>Visi:</strong> "${appState.school.visi}"</p>
+                                <p class="mt-2"><strong>Misi:</strong> ${appState.school.misi.length} misi sekolah.</p>
                             </div>
                         </div>
-
                         <div class="section-card">
                             <div class="title"><i class="fas fa-layer-group"></i> BAB III — Pengorganisasian Pembelajaran</div>
                             <div class="body">
-                                <p><strong>Intrakurikuler:</strong> Menggunakan Kurikulum Merdeka dengan pendekatan mata pelajaran. Struktur kurikulum Fase A, B, D (Kelas I, IV, VII). Beban belajar 41 JP/minggu (SRD) dan 41 JP/minggu (SRMP) dengan asumsi 1 JP=40 menit.</p>
-                                <ul class="mt-2">
-                                    <li><strong>Mata Pelajaran Utama:</strong> Pendidikan Agama, BK, PPKn, B. Indonesia, B. Inggris, Matematika, IPA, IPS, Seni Budaya, PJOK, TIK, Koding & AI.</li>
-                                    <li><strong>Metode:</strong> Pembelajaran terdiferensiasi, PBL, PjBL, Discovery/Inquiry Learning.</li>
-                                </ul>
-                                <p class="mt-2"><strong>Kokurikuler:</strong> Gerakan 7 Kebiasaan Anak Indonesia Hebat, Gerakan Literasi, Gerakan Numerasi, Praktikum Mata Pelajaran.</p>
-                                <p class="mt-2"><strong>Ekstrakurikuler:</strong> OSIS, Pramuka (wajib), Paskibra, Calistung, Futsal, Pencak Silat, Literasi, Computer Club, Jurnalistik, English Club, Hadroh.</p>
-                                <p class="mt-2"><strong>Pembiasaan:</strong> Rutin (berbaris, doa, kebersihan) dan Spontan (salam, sopan santun, membuang sampah pada tempatnya).</p>
+                                <p><strong>Intrakurikuler:</strong> Menggunakan Kurikulum Merdeka. Beban belajar 41 JP/minggu.</p>
+                                <p class="mt-2"><strong>Ekstrakurikuler:</strong> OSIS, Pramuka, Paskibra, Futsal, Silat, English Club, Hadroh, Computer Club, dan lainnya.</p>
                             </div>
                         </div>
-
                         <div class="section-card">
-                            <div class="title"><i class="fas fa-chalkboard-teacher"></i> BAB IV — Perencanaan Pembelajaran</div>
+                            <div class="title"><i class="fas fa-clipboard-check"></i> BAB V — Pendampingan, Evaluasi</div>
                             <div class="body">
-                                <p><strong>Alur Tujuan Pembelajaran:</strong> CP diuraikan menjadi tujuan operasional, kemudian disusun menjadi ATP secara logis dan linear.</p>
-                                <p><strong>KKTP:</strong> 0-40% (remidial total), 41-64% (remidial parsial), 65-84% (tuntas), 85-100% (pengayaan).</p>
-                                <p><strong>Kriteria Kenaikan Kelas & Kelulusan:</strong> Minimal 80% kehadiran, nilai sikap minimal baik, KKM 65, dan rapat dewan pendidik.</p>
-                                <p class="mt-2"><strong>Kalender Pendidikan:</strong> Semester 1 (6 Juli - 18 Des 2026), Semester 2 (4 Jan - 25 Jun 2027) dengan berbagai agenda PTS, PAS, libur, dan kegiatan lainnya.</p>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="title"><i class="fas fa-clipboard-check"></i> BAB V — Pendampingan, Evaluasi, & Pengembangan Profesional</div>
-                            <div class="body">
-                                <p><strong>Program:</strong> Supervisi rutin (1 bulan sekali), KKG SRT 39 Garut, IHT/FGD (6 bulan sekali).</p>
-                                <p><strong>Evaluasi:</strong> Harian (individu), Per Unit Belajar (kelompok), Per Semester, Per Tahun.</p>
-                                <p class="mt-2"><strong>Jadwal Monitoring:</strong> Pendampingan coaching (Juli 2026 - Juni 2027), supervisi (Sep 2026 & Mar 2027), pengembangan profesional (tentatif).</p>
-                            </div>
-                        </div>
-
-                        <div class="section-card">
-                            <div class="title"><i class="fas fa-check-double"></i> BAB VI — Penutup</div>
-                            <div class="body">
-                                <p>KSP SRT 39 Garut disusun sebagai kerangka acuan pelaksanaan pembelajaran Tahun Ajaran 2026/2027. Diharapkan dukungan penuh dari seluruh pihak (kepala sekolah, guru, komite, stakeholder) untuk mewujudkan visi, misi, dan tujuan sekolah. Kurikulum bersifat fleksibel dan dinamis, sehingga masukan dari seluruh pemangku kepentingan akan menjadi bahan perbaikan berkelanjutan.</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
-                            <h4 class="font-bold text-dark text-sm mb-3"><i class="fas fa-paperclip text-primary mr-2"></i>Lampiran KSP</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-slate-600">
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Dasar Hukum</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">KSP SRT 39 Garut</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Capaian Pembelajaran (CP)</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">ATP</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">RPP / Modul Ajar</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Modul Kokurikuler</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Kalender Pendidikan</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Jadwal Pelajaran</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">SK Pembagian Tugas</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">SK Tim Pengembang Kurikulum</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Berita Acara Review</span>
-                                <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Lembar Validasi</span>
+                                <p>Supervisi rutin, KKG SRT 39 Garut, IHT/FGD, dan evaluasi harian, per unit, per semester, per tahun.</p>
                             </div>
                         </div>
                     </div>
@@ -2361,8 +2199,10 @@
                 const ws2 = XLSX.utils.aoa_to_sheet(misiData);
                 XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
 
-                const guruData = appState.teachers.map(t => [t.nip, t.name, t.role, t.classes, t.photo || '']);
-                guruData.unshift(['NIP', 'Nama', 'Jabatan', 'Kelas', 'Foto']);
+                const guruData = appState.teachers.map(t => [t.nip, t.name, t.role, t.classes, t.isWaliKelas ? 'Ya' : 'Tidak',
+                    t.waliKelas || '-'
+                ]);
+                guruData.unshift(['NIP', 'Nama', 'Jabatan', 'Kelas', 'Wali Kelas', 'Kelas Wali']);
                 const ws3 = XLSX.utils.aoa_to_sheet(guruData);
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
 
@@ -2425,13 +2265,13 @@
                         const rows = XLSX.utils.sheet_to_json(wsSchool, { header: 1 });
                         rows.forEach(row => {
                             if (row[0] === 'Nama Sekolah') appState.school.name = row[1] || appState.school
-                                .name;
+                            .name;
                             if (row[0] === 'NPSN SRD') appState.school.npsn_srd = row[1] || appState.school
                                 .npsn_srd;
                             if (row[0] === 'NPSN SRMP') appState.school.npsn_srmp = row[1] || appState.school
                                 .npsn_srmp;
                             if (row[0] === 'Alamat') appState.school.address = row[1] || appState.school
-                                .address;
+                            .address;
                             if (row[0] === 'Kepala Sekolah') appState.school.kepsek = row[1] || appState.school
                                 .kepsek;
                             if (row[0] === 'NIP Kepsek') appState.school.kepsekNip = row[1] || appState.school
@@ -2443,7 +2283,7 @@
                             if (row[0] === 'Moto') appState.school.moto = row[1] || appState.school.moto;
                             if (row[0] === 'Visi') appState.school.visi = row[1] || appState.school.visi;
                             if (row[0] === 'Tahun Ajaran') appState.school.tahun = row[1] || appState.school
-                                .tahun;
+                            .tahun;
                             if (row[0] === 'Luas Tanah') appState.school.luasTanah = row[1] || appState.school
                                 .luasTanah;
                             if (row[0] === 'Luas Bangunan') appState.school.luasBangunan = row[1] || appState
@@ -2471,12 +2311,15 @@
                         const guruNew = [];
                         rows.forEach((row, idx) => {
                             if (idx > 0 && row[0]) {
+                                const isWali = row[4] === 'Ya';
                                 guruNew.push({
                                     nip: row[0] || '',
                                     name: row[1] || '',
                                     role: row[2] || '',
                                     classes: row[3] || '',
-                                    photo: row[4] || ''
+                                    isWaliKelas: isWali,
+                                    waliKelas: isWali ? (row[5] || '') : '',
+                                    photo: ''
                                 });
                             }
                         });
@@ -2486,11 +2329,8 @@
                                 if (!t.photo) {
                                     const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2)
                                         .map(n => n[0]).join('').toUpperCase();
-                                    const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
-                                    const hash = Array.from(t.nip).reduce((acc, char) => acc + char
-                                        .charCodeAt(0), 0);
                                     t.photo =
-                                        `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+                                        `https://placehold.co/150x150/${t.isWaliKelas ? '1e40af' : '64748b'}/ffffff?text=${initials}`;
                                 }
                             });
                         }
@@ -2640,11 +2480,17 @@
                 XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
 
                 const guruTemplate = [
-                    ['NIP', 'Nama', 'Jabatan', 'Kelas', 'Foto'],
-                    ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wakasek Kurikulum / Wali Kelas SRMP-B',
-                        'SRMP-B', ''
+                    ['NIP', 'Nama', 'Jabatan', 'Kelas', 'Wali Kelas', 'Kelas Wali'],
+                    ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wali Kelas 7B / PPKn', 'SRMP-B (7B)',
+                        'Ya', '7B'
                     ],
-                    ['', '', '', '', '']
+                    ['199901222025212077', 'Maha Ikhlas Sulfitrah, S.Pd., Gr.', 'Wali Kelas SRD / Guru Kelas', 'SRD',
+                        'Ya', 'SD'
+                    ],
+                    ['200003282025212060', 'Meliana Dwi Rahmawati, S.Pd., Gr.', 'Wali Kelas 7A / B. Inggris',
+                        'SRMP-A (7A)', 'Ya', '7A'
+                    ],
+                    ['', '', '', '', 'Tidak', '']
                 ];
                 const ws3 = XLSX.utils.aoa_to_sheet(guruTemplate);
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
@@ -2677,10 +2523,8 @@
                     ['Juli 2026', '14-31', 'MPLS (Siswa Baru)', 'primary'],
                     ['Agustus 2026', '2', 'Rapat Dinas Bulanan (Refleksi)', 'info'],
                     ['Agustus 2026', '24', 'Hari Pertama Masuk Sekolah', 'primary'],
-                    ['September 2026', '2', 'Rapat Dinas Bulanan (Refleksi)', 'info'],
                     ['September 2026', '30', 'Ulang Tahun SRT 39 Garut', 'primary'],
-                    ['Desember 2026', '18', 'Pembagian Raport', 'success'],
-                    ['Desember 2026', '27-31', 'Awal Libur Semester', 'danger']
+                    ['Desember 2026', '18', 'Pembagian Raport', 'success']
                 ];
                 const ws6 = XLSX.utils.aoa_to_sheet(calTemplate);
                 XLSX.utils.book_append_sheet(wb, ws6, 'Kalender');
