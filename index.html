@@ -15,6 +15,10 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+    <!-- SheetJS untuk Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -25,7 +29,7 @@
                         secondary: '#0ea5e9',
                         accent: '#8b5cf6',
                         dark: '#0f172a',
-                        soft: '#f1f5f9'
+                        soft: '#f1f5f8'
                     }
                 }
             }
@@ -56,21 +60,6 @@
             background: #64748b;
         }
 
-        [contenteditable="true"] {
-            border-bottom: 2px dashed #818cf8;
-            background: rgba(224, 231, 255, 0.4);
-            padding: 2px 8px;
-            border-radius: 6px;
-            outline: none;
-            transition: 0.2s;
-            cursor: text;
-        }
-        [contenteditable="true"]:focus {
-            background: rgba(224, 231, 255, 0.9);
-            border-bottom: 2px solid #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-        }
-
         @media print {
             body {
                 background: white !important;
@@ -87,11 +76,6 @@
             .print-shadow-none {
                 box-shadow: none !important;
                 border: 1px solid #e2e8f0;
-            }
-            [contenteditable="true"] {
-                border: none;
-                background: transparent;
-                padding: 0;
             }
             .page-break {
                 page-break-before: always;
@@ -212,6 +196,35 @@
             justify-content: center;
             font-size: 1.4rem;
         }
+
+        .btn-excel {
+            transition: all 0.2s ease;
+        }
+        .btn-excel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-menu {
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Tabel data siswa responsif */
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        .file-input-label {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .file-input-label:hover {
+            background: #f1f5f9;
+        }
     </style>
 </head>
 <body>
@@ -324,24 +337,31 @@
                     <h2 id="page-title" class="text-lg md:text-xl font-extrabold text-dark tracking-tight">Dashboard</h2>
                 </div>
                 <div class="flex items-center gap-2 md:gap-3">
-                    <!-- Import / Export -->
-                    <div class="relative group no-print">
+
+                    <!-- DATA MENU: Excel Import / Export / Template -->
+                    <div class="relative dropdown no-print">
                         <button class="w-10 h-10 md:w-auto md:px-4 md:py-2 bg-emerald-50 text-emerald-700 rounded-full font-medium hover:bg-emerald-100 transition-colors flex items-center justify-center gap-2 text-sm border border-emerald-200">
-                            <i class="fas fa-database"></i> <span class="hidden md:inline">Data</span>
+                            <i class="fas fa-file-excel"></i> <span class="hidden md:inline">Data</span>
+                            <i class="fas fa-chevron-down text-xs ml-1 hidden md:inline"></i>
                         </button>
-                        <div class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 hidden group-hover:block z-50 py-1 overflow-hidden">
-                            <button onclick="exportData()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-3 text-slate-700"><i class="fas fa-file-export text-emerald-500"></i> Ekspor Data (JSON)</button>
-                            <label class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-3 text-slate-700 cursor-pointer">
-                                <i class="fas fa-file-import text-blue-500"></i> Impor Data
-                                <input type="file" id="import-file" accept=".json" class="hidden" onchange="importData(event)" />
+                        <div class="dropdown-menu absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 z-50 py-2 overflow-hidden">
+                            <div class="px-4 py-2 border-b border-slate-100 text-xs font-semibold text-slate-400 uppercase tracking-wider">Manajemen Data Excel</div>
+                            <button onclick="exportExcel()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-3 text-slate-700 transition">
+                                <i class="fas fa-file-export text-emerald-500 w-5 text-center"></i> Ekspor Data ke Excel
+                            </button>
+                            <label class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-3 text-slate-700 cursor-pointer transition file-input-label">
+                                <i class="fas fa-file-import text-blue-500 w-5 text-center"></i> Impor Data dari Excel
+                                <input type="file" id="import-excel" accept=".xlsx,.xls" class="hidden" onchange="importExcel(event)" />
                             </label>
-                            <button onclick="downloadTemplate()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-3 text-slate-700 border-t border-slate-100"><i class="fas fa-download text-amber-500"></i> Unduh Template</button>
+                            <button onclick="downloadTemplate()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 flex items-center gap-3 text-slate-700 border-t border-slate-100 transition">
+                                <i class="fas fa-download text-amber-500 w-5 text-center"></i> Unduh Template Excel
+                            </button>
+                            <div class="px-4 py-2 border-t border-slate-100 text-[10px] text-slate-400">
+                                <i class="fas fa-info-circle"></i> Format: .xlsx / .xls
+                            </div>
                         </div>
                     </div>
 
-                    <button onclick="toggleEditMode()" id="edit-toggle-btn" class="flex items-center gap-2 px-3 md:px-4 py-2 bg-slate-100 text-slate-600 rounded-full font-medium hover:bg-slate-200 transition-all text-sm border border-slate-200 no-print">
-                        <i class="fas fa-edit"></i> <span class="hidden md:inline">Mode Edit:</span> <span id="edit-status" class="font-bold">OFF</span>
-                    </button>
                     <button onclick="window.print()" class="w-10 h-10 md:w-auto md:px-4 md:py-2 bg-indigo-50 text-primary rounded-full font-medium hover:bg-indigo-100 transition-colors flex items-center justify-center gap-2 text-sm border border-indigo-100 no-print">
                         <i class="fas fa-print"></i> <span class="hidden md:inline">Cetak</span>
                     </button>
@@ -354,7 +374,7 @@
 
             <!-- View Container -->
             <div id="view-container" class="flex-1 overflow-y-auto p-4 md:p-8 bg-grid">
-                <!-- Dinamis -->
+                <!-- Konten dinamis diisi oleh JavaScript -->
             </div>
         </main>
     </div>
@@ -391,7 +411,7 @@
     <!-- ============================================================ -->
     <script>
         // ================================================================
-        // DATA MASTER (lengkap dari file)
+        // DATA MASTER — Lengkap dari file yang diupload
         // ================================================================
 
         const defaultData = {
@@ -421,54 +441,70 @@
                 tahunBerdiri: "2025"
             },
             teachers: [
-                { nip: "198008292014121002", name: "Andi Yasir Habibi, S.Sos., S.Pd.", role: "Kepala Sekolah", classes: "-" },
-                { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wakasek Kurikulum / PPKn", classes: "SRD & SRMP" },
-                { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Guru Kelas", classes: "SRD" },
-                { nip: "199908182025212101", name: "Sarah Nur Faziah, S.Pd., Gr.", role: "Guru TIK", classes: "SRD & SRMP" },
-                { nip: "200002282025211064", name: "Lufi Feriansyah, S.Pd., Gr.", role: "Guru Matematika", classes: "SRMP" },
+                { nip: "198008292014121002", name: "Andi Yasir Habibi, S.Sos., S.Pd.", role: "Kepala Sekolah",
+                    classes: "-" },
+                { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wakasek Kurikulum / PPKn",
+                    classes: "SRD & SRMP" },
+                { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Guru Kelas",
+                    classes: "SRD" },
+                { nip: "199908182025212101", name: "Sarah Nur Faziah, S.Pd., Gr.", role: "Guru TIK",
+                    classes: "SRD & SRMP" },
+                { nip: "200002282025211064", name: "Lufi Feriansyah, S.Pd., Gr.", role: "Guru Matematika",
+                    classes: "SRMP" },
                 { nip: "200003112025212061", name: "Mitha Amalia, S.Pd., Gr.", role: "Guru IPA", classes: "SRMP" },
-                { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Guru B. Inggris", classes: "SRD & SRMP" },
+                { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Guru B. Inggris",
+                    classes: "SRD & SRMP" },
                 { nip: "200004272025212059", name: "Youtrin Fadila, S.Pd., Gr.", role: "Guru IPS", classes: "SRMP" },
-                { nip: "200006022025212083", name: "Navika Putri Dwi Lestari, S.Pd., Gr.", role: "Guru Seni Budaya", classes: "SRD & SRMP" },
-                { nip: "200009152025211042", name: "Mochamad Hoky Aldiansyah, S.Pd., Gr.", role: "Guru PJOK", classes: "SRD & SRMP" },
-                { nip: "200102142025212047", name: "Syifa Nurlathifah Al Azmi, S.Pd., Gr.", role: "Guru KKA", classes: "SRD & SRMP" },
-                { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia", classes: "SRMP" }
+                { nip: "200006022025212083", name: "Navika Putri Dwi Lestari, S.Pd., Gr.", role: "Guru Seni Budaya",
+                    classes: "SRD & SRMP" },
+                { nip: "200009152025211042", name: "Mochamad Hoky Aldiansyah, S.Pd., Gr.", role: "Guru PJOK",
+                    classes: "SRD & SRMP" },
+                { nip: "200102142025212047", name: "Syifa Nurlathifah Al Azmi, S.Pd., Gr.", role: "Guru KKA",
+                    classes: "SRD & SRMP" },
+                { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia",
+                classes: "SRMP" }
             ],
             calendar: [
-                { month: "Juli 2026", events: [{ date: "6 Jul", name: "Hari Pertama Sekolah / Awal Tahun Ajaran", type: "primary" },
-                        { date: "6-10 Jul", name: "MPLS / Asesmen Diagnostik / DNA Talent", type: "info" }] },
+                { month: "Juli 2026", events: [{ date: "6 Jul", name: "Hari Pertama Sekolah / Awal Tahun Ajaran",
+                        type: "primary" },
+                    { date: "6-10 Jul", name: "MPLS / Asesmen Diagnostik / DNA Talent", type: "info" }] },
                 { month: "Agustus 2026", events: [{ date: "17 Agu", name: "Hari Kemerdekaan RI", type: "danger" },
-                        { date: "25-26 Agu", name: "Maulid Nabi Muhammad SAW", type: "warning" }] },
-                { month: "September 2026", events: [{ date: "7-11 Sep", name: "Penilaian Sumatif Tengah Semester", type: "warning" },
-                        { date: "30 Sep", name: "HUT SRT 39 Garut", type: "primary" }] },
-                { month: "Desember 2026", events: [{ date: "7-11 Des", name: "Penilaian Sumatif Akhir Semester", type: "warning" },
-                        { date: "18 Des", name: "Pembagian Rapor", type: "info" }, { date: "21-31 Des",
-                            name: "Libur Semester 1", type: "danger" }] },
+                    { date: "25-26 Agu", name: "Maulid Nabi Muhammad SAW", type: "warning" }] },
+                { month: "September 2026", events: [{ date: "7-11 Sep", name: "Penilaian Sumatif Tengah Semester",
+                        type: "warning" },
+                    { date: "30 Sep", name: "HUT SRT 39 Garut", type: "primary" }] },
+                { month: "Desember 2026", events: [{ date: "7-11 Des", name: "Penilaian Sumatif Akhir Semester",
+                        type: "warning" },
+                    { date: "18 Des", name: "Pembagian Rapor", type: "info" }, { date: "21-31 Des",
+                        name: "Libur Semester 1", type: "danger" }] },
                 { month: "Januari 2027", events: [{ date: "4 Jan", name: "Awal Semester Genap", type: "primary" },
-                        { date: "4-8 Jan", name: "Asesmen Diagnostik / DNA Talent", type: "info" }, { date: "18 Jan",
-                            name: "Pemilihan Ketua OSIS", type: "info" }, { date: "25 Jan",
-                            name: "Pelantikan Pengurus OSIS", type: "info" }] },
-                { month: "Maret 2027", events: [{ date: "8-12 Mar", name: "Penilaian Sumatif Tengah Semester", type: "warning" },
-                        { date: "15-26 Mar", name: "Libur Idul Fitri", type: "danger" }] },
-                { month: "Mei 2027", events: [{ date: "3-7 Mei", name: "Penilaian Sumatif Akhir Jenjang", type: "warning" },
-                        { date: "17-21 Mei", name: "Penilaian Sumatif Akhir Jenjang", type: "warning" }] },
-                { month: "Juni 2027", events: [{ date: "7-11 Jun", name: "Penilaian Sumatif Akhir Tahun", type: "warning" },
-                        { date: "25 Jun", name: "Pembagian Rapor", type: "info" }, { date: "28 Jun - 9 Jul",
-                            name: "Libur Kenaikan Kelas", type: "danger" }] }
+                    { date: "4-8 Jan", name: "Asesmen Diagnostik / DNA Talent", type: "info" },
+                    { date: "18 Jan", name: "Pemilihan Ketua OSIS", type: "info" },
+                    { date: "25 Jan", name: "Pelantikan Pengurus OSIS", type: "info" }] },
+                { month: "Maret 2027", events: [{ date: "8-12 Mar", name: "Penilaian Sumatif Tengah Semester",
+                        type: "warning" },
+                    { date: "15-26 Mar", name: "Libur Idul Fitri", type: "danger" }] },
+                { month: "Mei 2027", events: [{ date: "3-7 Mei", name: "Penilaian Sumatif Akhir Jenjang",
+                        type: "warning" },
+                    { date: "17-21 Mei", name: "Penilaian Sumatif Akhir Jenjang", type: "warning" }] },
+                { month: "Juni 2027", events: [{ date: "7-11 Jun", name: "Penilaian Sumatif Akhir Tahun",
+                        type: "warning" },
+                    { date: "25 Jun", name: "Pembagian Rapor", type: "info" }, { date: "28 Jun - 9 Jul",
+                        name: "Libur Kenaikan Kelas", type: "danger" }] }
             ],
             jadwal: [
                 { jam: "1", waktu: "08.00 - 08.40", s: ["B. Indonesia", "IPA", "Matematika"], sel: ["PJOK", "PAI",
                         "KKA"
                     ], r: ["Matematika", "KKA", "PJOK"], k: ["KKA", "PJOK", "IPS"], jm: "08.00 - 08.35",
-                j: ["IPAS", "IPS", "B. Indonesia"] },
+                    j: ["IPAS", "IPS", "B. Indonesia"] },
                 { jam: "2", waktu: "08.40 - 09.20", s: ["B. Indonesia", "IPA", "Matematika"], sel: ["PJOK", "PAI",
                         "KKA"
                     ], r: ["Matematika", "KKA", "PJOK"], k: ["KKA", "PJOK", "IPS"], jm: "08.35 - 09.10",
-                j: ["IPAS", "IPS", "B. Indonesia"] },
+                    j: ["IPAS", "IPS", "B. Indonesia"] },
                 { jam: "3", waktu: "09.20 - 10.00", s: ["B. Indonesia", "IPA", "Matematika"], sel: ["PJOK",
                         "Matematika", "Seni Budaya"
                     ], r: ["Matematika", "IPS", "PJOK"], k: ["Matematika", "PJOK", "IPS"], jm: "09.10 - 09.45",
-                j: ["IPAS", "IPS", "B. Indonesia"] },
+                    j: ["IPAS", "IPS", "B. Indonesia"] },
                 { jam: "", waktu: "10.00 - 10.30", isBreak: true },
                 { jam: "4", waktu: "10.30 - 11.10", s: ["B. Inggris", "TIK", "IPA"], sel: ["PJOK", "Matematika",
                         "Seni Budaya"
@@ -501,63 +537,63 @@
                 kordinator: ["Fauzi Faturohman, S.Pd., Gr."]
             },
             ekstra: [
-                { waktu: "15.30-Selesai", s: "OSIS", sel: "Literasi & Numerasi", r: "Futsal", k: "Paskibra", j: "Hadroh",
-                    ws: "09.00-Selesai", sab: "Pramuka", wm: "15.30-Selesai", m: "Paskibra" },
+                { waktu: "15.30-Selesai", s: "OSIS", sel: "Literasi & Numerasi", r: "Futsal", k: "Paskibra",
+                    j: "Hadroh", ws: "09.00-Selesai", sab: "Pramuka", wm: "15.30-Selesai", m: "Paskibra" },
                 { waktu: "", s: "English Club", sel: "Karya Ilmiah Remaja", r: "Jurnalistik", k: "Silat", j: "UKS",
                     ws: "", sab: "", wm: "", m: "" },
-                { waktu: "", s: "", sel: "Computer Club", r: "Sahabat Literasi", k: "", j: "", ws: "", sab: "", wm: "",
-                    m: "" }
+                { waktu: "", s: "", sel: "Computer Club", r: "Sahabat Literasi", k: "", j: "", ws: "", sab: "",
+                    wm: "", m: "" }
             ],
-            // 75 siswa
+            // 75 siswa dari screenshot
             students: [
                 { id: 1, name: "ADE MUSTOPA", nisn: "3139453861", school: "SRDT 39 Garut", level: "SD", gender: "L",
                     rombel: "SD", grades: {} },
-                { id: 2, name: "AGUS RAMDANI", nisn: "0104915906", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7B", grades: {} },
-                { id: 3, name: "AHMAD PADILAH", nisn: "3137836817", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
-                { id: 4, name: "AI SITI NUROHMAH", nisn: "3158260386", school: "SRDT 39 Garut", level: "SD", gender: "P",
-                    rombel: "SD", grades: {} },
-                { id: 5, name: "ANDIKA NUROHMAN", nisn: "0141419382", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
-                { id: 6, name: "ANISA SAPUTRI", nisn: "0123595071", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {} },
+                { id: 2, name: "AGUS RAMDANI", nisn: "0104915906", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {} },
+                { id: 3, name: "AHMAD PADILAH", nisn: "3137836817", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {} },
+                { id: 4, name: "AI SITI NUROHMAH", nisn: "3158260386", school: "SRDT 39 Garut", level: "SD",
+                    gender: "P", rombel: "SD", grades: {} },
+                { id: 5, name: "ANDIKA NUROHMAN", nisn: "0141419382", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {} },
+                { id: 6, name: "ANISA SAPUTRI", nisn: "0123595071", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {} },
                 { id: 7, name: "ARDIANSYAH SAPUTRA", nisn: "3162522983", school: "SRDT 39 Garut", level: "SD",
                     gender: "L", rombel: "SD", grades: {} },
-                { id: 8, name: "ARIF FIRMANSYAH", nisn: "3120690349", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
-                { id: 9, name: "ARMAN MAULANA", nisn: "3132152714", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {} },
+                { id: 8, name: "ARIF FIRMANSYAH", nisn: "3120690349", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {} },
+                { id: 9, name: "ARMAN MAULANA", nisn: "3132152714", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {} },
                 { id: 10, name: "DE PAHRI PUTRA RAMADAN", nisn: "3111636292", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "L", rombel: "7B", grades: {} },
-                { id: 11, name: "DERI MUHAMMAD", nisn: "3122527422", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7B", grades: {} },
+                { id: 11, name: "DERI MUHAMMAD", nisn: "3122527422", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {} },
                 { id: 12, name: "DEWANGGA NUGRAHA", nisn: "3124835417", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "L", rombel: "7B", grades: {} },
                 { id: 13, name: "DEWI TANIA", nisn: "3124764226", school: "SRDT 39 Garut", level: "SD", gender: "P",
                     rombel: "SD", grades: {} },
                 { id: 14, name: "ELSA SABILA NURHALIMAH", nisn: "3130228888", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7B", grades: {} },
-                { id: 15, name: "EVA FAUZIAH", nisn: "0094884752", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7B", grades: {} },
+                { id: 15, name: "EVA FAUZIAH", nisn: "0094884752", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {} },
                 { id: 16, name: "FANESA ANASTASYA", nisn: "0106857181", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7B", grades: {} },
                 { id: 17, name: "FEBI", nisn: "0129226857", school: "SRDT 39 Garut", level: "SD", gender: "L",
                     rombel: "SD", grades: {} },
                 { id: 18, name: "HISMA HOLIPATUL PADILAH", nisn: "0113316745", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7A", grades: {} },
-                { id: 19, name: "IHSAN MAULANA", nisn: "3126090468", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {} },
+                { id: 19, name: "IHSAN MAULANA", nisn: "3126090468", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7A", grades: {} },
                 { id: 20, name: "INDRIA DELIA PUTRI", nisn: "97311050", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7B", grades: {} },
                 { id: 21, name: "IRNA RAODOTUL ZANAH", nisn: "3133143373", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7B", grades: {} },
-                { id: 22, name: "IRSAL KHAERUNA", nisn: "3146716444", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
-                { id: 23, name: "LESTI JULIANTI", nisn: "3128365677", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7B", grades: {} },
-                { id: 24, name: "M RIZKY MAULANA", nisn: "3159241108", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
+                { id: 22, name: "IRSAL KHAERUNA", nisn: "3146716444", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {} },
+                { id: 23, name: "LESTI JULIANTI", nisn: "3128365677", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {} },
+                { id: 24, name: "M RIZKY MAULANA", nisn: "3159241108", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {} },
                 { id: 25, name: "M. FATIR", nisn: "0135531105", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
                     rombel: "7A", grades: {} },
                 { id: 26, name: "MOCH AKBAR TRI HERMAWAN", nisn: "0107125765", school: "SRMPT 39 Garut", level: "SMP",
@@ -570,16 +606,16 @@
                     gender: "L", rombel: "7B", grades: {} },
                 { id: 30, name: "MUHAMAD HASANUDIN", nisn: "0113191027", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "L", rombel: "7B", grades: {} },
-                { id: 31, name: "MUHAMAD REHAN NURUL JANAH", nisn: "0111987988", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                { id: 31, name: "MUHAMAD REHAN NURUL JANAH", nisn: "0111987988", school: "SRMPT 39 Garut",
+                    level: "SMP", gender: "L", rombel: "7A", grades: {} },
                 { id: 32, name: "MUHAMAD RISKI ABDULLOH", nisn: "3161059263", school: "SRDT 39 Garut", level: "SD",
                     gender: "L", rombel: "SD", grades: {} },
                 { id: 33, name: "MUHAMAD RIVAL ALFARIZI", nisn: "3169279715", school: "SRDT 39 Garut", level: "SD",
                     gender: "L", rombel: "SD", grades: {} },
                 { id: 34, name: "MUHAMAD SAMIN NUGRAHA", nisn: "0119673298", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "L", rombel: "7B", grades: {} },
-                { id: 35, name: "MUHAMAD SANDI", nisn: "0115109325", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7B", grades: {} },
+                { id: 35, name: "MUHAMAD SANDI", nisn: "0115109325", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "L", rombel: "7B", grades: {} },
                 { id: 36, name: "MUHAMMAD IDRUS PAHMI JAHARSAH", nisn: "0115015547", school: "SRMPT 39 Garut",
                     level: "SMP", gender: "L", rombel: "7B", grades: {} },
                 { id: 37, name: "MUHAMMAD RAEHAN", nisn: "3094108589", school: "SRMPT 39 Garut", level: "SMP",
@@ -620,8 +656,8 @@
                     rombel: "7A", grades: {} },
                 { id: 55, name: "RISKY", nisn: "0103304248", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
                     rombel: "7B", grades: {} },
-                { id: 56, name: "RIYAD FADILAH", nisn: "0131133087", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
+                { id: 56, name: "RIYAD FADILAH", nisn: "0131133087", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {} },
                 { id: 57, name: "RIYAN AGUNG FAUZI", nisn: "3129425558", school: "SRDT 39 Garut", level: "SD",
                     gender: "L", rombel: "SD", grades: {} },
                 { id: 58, name: "RIZKI MIRAJ NAWAWI", nisn: "3120958649", school: "SRDT 39 Garut", level: "SD",
@@ -630,30 +666,30 @@
                     gender: "L", rombel: "7A", grades: {} },
                 { id: 60, name: "SALMAN SAEPUL BAGRI", nisn: "0115635878", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "L", rombel: "7B", grades: {} },
-                { id: 61, name: "SALSA BILA", nisn: "0124232598", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {} },
+                { id: 61, name: "SALSA BILA", nisn: "0124232598", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {} },
                 { id: 62, name: "SALWA AULIA ZAKIAWAN", nisn: "0109385868", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7B", grades: {} },
                 { id: 63, name: "SELLI KHAIRUNNISA", nisn: "3124008773", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7A", grades: {} },
-                { id: 64, name: "SIFA NURAINI", nisn: "0103955647", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {} },
-                { id: 65, name: "SITI FADILAH", nisn: "3154325333", school: "SRDT 39 Garut", level: "SD", gender: "P",
-                    rombel: "SD", grades: {} },
-                { id: 66, name: "SITIMASITOH", nisn: "3125474904", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {} },
+                { id: 64, name: "SIFA NURAINI", nisn: "0103955647", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {} },
+                { id: 65, name: "SITI FADILAH", nisn: "3154325333", school: "SRDT 39 Garut", level: "SD",
+                    gender: "P", rombel: "SD", grades: {} },
+                { id: 66, name: "SITIMASITOH", nisn: "3125474904", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7A", grades: {} },
                 { id: 67, name: "SITIPASWA", nisn: "3131493765", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
                     rombel: "7A", grades: {} },
-                { id: 68, name: "SRIMULYANI", nisn: "0108334564", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7B", grades: {} },
+                { id: 68, name: "SRIMULYANI", nisn: "0108334564", school: "SRMPT 39 Garut", level: "SMP",
+                    gender: "P", rombel: "7B", grades: {} },
                 { id: 69, name: "SUDIRMAN", nisn: "0119440168", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
                     rombel: "7A", grades: {} },
                 { id: 70, name: "SYIFANURHAYATI", nisn: "0103927661", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "P", rombel: "7B", grades: {} },
                 { id: 71, name: "YAN YAN ABDUL HADI", nisn: "0106183939", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "L", rombel: "7A", grades: {} },
-                { id: 72, name: "YANA MULYANA", nisn: "3138754482", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
+                { id: 72, name: "YANA MULYANA", nisn: "3138754482", school: "SRDT 39 Garut", level: "SD",
+                    gender: "L", rombel: "SD", grades: {} },
                 { id: 73, name: "YUSUP AWALUDIN", nisn: "0114870689", school: "SRMPT 39 Garut", level: "SMP",
                     gender: "L", rombel: "7A", grades: {} },
                 { id: 74, name: "ZAKI MUHAMAD KUSUMAH", nisn: "3133946425", school: "SRDT 39 Garut", level: "SD",
@@ -668,8 +704,7 @@
                 { id: Date.now() + 1, nip: "199908182025212101", name: "Sarah Nur Faziah", category: "Modul Ajar",
                     title: "Modul Ajar TIK Kelas VII Ganjil", link: "https://drive.google.com/drive/folders/example2",
                     date: new Date().toLocaleDateString('id-ID') }
-            ],
-            isEditMode: false
+            ]
         };
 
         // Generate avatar untuk guru
@@ -700,23 +735,6 @@
             localStorage.setItem('srt39_data', JSON.stringify(appState));
         }
 
-        function updateData(path, value) {
-            let parts = path.split('.');
-            let obj = appState;
-            for (let i = 0; i < parts.length - 1; i++) {
-                if (!obj[parts[i]]) obj[parts[i]] = {};
-                obj = obj[parts[i]];
-            }
-            obj[parts[parts.length - 1]] = value;
-            saveState();
-        }
-
-        function getEditableAttr(path) {
-            return appState.isEditMode ?
-                `contenteditable="true" onblur="updateData('${path}', this.innerText)" title="Klik untuk mengedit"` :
-                '';
-        }
-
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             if (!container) return;
@@ -740,29 +758,6 @@
             document.getElementById('sidebar').classList.toggle('-translate-x-full');
         }
 
-        function toggleEditMode() {
-            appState.isEditMode = !appState.isEditMode;
-            saveState();
-            updateEditBtnUI();
-            router();
-            showToast(appState.isEditMode ? 'Mode Edit Diaktifkan' : 'Mode Edit Dinonaktifkan', 'info');
-        }
-
-        function updateEditBtnUI() {
-            const btn = document.getElementById('edit-toggle-btn');
-            const status = document.getElementById('edit-status');
-            if (!btn || !status) return;
-            if (appState.isEditMode) {
-                btn.classList.replace('bg-slate-100', 'bg-primary');
-                btn.classList.replace('text-slate-600', 'text-white');
-                status.innerText = 'ON';
-            } else {
-                btn.classList.replace('bg-primary', 'bg-slate-100');
-                btn.classList.replace('text-white', 'text-slate-600');
-                status.innerText = 'OFF';
-            }
-        }
-
         // ================================================================
         // AUTH
         // ================================================================
@@ -777,7 +772,6 @@
                 if (avatar) avatar.src = currentUser.photo;
                 if (nameElem) nameElem.innerText = currentUser.name.split(',')[0];
                 if (roleElem) roleElem.innerText = currentUser.role;
-                updateEditBtnUI();
                 router();
             } else {
                 document.getElementById('login-screen').classList.remove('hidden');
@@ -803,8 +797,6 @@
         function handleLogout() {
             currentUser = null;
             localStorage.removeItem('srt39_user');
-            appState.isEditMode = false;
-            saveState();
             initAuth();
         }
 
@@ -870,7 +862,7 @@
         window.addEventListener('hashchange', router);
 
         // ================================================================
-        // RENDER: DASHBOARD
+        // FUNGSI RENDER (Dashboard, Profil, Kalender, Jadwal, Ekstra, Siswa, Guru, Admin, RKT-KSP)
         // ================================================================
 
         function renderDashboard() {
@@ -880,7 +872,6 @@
             const guru = appState.teachers.length;
             return `
             <div class="fade-in space-y-6">
-                <!-- Welcome -->
                 <div class="bg-gradient-to-br from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
                     <div class="absolute -right-12 -top-12 opacity-10"><i class="fas fa-school" style="font-size:16rem;"></i></div>
                     <div class="relative z-10">
@@ -893,7 +884,6 @@
                     </div>
                 </div>
 
-                <!-- Stats -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="stat-card flex items-center gap-4">
                         <div class="icon bg-blue-50 text-blue-600"><i class="fas fa-user-graduate"></i></div>
@@ -913,7 +903,6 @@
                     </div>
                 </div>
 
-                <!-- Quick Info -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
                         <h3 class="font-bold text-dark text-sm mb-3"><i class="fas fa-info-circle text-primary mr-2"></i>Informasi Sekolah</h3>
@@ -937,15 +926,11 @@
             </div>`;
         }
 
-        // ================================================================
-        // RENDER: PROFIL
-        // ================================================================
-
         function renderProfile() {
             let misiHTML = appState.school.misi.map((m, i) => `
                 <li class="flex gap-3 mb-2.5">
                     <span class="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold flex-shrink-0">${i+1}</span>
-                    <span ${getEditableAttr(`school.misi.${i}`)} class="flex-1">${m}</span>
+                    <span class="flex-1">${m}</span>
                 </li>
             `).join('');
             return `
@@ -955,8 +940,8 @@
                         <i class="fas fa-school text-5xl text-primary/60"></i>
                     </div>
                     <div class="flex-1">
-                        <h1 class="text-2xl md:text-3xl font-extrabold text-dark" ${getEditableAttr('school.name')}>${appState.school.name}</h1>
-                        <p class="text-slate-500 mt-2 flex items-center justify-center md:justify-start gap-2"><i class="fas fa-map-marker-alt text-rose-500"></i> <span ${getEditableAttr('school.address')}>${appState.school.address}</span></p>
+                        <h1 class="text-2xl md:text-3xl font-extrabold text-dark">${appState.school.name}</h1>
+                        <p class="text-slate-500 mt-2 flex items-center justify-center md:justify-start gap-2"><i class="fas fa-map-marker-alt text-rose-500"></i> ${appState.school.address}</p>
                         <div class="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
                             <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold">NPSN SRD: ${appState.school.npsn_srd}</span>
                             <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-semibold">NPSN SRMP: ${appState.school.npsn_srmp}</span>
@@ -968,7 +953,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
                         <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-eye text-amber-500 mr-2"></i>Visi Sekolah</h2>
-                        <p class="text-slate-600 leading-relaxed font-medium p-5 bg-slate-50 rounded-2xl italic text-center" ${getEditableAttr('school.visi')}>"${appState.school.visi}"</p>
+                        <p class="text-slate-600 leading-relaxed font-medium p-5 bg-slate-50 rounded-2xl italic text-center">"${appState.school.visi}"</p>
                     </div>
                     <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
                         <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-bullseye text-emerald-500 mr-2"></i>Misi Sekolah</h2>
@@ -988,10 +973,6 @@
             </div>`;
         }
 
-        // ================================================================
-        // RENDER: KALENDER
-        // ================================================================
-
         function renderCalendar() {
             let calHTML = appState.calendar.map((monthData, mIdx) => {
                 let eventsList = monthData.events.map((ev, eIdx) => {
@@ -1001,8 +982,8 @@
                     <div class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
                         <div class="w-2 h-2 mt-2 rounded-full ${badgeColor} flex-shrink-0"></div>
                         <div class="flex-1">
-                            <p class="font-bold text-slate-700 text-sm" ${getEditableAttr(`calendar.${mIdx}.events.${eIdx}.date`)}>${ev.date}</p>
-                            <p class="text-slate-600 text-sm mt-0.5" ${getEditableAttr(`calendar.${mIdx}.events.${eIdx}.name`)}>${ev.name}</p>
+                            <p class="font-bold text-slate-700 text-sm">${ev.date}</p>
+                            <p class="text-slate-600 text-sm mt-0.5">${ev.name}</p>
                         </div>
                     </div>`;
                 }).join('');
@@ -1013,10 +994,6 @@
             }).join('');
             return `<div class="fade-in"><div class="columns-1 md:columns-2 lg:columns-3 gap-6">${calHTML}</div></div>`;
         }
-
-        // ================================================================
-        // RENDER: JADWAL
-        // ================================================================
 
         function getSubjColor(t) {
             if (!t) return '';
@@ -1037,7 +1014,7 @@
                     return `
                     <tr class="bg-slate-100 border-b border-slate-300 text-sm text-center font-bold text-slate-700 uppercase tracking-widest">
                         <td class="py-2 px-1 border-r border-slate-300 bg-white"></td>
-                        <td class="py-2 px-1 whitespace-nowrap text-xs border-r border-slate-300 bg-white" ${getEditableAttr(`jadwal.${i}.waktu`)}>${row.waktu}</td>
+                        <td class="py-2 px-1 whitespace-nowrap text-xs border-r border-slate-300 bg-white">${row.waktu}</td>
                         <td colspan="12" class="py-2 px-1 border-r border-slate-300">ISTIRAHAT</td>
                         <td class="py-2 px-1 whitespace-nowrap text-xs border-r border-slate-300 bg-white">09.45 - 10.15</td>
                         <td colspan="3" class="py-2 px-1 border-r border-slate-300">ISTIRAHAT</td>
@@ -1046,23 +1023,23 @@
                 return `
                 <tr class="hover:bg-slate-50 transition border-b border-slate-200 text-sm text-center font-medium">
                     <td class="py-3 px-1 font-bold text-slate-700 border-r border-slate-200 bg-slate-50">${row.jam}</td>
-                    <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50" ${getEditableAttr(`jadwal.${i}.waktu`)}>${row.waktu}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[0])}" ${getEditableAttr(`jadwal.${i}.s.0`)}>${row.s[0]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[1])}" ${getEditableAttr(`jadwal.${i}.s.1`)}>${row.s[1]}</td>
-                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.s[2])}" ${getEditableAttr(`jadwal.${i}.s.2`)}>${row.s[2]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[0])}" ${getEditableAttr(`jadwal.${i}.sel.0`)}>${row.sel[0]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[1])}" ${getEditableAttr(`jadwal.${i}.sel.1`)}>${row.sel[1]}</td>
-                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.sel[2])}" ${getEditableAttr(`jadwal.${i}.sel.2`)}>${row.sel[2]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[0])}" ${getEditableAttr(`jadwal.${i}.r.0`)}>${row.r[0]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[1])}" ${getEditableAttr(`jadwal.${i}.r.1`)}>${row.r[1]}</td>
-                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.r[2])}" ${getEditableAttr(`jadwal.${i}.r.2`)}>${row.r[2]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[0])}" ${getEditableAttr(`jadwal.${i}.k.0`)}>${row.k[0]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[1])}" ${getEditableAttr(`jadwal.${i}.k.1`)}>${row.k[1]}</td>
-                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.k[2])}" ${getEditableAttr(`jadwal.${i}.k.2`)}>${row.k[2]}</td>
-                    <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50" ${getEditableAttr(`jadwal.${i}.jm`)}>${row.jm}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[0])}" ${getEditableAttr(`jadwal.${i}.j.0`)}>${row.j[0]}</td>
-                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[1])}" ${getEditableAttr(`jadwal.${i}.j.1`)}>${row.j[1]}</td>
-                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.j[2])}" ${getEditableAttr(`jadwal.${i}.j.2`)}>${row.j[2]}</td>
+                    <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50">${row.waktu}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[0])}">${row.s[0]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[1])}">${row.s[1]}</td>
+                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.s[2])}">${row.s[2]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[0])}">${row.sel[0]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[1])}">${row.sel[1]}</td>
+                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.sel[2])}">${row.sel[2]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[0])}">${row.r[0]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[1])}">${row.r[1]}</td>
+                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.r[2])}">${row.r[2]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[0])}">${row.k[0]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[1])}">${row.k[1]}</td>
+                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.k[2])}">${row.k[2]}</td>
+                    <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50">${row.jm}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[0])}">${row.j[0]}</td>
+                    <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[1])}">${row.j[1]}</td>
+                    <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.j[2])}">${row.j[2]}</td>
                 </tr>`;
             }).join('');
 
@@ -1105,19 +1082,19 @@
                             ${trMapel}
                             <tr class="bg-white text-xs text-center border-b border-slate-300 text-slate-800">
                                 <td rowspan="2" colspan="2" class="py-3 px-1 border-r border-slate-300 font-bold uppercase bg-slate-50">Piket</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.senin.0`)}>${appState.petugasPiket.senin[0]}</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.selasa.0`)}>${appState.petugasPiket.selasa[0]}</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.rabu.0`)}>${appState.petugasPiket.rabu[0]}</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.kamis.0`)}>${appState.petugasPiket.kamis[0]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.senin[0]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.selasa[0]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.rabu[0]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.kamis[0]}</td>
                                 <td rowspan="2" class="border-r border-slate-300"></td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.jumat.0`)}>${appState.petugasPiket.jumat[0]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.jumat[0]}</td>
                             </tr>
                             <tr class="bg-white text-xs text-center border-b border-slate-300 text-slate-800">
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.senin.1`)}>${appState.petugasPiket.senin[1]}</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.selasa.1`)}>${appState.petugasPiket.selasa[1]}</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.rabu.1`)}>${appState.petugasPiket.rabu[1]}</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.kamis.1`)}>${appState.petugasPiket.kamis[1]}</td>
-                                <td colspan="3" class="py-1 px-1 border-r border-slate-300" ${getEditableAttr(`petugasPiket.jumat.1`)}>${appState.petugasPiket.jumat[1]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.senin[1]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.selasa[1]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.rabu[1]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.kamis[1]}</td>
+                                <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.jumat[1]}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1126,26 +1103,22 @@
             </div>`;
         }
 
-        // ================================================================
-        // RENDER: EKSTRA
-        // ================================================================
-
         function renderEkstra() {
             let rows = appState.ekstra.map((e, i) => {
                 const isFirst = i === 0;
                 return `
                 <tr class="border-b border-slate-100 hover:bg-slate-50 transition text-sm">
                     <td class="py-3 px-2 text-center font-bold text-slate-700">${isFirst ? '1' : ''}</td>
-                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}" ${getEditableAttr(`ekstra.${i}.waktu`)}>${e.waktu}</td>
-                    <td class="py-3 px-2 text-center" ${getEditableAttr(`ekstra.${i}.s`)}>${e.s}</td>
-                    <td class="py-3 px-2 text-center" ${getEditableAttr(`ekstra.${i}.sel`)}>${e.sel}</td>
-                    <td class="py-3 px-2 text-center" ${getEditableAttr(`ekstra.${i}.r`)}>${e.r}</td>
-                    <td class="py-3 px-2 text-center" ${getEditableAttr(`ekstra.${i}.k`)}>${e.k}</td>
-                    <td class="py-3 px-2 text-center" ${getEditableAttr(`ekstra.${i}.j`)}>${e.j}</td>
-                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}" ${getEditableAttr(`ekstra.${i}.ws`)}>${e.ws}</td>
-                    <td class="py-3 px-2 text-center" ${getEditableAttr(`ekstra.${i}.sab`)}>${e.sab}</td>
-                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}" ${getEditableAttr(`ekstra.${i}.wm`)}>${e.wm}</td>
-                    <td class="py-3 px-2 text-center" ${getEditableAttr(`ekstra.${i}.m`)}>${e.m}</td>
+                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}">${e.waktu}</td>
+                    <td class="py-3 px-2 text-center">${e.s}</td>
+                    <td class="py-3 px-2 text-center">${e.sel}</td>
+                    <td class="py-3 px-2 text-center">${e.r}</td>
+                    <td class="py-3 px-2 text-center">${e.k}</td>
+                    <td class="py-3 px-2 text-center">${e.j}</td>
+                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}">${e.ws}</td>
+                    <td class="py-3 px-2 text-center">${e.sab}</td>
+                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}">${e.wm}</td>
+                    <td class="py-3 px-2 text-center">${e.m}</td>
                 </tr>`;
             }).join('');
 
@@ -1182,10 +1155,6 @@
                 </div>
             </div>`;
         }
-
-        // ================================================================
-        // RENDER: SISWA
-        // ================================================================
 
         function renderStudents() {
             let trs = appState.students.map((m, idx) => {
@@ -1255,10 +1224,6 @@
             });
         }
 
-        // ================================================================
-        // GRADE MODAL
-        // ================================================================
-
         function openGradeModal(studentId) {
             const student = appState.students.find(s => s.id === studentId);
             if (!student) return;
@@ -1310,10 +1275,6 @@
             }
         }
 
-        // ================================================================
-        // RENDER: GURU
-        // ================================================================
-
         function renderTeachers() {
             const sorted = [...appState.teachers].sort((a, b) => a.nip.localeCompare(b.nip));
             let html = sorted.map(t => `
@@ -1330,10 +1291,6 @@
                 </div>`).join('');
             return `<div class="fade-in"><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">${html}</div></div>`;
         }
-
-        // ================================================================
-        // RENDER: ADMINISTRASI
-        // ================================================================
 
         function renderAdmin() {
             let trs = appState.adminLinks.length === 0 ?
@@ -1362,7 +1319,7 @@
                     </div>
                 </div>
                 <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 text-center text-sm text-slate-500 no-print">
-                    <i class="fas fa-info-circle text-primary mr-2"></i>Untuk menambah dokumen, gunakan fitur <b>Impor Data</b> pada menu <b>Data</b> di header.
+                    <i class="fas fa-info-circle text-primary mr-2"></i>Gunakan menu <b>Data → Impor dari Excel</b> untuk menambah atau memperbarui dokumen.
                 </div>
             </div>`;
         }
@@ -1382,14 +1339,13 @@
                     <p class="text-white/60 text-xs mt-1">Tahun Ajaran ${appState.school.tahun}</p>
                 </div>
 
-                <!-- ====== RKT ====== -->
+                <!-- RKT -->
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-5 bg-gradient-to-r from-blue-50 to-white border-b border-slate-100">
                         <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-tasks text-primary"></i> Rencana Kerja Tahunan (RKT)</h3>
                     </div>
                     <div class="p-6 space-y-4">
 
-                        <!-- BAB I -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-book-open"></i> BAB I — Pendahuluan</div>
                             <div class="body">
@@ -1405,7 +1361,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB II -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-flag"></i> BAB II — Visi, Misi, dan Tujuan</div>
                             <div class="body">
@@ -1424,7 +1379,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB III -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-building"></i> BAB III — Profil Sekolah</div>
                             <div class="body">
@@ -1441,7 +1395,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB IV & V -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-bullseye"></i> BAB IV — Harapan Pemangku Kepentingan</div>
                             <div class="body">
@@ -1475,7 +1428,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB VI -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-check-circle"></i> BAB VI — Penutup</div>
                             <div class="body">
@@ -1483,18 +1435,16 @@
                                 <p class="mt-2"><strong>Rekomendasi:</strong> Penyesuaian sumber dana dengan kebutuhan, ketepatan pengawasan keuangan, fleksibilitas untuk kegiatan spontan (kesehatan), dan sinkronisasi tahun pelajaran dengan tahun anggaran.</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- ====== KSP ====== -->
+                <!-- KSP -->
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mt-6">
                     <div class="p-5 bg-gradient-to-r from-indigo-50 to-white border-b border-slate-100">
                         <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Kurikulum Satuan Pendidikan (KSP)</h3>
                     </div>
                     <div class="p-6 space-y-4">
 
-                        <!-- BAB I -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-graduation-cap"></i> BAB I — Pendahuluan</div>
                             <div class="body">
@@ -1504,7 +1454,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB II -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-eye"></i> BAB II — Visi, Misi, dan Tujuan</div>
                             <div class="body">
@@ -1519,7 +1468,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB III -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-layer-group"></i> BAB III — Pengorganisasian Pembelajaran</div>
                             <div class="body">
@@ -1534,7 +1482,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB IV -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-chalkboard-teacher"></i> BAB IV — Perencanaan Pembelajaran</div>
                             <div class="body">
@@ -1545,7 +1492,6 @@
                             </div>
                         </div>
 
-                        <!-- BAB V & VI -->
                         <div class="section-card">
                             <div class="title"><i class="fas fa-clipboard-check"></i> BAB V — Pendampingan, Evaluasi, & Pengembangan Profesional</div>
                             <div class="body">
@@ -1562,7 +1508,6 @@
                             </div>
                         </div>
 
-                        <!-- Lampiran -->
                         <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
                             <h4 class="font-bold text-dark text-sm mb-3"><i class="fas fa-paperclip text-primary mr-2"></i>Lampiran KSP</h4>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-slate-600">
@@ -1580,113 +1525,344 @@
                                 <span class="bg-white px-3 py-1.5 rounded-full border border-slate-200">Lembar Validasi</span>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>`;
         }
 
 
         // ================================================================
-        // IMPORT / EXPORT / TEMPLATE
+        // EXCEL IMPORT / EXPORT / TEMPLATE
         // ================================================================
 
-        function exportData() {
-            const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `data_srt39_${new Date().toISOString().slice(0,10)}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('Data berhasil diekspor!', 'success');
+        function exportExcel() {
+            try {
+                const wb = XLSX.utils.book_new();
+
+                // Sheet 1: Sekolah
+                const schoolData = [
+                    ['Properti', 'Nilai'],
+                    ['Nama Sekolah', appState.school.name],
+                    ['NPSN SRD', appState.school.npsn_srd],
+                    ['NPSN SRMP', appState.school.npsn_srmp],
+                    ['Alamat', appState.school.address],
+                    ['Kepala Sekolah', appState.school.kepsek],
+                    ['NIP Kepsek', appState.school.kepsekNip],
+                    ['Wakasek Kurikulum', appState.school.wakakur],
+                    ['NIP Wakasek', appState.school.wakasekNip],
+                    ['Moto', appState.school.moto],
+                    ['Visi', appState.school.visi],
+                    ['Tahun Ajaran', appState.school.tahun],
+                    ['Luas Tanah', appState.school.luasTanah],
+                    ['Luas Bangunan', appState.school.luasBangunan],
+                    ['Status Tanah', appState.school.statusTanah],
+                    ['Tahun Berdiri', appState.school.tahunBerdiri]
+                ];
+                const ws1 = XLSX.utils.aoa_to_sheet(schoolData);
+                XLSX.utils.book_append_sheet(wb, ws1, 'Sekolah');
+
+                // Sheet 2: Misi
+                const misiData = appState.school.misi.map((m, i) => [i + 1, m]);
+                misiData.unshift(['No', 'Misi']);
+                const ws2 = XLSX.utils.aoa_to_sheet(misiData);
+                XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
+
+                // Sheet 3: Guru
+                const guruData = appState.teachers.map(t => [t.nip, t.name, t.role, t.classes]);
+                guruData.unshift(['NIP', 'Nama', 'Jabatan', 'Kelas']);
+                const ws3 = XLSX.utils.aoa_to_sheet(guruData);
+                XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
+
+                // Sheet 4: Siswa
+                const siswaData = appState.students.map(s => [s.id, s.name, s.nisn, s.school, s.level, s.gender, s.rombel]);
+                siswaData.unshift(['ID', 'Nama', 'NISN', 'Sekolah', 'Jenjang', 'Gender', 'Rombel']);
+                const ws4 = XLSX.utils.aoa_to_sheet(siswaData);
+                XLSX.utils.book_append_sheet(wb, ws4, 'Siswa');
+
+                // Sheet 5: Ekstrakurikuler
+                const ekstraData = appState.ekstra.map(e => [e.waktu, e.s, e.sel, e.r, e.k, e.j, e.ws, e.sab, e.wm, e.m]);
+                ekstraData.unshift(['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', 'Sabtu', 'Waktu Minggu',
+                    'Minggu'
+                ]);
+                const ws5 = XLSX.utils.aoa_to_sheet(ekstraData);
+                XLSX.utils.book_append_sheet(wb, ws5, 'Ekstrakurikuler');
+
+                // Sheet 6: Kalender
+                const calData = [];
+                calData.push(['Bulan', 'Tanggal', 'Event', 'Tipe']);
+                appState.calendar.forEach(m => {
+                    m.events.forEach(e => {
+                        calData.push([m.month, e.date, e.name, e.type]);
+                    });
+                });
+                const ws6 = XLSX.utils.aoa_to_sheet(calData);
+                XLSX.utils.book_append_sheet(wb, ws6, 'Kalender');
+
+                // Sheet 7: Administrasi
+                const adminData = appState.adminLinks.map(d => [d.nip, d.name, d.category, d.title, d.link, d.date]);
+                adminData.unshift(['NIP', 'Nama', 'Kategori', 'Judul', 'Link', 'Tanggal']);
+                const ws7 = XLSX.utils.aoa_to_sheet(adminData);
+                XLSX.utils.book_append_sheet(wb, ws7, 'Administrasi');
+
+                // Export
+                const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([wbout], { type: 'application/octet-stream' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `data_srt39_${new Date().toISOString().slice(0,10)}.xlsx`;
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast('Data berhasil diekspor ke Excel!', 'success');
+            } catch (err) {
+                showToast('Gagal ekspor: ' + err.message, 'error');
+            }
         }
 
-        function importData(event) {
+        function importExcel(event) {
             const file = event.target.files[0];
             if (!file) return;
+
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = function(e) {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    if (data.school && data.teachers && data.students) {
-                        appState = data;
-                        saveState();
-                        router();
-                        showToast('Data berhasil diimpor!', 'success');
-                    } else {
-                        showToast('Format file tidak valid!', 'error');
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+
+                    // Baca sheet Sekolah
+                    const wsSchool = workbook.Sheets['Sekolah'];
+                    if (wsSchool) {
+                        const rows = XLSX.utils.sheet_to_json(wsSchool, { header: 1 });
+                        rows.forEach(row => {
+                            if (row[0] === 'Nama Sekolah') appState.school.name = row[1] || appState.school
+                            .name;
+                            if (row[0] === 'NPSN SRD') appState.school.npsn_srd = row[1] || appState.school
+                                .npsn_srd;
+                            if (row[0] === 'NPSN SRMP') appState.school.npsn_srmp = row[1] || appState.school
+                                .npsn_srmp;
+                            if (row[0] === 'Alamat') appState.school.address = row[1] || appState.school
+                            .address;
+                            if (row[0] === 'Kepala Sekolah') appState.school.kepsek = row[1] || appState.school
+                                .kepsek;
+                            if (row[0] === 'NIP Kepsek') appState.school.kepsekNip = row[1] || appState.school
+                                .kepsekNip;
+                            if (row[0] === 'Wakasek Kurikulum') appState.school.wakakur = row[1] || appState
+                                .school.wakakur;
+                            if (row[0] === 'NIP Wakasek') appState.school.wakasekNip = row[1] || appState.school
+                                .wakasekNip;
+                            if (row[0] === 'Moto') appState.school.moto = row[1] || appState.school.moto;
+                            if (row[0] === 'Visi') appState.school.visi = row[1] || appState.school.visi;
+                            if (row[0] === 'Tahun Ajaran') appState.school.tahun = row[1] || appState.school
+                                .tahun;
+                            if (row[0] === 'Luas Tanah') appState.school.luasTanah = row[1] || appState.school
+                                .luasTanah;
+                            if (row[0] === 'Luas Bangunan') appState.school.luasBangunan = row[1] || appState
+                                .school.luasBangunan;
+                            if (row[0] === 'Status Tanah') appState.school.statusTanah = row[1] || appState
+                                .school.statusTanah;
+                            if (row[0] === 'Tahun Berdiri') appState.school.tahunBerdiri = row[1] || appState
+                                .school.tahunBerdiri;
+                        });
                     }
+
+                    // Baca sheet Misi
+                    const wsMisi = workbook.Sheets['Misi'];
+                    if (wsMisi) {
+                        const rows = XLSX.utils.sheet_to_json(wsMisi, { header: 1 });
+                        const misiNew = [];
+                        rows.forEach((row, idx) => {
+                            if (idx > 0 && row[1]) misiNew.push(row[1]);
+                        });
+                        if (misiNew.length > 0) appState.school.misi = misiNew;
+                    }
+
+                    // Baca sheet Guru
+                    const wsGuru = workbook.Sheets['Guru'];
+                    if (wsGuru) {
+                        const rows = XLSX.utils.sheet_to_json(wsGuru, { header: 1 });
+                        const guruNew = [];
+                        rows.forEach((row, idx) => {
+                            if (idx > 0 && row[0]) {
+                                guruNew.push({
+                                    nip: row[0] || '',
+                                    name: row[1] || '',
+                                    role: row[2] || '',
+                                    classes: row[3] || ''
+                                });
+                            }
+                        });
+                        if (guruNew.length > 0) {
+                            appState.teachers = guruNew;
+                            // Regenerate avatar
+                            appState.teachers.forEach(t => {
+                                const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(
+                                    n => n[0]).join('').toUpperCase();
+                                const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
+                                const hash = Array.from(t.nip).reduce((acc, char) => acc + char.charCodeAt(0),
+                                    0);
+                                t.photo =
+                                    `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+                            });
+                        }
+                    }
+
+                    // Baca sheet Siswa
+                    const wsSiswa = workbook.Sheets['Siswa'];
+                    if (wsSiswa) {
+                        const rows = XLSX.utils.sheet_to_json(wsSiswa, { header: 1 });
+                        const siswaNew = [];
+                        rows.forEach((row, idx) => {
+                            if (idx > 0 && row[1]) {
+                                siswaNew.push({
+                                    id: parseInt(row[0]) || idx,
+                                    name: row[1] || '',
+                                    nisn: row[2] || '',
+                                    school: row[3] || '',
+                                    level: row[4] || '',
+                                    gender: row[5] || '',
+                                    rombel: row[6] || '',
+                                    grades: {}
+                                });
+                            }
+                        });
+                        if (siswaNew.length > 0) appState.students = siswaNew;
+                    }
+
+                    // Baca sheet Ekstrakurikuler
+                    const wsEkstra = workbook.Sheets['Ekstrakurikuler'];
+                    if (wsEkstra) {
+                        const rows = XLSX.utils.sheet_to_json(wsEkstra, { header: 1 });
+                        const ekstraNew = [];
+                        rows.forEach((row, idx) => {
+                            if (idx > 0) {
+                                ekstraNew.push({
+                                    waktu: row[0] || '',
+                                    s: row[1] || '',
+                                    sel: row[2] || '',
+                                    r: row[3] || '',
+                                    k: row[4] || '',
+                                    j: row[5] || '',
+                                    ws: row[6] || '',
+                                    sab: row[7] || '',
+                                    wm: row[8] || '',
+                                    m: row[9] || ''
+                                });
+                            }
+                        });
+                        if (ekstraNew.length > 0) appState.ekstra = ekstraNew;
+                    }
+
+                    // Baca sheet Kalender
+                    const wsCal = workbook.Sheets['Kalender'];
+                    if (wsCal) {
+                        const rows = XLSX.utils.sheet_to_json(wsCal, { header: 1 });
+                        const calMap = {};
+                        rows.forEach((row, idx) => {
+                            if (idx > 0 && row[0] && row[1]) {
+                                if (!calMap[row[0]]) calMap[row[0]] = [];
+                                calMap[row[0]].push({
+                                    date: row[1] || '',
+                                    name: row[2] || '',
+                                    type: row[3] || 'info'
+                                });
+                            }
+                        });
+                        appState.calendar = Object.keys(calMap).map(month => ({
+                            month: month,
+                            events: calMap[month]
+                        }));
+                    }
+
+                    // Baca sheet Administrasi
+                    const wsAdmin = workbook.Sheets['Administrasi'];
+                    if (wsAdmin) {
+                        const rows = XLSX.utils.sheet_to_json(wsAdmin, { header: 1 });
+                        const adminNew = [];
+                        rows.forEach((row, idx) => {
+                            if (idx > 0 && row[0]) {
+                                adminNew.push({
+                                    id: Date.now() + idx,
+                                    nip: row[0] || '',
+                                    name: row[1] || '',
+                                    category: row[2] || '',
+                                    title: row[3] || '',
+                                    link: row[4] || '',
+                                    date: row[5] || new Date().toLocaleDateString('id-ID')
+                                });
+                            }
+                        });
+                        if (adminNew.length > 0) appState.adminLinks = adminNew;
+                    }
+
+                    saveState();
+                    router();
+                    showToast('Data berhasil diimpor dari Excel!', 'success');
+
                 } catch (err) {
                     showToast('Gagal membaca file: ' + err.message, 'error');
                 }
             };
-            reader.readAsText(file);
+            reader.readAsArrayBuffer(file);
             event.target.value = '';
         }
 
         function downloadTemplate() {
-            const template = {
-                school: {
-                    name: "Sekolah Rakyat Terintegrasi 39 Garut",
-                    npsn_srd: "70058801",
-                    npsn_srmp: "70058802",
-                    address: "Jl. Raya Samarang KM 4, Garut",
-                    kepsek: "Andi Yasir Habibi, S.Sos., S.Pd.",
-                    kepsekNip: "198008292014121002",
-                    wakakur: "Fauzi Faturohman, S.Pd., Gr.",
-                    wakasekNip: "199409082025211128",
-                    moto: "Cerdas Bersama Tumbuh Setara",
-                    visi: "Visi Sekolah",
-                    misi: ["Misi 1", "Misi 2"],
-                    tahun: "2026/2027",
-                    luasTanah: "2.613 m²",
-                    luasBangunan: "1.441 m²",
-                    statusTanah: "Hibah / BLK",
-                    tahunBerdiri: "2025"
-                },
-                teachers: [{ nip: "NIP", name: "Nama Guru", role: "Jabatan", classes: "Kelas" }],
-                students: [{ id: 1, name: "Nama Siswa", nisn: "NISN", school: "SRDT/SRMPT 39 Garut", level: "SD/SMP",
-                    gender: "L/P", rombel: "SD/7A/7B", grades: {} }],
-                ekstra: [{ waktu: "15.30-Selesai", s: "OSIS", sel: "Literasi", r: "Futsal", k: "Paskibra", j: "Hadroh",
-                    ws: "09.00-Selesai", sab: "Pramuka", wm: "15.30-Selesai", m: "Paskibra" }],
-                calendar: [{ month: "Bulan", events: [{ date: "Tanggal", name: "Event", type: "primary" }] }],
-                jadwal: [{ jam: "1", waktu: "08.00-08.40", s: ["Mapel1", "Mapel2", "Mapel3"], sel: ["Mapel4", "Mapel5",
-                        "Mapel6"
-                    ], r: ["Mapel7", "Mapel8", "Mapel9"], k: ["Mapel10", "Mapel11", "Mapel12"], jm: "08.00-08.35",
-                    j: ["Mapel13", "Mapel14", "Mapel15"] }],
-                petugasPiket: { senin: ["Guru A", "Guru B"], selasa: ["Guru C", "Guru D"], rabu: ["Guru E", "Guru F"],
-                    kamis: ["Guru G", "Guru H"], jumat: ["Guru I", "Guru J"], kordinator: ["Kordinator"] },
-                adminLinks: [{ id: 1, nip: "NIP", name: "Nama Guru", category: "Kategori", title: "Judul Dokumen",
-                    link: "https://...", date: "Tanggal" }],
-                isEditMode: false
-            };
-            const blob = new Blob([JSON.stringify(template, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `template_data_srt39.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast('Template berhasil diunduh!', 'success');
-        }
+            try {
+                const wb = XLSX.utils.book_new();
 
+                // Template Sekolah
+                const schoolTemplate = [
+                    ['Properti', 'Nilai'],
+                    ['Nama Sekolah', 'Sekolah Rakyat Terintegrasi 39 Garut'],
+                    ['NPSN SRD', '70058801'],
+                    ['NPSN SRMP', '70058802'],
+                    ['Alamat', 'Jl. Raya Samarang KM 4, Garut'],
+                    ['Kepala Sekolah', 'Andi Yasir Habibi, S.Sos., S.Pd.'],
+                    ['NIP Kepsek', '198008292014121002'],
+                    ['Wakasek Kurikulum', 'Fauzi Faturohman, S.Pd., Gr.'],
+                    ['NIP Wakasek', '199409082025211128'],
+                    ['Moto', 'Cerdas Bersama Tumbuh Setara'],
+                    ['Visi', 'Mewujudkan Generasi yang Disiplin, Jujur, Mandiri, Tangguh, Religius, dan Mampu Bersaing di Persaingan Global'],
+                    ['Tahun Ajaran', '2026/2027'],
+                    ['Luas Tanah', '2.613 m²'],
+                    ['Luas Bangunan', '1.441 m²'],
+                    ['Status Tanah', 'Hibah / BLK'],
+                    ['Tahun Berdiri', '2025']
+                ];
+                const ws1 = XLSX.utils.aoa_to_sheet(schoolTemplate);
+                XLSX.utils.book_append_sheet(wb, ws1, 'Sekolah');
 
-        // ================================================================
-        // INIT
-        // ================================================================
+                // Template Misi
+                const misiTemplate = [
+                    ['No', 'Misi'],
+                    [1, 'Menanamkan kedisiplinan dimanapun berada'],
+                    [2, 'Menanamkan karakter jujur dalam kehidupan sehari-hari'],
+                    [3, 'Menumbuhkan kemandirian dalam berfikir dan berprilaku'],
+                    [4, 'Menanamkan karakter tangguh atau tidak mudah menyerah'],
+                    [5, 'Membersamai dalam menumbuhkan ketaatan menjalankan ajaran agama'],
+                    [6, 'Memberikan pembekalan ilmu dan keterampilan untuk bersaing secara global']
+                ];
+                const ws2 = XLSX.utils.aoa_to_sheet(misiTemplate);
+                XLSX.utils.book_append_sheet(wb, ws2, 'Misi');
 
-        window.onload = function() {
-            initAuth();
-            document.getElementById('main-content')?.addEventListener('click', (e) => {
-                const sidebar = document.getElementById('sidebar');
-                if (window.innerWidth < 768 && sidebar && !sidebar.contains(e.target) && !e.target.closest(
-                        'header button')) {
-                    sidebar.classList.add('-translate-x-full');
-                }
-            });
-        };
-    </script>
-</body>
-</html>
+                // Template Guru
+                const guruTemplate = [
+                    ['NIP', 'Nama', 'Jabatan', 'Kelas'],
+                    ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wakasek Kurikulum', 'SRD & SRMP'],
+                    ['', '', '', '']
+                ];
+                const ws3 = XLSX.utils.aoa_to_sheet(guruTemplate);
+                XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
+
+                // Template Siswa
+                const siswaTemplate = [
+                    ['ID', 'Nama', 'NISN', 'Sekolah', 'Jenjang', 'Gender', 'Rombel'],
+                    [1, 'ADE MUSTOPA', '3139453861', 'SRDT 39 Garut', 'SD', 'L', 'SD'],
+                    [2, 'AGUS RAMDANI', '0104915906', 'SRMPT 39 Garut', 'SMP', 'L', '7B']
+                ];
+                const ws4 = XLSX.utils.aoa_to_sheet(siswaTemplate);
+                XLSX.utils.book_append_sheet(wb, ws4, 'Siswa');
+
+                // Template Ekstra
+                const ekstraTemplate = [
+                    ['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', '
