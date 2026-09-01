@@ -1,10 +1,3 @@
-/**
- * ================================================================
- * SISTEM MANAJEMEN KURIKULUM SRT 39 GARUT
- * File: assets/js/app.js
- * ================================================================
- */
-
 // ================================================================
 // DATA MASTER — Lengkap dari file yang diupload (75 siswa)
 // ================================================================
@@ -35,62 +28,28 @@ const defaultData = {
         statusTanah: "Hibah / BLK",
         tahunBerdiri: "2025"
     },
-    // ===== GURU dengan foto profil =====
     teachers: [
-        { nip: "198008292014121002", name: "Andi Yasir Habibi, S.Sos., S.Pd.", role: "Kepala Sekolah", classes: "-", photo: "" },
-        { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wali Kelas 7B / PPKn", classes: "SRMP-B (7B)", photo: "", isWaliKelas: true, waliKelas: "7B" },
-        { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Wali Kelas SRD / Guru Kelas", classes: "SRD", photo: "", isWaliKelas: true, waliKelas: "SD" },
+        { nip: "198008292014121002", name: "Andi Yasir Habibi, S.Sos., S.Pd.", role: "Kepala Sekolah", classes: "-", photo: "", isWaliKelas: false, waliKelas: "" },
+        { nip: "199409082025211128", name: "Fauzi Faturohman, S.Pd., Gr.", role: "Wakasek Kurikulum / PPKn", classes: "SRMP-B (7B)", photo: "", isWaliKelas: true, waliKelas: "7B", isSuperAdmin: true },
+        { nip: "199901222025212077", name: "Maha Ikhlas Sulfitrah, S.Pd., Gr.", role: "Wali Kelas SRD", classes: "SRD", photo: "", isWaliKelas: true, waliKelas: "SD" },
         { nip: "199908182025212101", name: "Sarah Nur Faziah, S.Pd., Gr.", role: "Guru TIK", classes: "SRD & SRMP", photo: "" },
         { nip: "200002282025211064", name: "Lufi Feriansyah, S.Pd., Gr.", role: "Guru Matematika", classes: "SRMP", photo: "" },
         { nip: "200003112025212061", name: "Mitha Amalia, S.Pd., Gr.", role: "Guru IPA", classes: "SRMP", photo: "" },
-        { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Wali Kelas 7A / B. Inggris", classes: "SRMP-A (7A)", photo: "", isWaliKelas: true, waliKelas: "7A" },
+        { nip: "200003282025212060", name: "Meliana Dwi Rahmawati, S.Pd., Gr.", role: "Wali Kelas 7A", classes: "SRMP-A (7A)", photo: "", isWaliKelas: true, waliKelas: "7A" },
         { nip: "200004272025212059", name: "Youtrin Fadila, S.Pd., Gr.", role: "Guru IPS", classes: "SRMP", photo: "" },
         { nip: "200006022025212083", name: "Navika Putri Dwi Lestari, S.Pd., Gr.", role: "Guru Seni Budaya", classes: "SRD & SRMP", photo: "" },
         { nip: "200009152025211042", name: "Mochamad Hoky Aldiansyah, S.Pd., Gr.", role: "Guru PJOK", classes: "SRD & SRMP", photo: "" },
         { nip: "200102142025212047", name: "Syifa Nurlathifah Al Azmi, S.Pd., Gr.", role: "Guru KKA", classes: "SRD & SRMP", photo: "" },
         { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia", classes: "SRMP", photo: "" }
     ],
-    // ===== KALENDER PENDIDIKAN =====
-    calendar: [{
-        month: "Juli 2026",
-        events: [
-            { date: "1-30", name: "Libur Semester Genap (Siswa Eksisting)", type: "danger" },
-            { date: "2", name: "Rapat Dinas Bulanan", type: "info" },
-            { date: "14-31", name: "MPLS (Siswa Baru)", type: "primary" }
-        ]
-    }, {
-        month: "Agustus 2026",
-        events: [
-            { date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
-            { date: "24", name: "Hari Pertama Masuk Sekolah", type: "primary" }
-        ]
-    }, {
-        month: "September 2026",
-        events: [
-            { date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
-            { date: "1-30", name: "Rentang Supervisi II (GTK)", type: "warning" },
-            { date: "30", name: "Ulang Tahun SRT 39 Garut (Open House)", type: "primary" }
-        ]
-    }, {
-        month: "Oktober 2026",
-        events: [
-            { date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
-            { date: "1-31", name: "Kegiatan Sumatif", type: "warning" }
-        ]
-    }, {
-        month: "November 2026",
-        events: [
-            { date: "3", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
-            { date: "1-30", name: "Class Meeting & Remedial", type: "warning" }
-        ]
-    }, {
-        month: "Desember 2026",
-        events: [
-            { date: "3", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" },
-            { date: "18", name: "Pembagian Raport", type: "success" },
-            { date: "27-31", name: "Awal Libur Semester", type: "danger" }
-        ]
-    }],
+    calendar: [
+        { month: "Juli 2026", events: [{ date: "1-30", name: "Libur Semester Genap (Siswa Eksisting)", type: "danger" }, { date: "2", name: "Rapat Dinas Bulanan", type: "info" }, { date: "14-31", name: "MPLS (Siswa Baru)", type: "primary" }] },
+        { month: "Agustus 2026", events: [{ date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" }, { date: "24", name: "Hari Pertama Masuk Sekolah", type: "primary" }] },
+        { month: "September 2026", events: [{ date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" }, { date: "1-30", name: "Rentang Supervisi II (GTK)", type: "warning" }, { date: "30", name: "Ulang Tahun SRT 39 Garut (Open House)", type: "primary" }] },
+        { month: "Oktober 2026", events: [{ date: "2", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" }, { date: "1-31", name: "Kegiatan Sumatif", type: "warning" }] },
+        { month: "November 2026", events: [{ date: "3", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" }, { date: "1-30", name: "Class Meeting & Remedial", type: "warning" }] },
+        { month: "Desember 2026", events: [{ date: "3", name: "Rapat Dinas Bulanan (Refleksi)", type: "info" }, { date: "18", name: "Pembagian Raport", type: "success" }, { date: "27-31", name: "Awal Libur Semester", type: "danger" }] }
+    ],
     jadwal: [
         { jam: "1", waktu: "08.00 - 08.40", s: ["B. Indonesia", "IPA", "Matematika"], sel: ["PJOK", "PAI", "KKA"], r: ["Matematika", "KKA", "PJOK"], k: ["KKA", "PJOK", "IPS"], jm: "08.00 - 08.35", j: ["IPAS", "IPS", "B. Indonesia"] },
         { jam: "2", waktu: "08.40 - 09.20", s: ["B. Indonesia", "IPA", "Matematika"], sel: ["PJOK", "PAI", "KKA"], r: ["Matematika", "KKA", "PJOK"], k: ["KKA", "PJOK", "IPS"], jm: "08.35 - 09.10", j: ["IPAS", "IPS", "B. Indonesia"] },
@@ -111,70 +70,13 @@ const defaultData = {
         jumat: ["Mochamad Hoky Aldiansyah, S.Pd., Gr.", "Lufi Feriansyah, S.Pd., Gr."],
         kordinator: ["Fauzi Faturohman, S.Pd., Gr."]
     },
-    // ===== EKSTRAKURIKULER =====
-    ekstra: [{
-        waktu: "15.30 - Selesai",
-        senin: "OSIS",
-        selasa: "Literasi dan Numerasi",
-        rabu: "Futsal",
-        kamis: "Paskibra",
-        jumat: "Hadroh",
-        waktu_sabtu: "09.00 - Selesai",
-        sabtu: "Pramuka",
-        waktu_minggu: "15.30 - Selesai",
-        minggu: "Paskibra",
-        penanggung: {
-            senin: ["Fauzi Faturohman, S.Pd., Gr.", "Meliana Dwi Rahmawati, S.Pd., Gr."],
-            selasa: ["Maha Ikhlas Sulfitrah, S.Pd., Gr.", "Lufi Feriansyah, S.Pd., Gr."],
-            rabu: ["Mochamad Hoky Aldiansyah, S.Pd., Gr.", "Youtrin Fadila, S.Pd., Gr."],
-            kamis: ["Syifa Nurlathifah Al Azmi, S.Pd., Gr.", "Mitha Amalia, S.Pd., Gr."],
-            jumat: ["Pelatih Tamu", "Mitha Amalia, S.Pd., Gr."],
-            sabtu: ["Rukman", "-"],
-            minggu: ["Syifa Nurlathifah Al Azmi, S.Pd., Gr.", "-"]
-        }
-    }, {
-        waktu: "",
-        senin: "English Club",
-        selasa: "Karya Ilmiah Remaja",
-        rabu: "Jurnalistik",
-        kamis: "Silat",
-        jumat: "UKS",
-        waktu_sabtu: "",
-        sabtu: "",
-        waktu_minggu: "",
-        minggu: "",
-        penanggung: {
-            senin: ["-", "Sarah Nur Fazriah, S.Pd., Gr."],
-            selasa: ["-", "-"],
-            rabu: ["Yulistina, S.Pd., Gr.", "-"],
-            kamis: ["-", "-"],
-            jumat: ["-", "-"],
-            sabtu: ["-", "-"],
-            minggu: ["-", "-"]
-        }
-    }, {
-        waktu: "",
-        senin: "-",
-        selasa: "Computer Club",
-        rabu: "Sahabat Literasi",
-        kamis: "-",
-        jumat: "-",
-        waktu_sabtu: "",
-        sabtu: "",
-        waktu_minggu: "",
-        minggu: "",
-        penanggung: {
-            senin: ["-", "-"],
-            selasa: ["-", "-"],
-            rabu: ["-", "-"],
-            kamis: ["-", "-"],
-            jumat: ["-", "-"],
-            sabtu: ["-", "-"],
-            minggu: ["-", "-"]
-        }
-    }],
-    // ===== 75 SISWA =====
+    ekstra: [
+        { waktu: "15.30 - Selesai", senin: "OSIS", selasa: "Literasi dan Numerasi", rabu: "Futsal", kamis: "Paskibra", jumat: "Hadroh", waktu_sabtu: "09.00 - Selesai", sabtu: "Pramuka", waktu_minggu: "15.30 - Selesai", minggu: "Paskibra", penanggung: { senin: ["Fauzi Faturohman, S.Pd., Gr.", "Meliana Dwi Rahmawati, S.Pd., Gr."], selasa: ["Maha Ikhlas Sulfitrah, S.Pd., Gr.", "Lufi Feriansyah, S.Pd., Gr."], rabu: ["Mochamad Hoky Aldiansyah, S.Pd., Gr.", "Youtrin Fadila, S.Pd., Gr."], kamis: ["Syifa Nurlathifah Al Azmi, S.Pd., Gr.", "Mitha Amalia, S.Pd., Gr."], jumat: ["Pelatih Tamu", "Mitha Amalia, S.Pd., Gr."], sabtu: ["Rukman", "-"], minggu: ["Syifa Nurlathifah Al Azmi, S.Pd., Gr.", "-"] } },
+        { waktu: "", senin: "English Club", selasa: "Karya Ilmiah Remaja", rabu: "Jurnalistik", kamis: "Silat", jumat: "UKS", waktu_sabtu: "", sabtu: "", waktu_minggu: "", minggu: "", penanggung: { senin: ["-", "Sarah Nur Fazriah, S.Pd., Gr."], selasa: ["-", "-"], rabu: ["Yulistina, S.Pd., Gr.", "-"], kamis: ["-", "-"], jumat: ["-", "-"], sabtu: ["-", "-"], minggu: ["-", "-"] } },
+        { waktu: "", senin: "-", selasa: "Computer Club", rabu: "Sahabat Literasi", kamis: "-", jumat: "-", waktu_sabtu: "", sabtu: "", waktu_minggu: "", minggu: "", penanggung: { senin: ["-", "-"], selasa: ["-", "-"], rabu: ["-", "-"], kamis: ["-", "-"], jumat: ["-", "-"], sabtu: ["-", "-"], minggu: ["-", "-"] } }
+    ],
     students: [
+        // 75 siswa lengkap dari screenshot
         { id: 1, name: "ADE MUSTOPA", nisn: "3139453861", school: "SRDT 39 Garut", level: "SD", gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
         { id: 2, name: "AGUS RAMDANI", nisn: "0104915906", school: "SRMPT 39 Garut", level: "SMP", gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
         { id: 3, name: "AHMAD PADILAH", nisn: "3137836817", school: "SRDT 39 Garut", level: "SD", gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
@@ -298,7 +200,7 @@ function toggleSidebar() {
 }
 
 // ================================================================
-// AUTH — dengan login Wali Kelas
+// AUTH — dengan Role-Based Access
 // ================================================================
 
 function initAuth() {
@@ -308,12 +210,16 @@ function initAuth() {
         const avatar = document.getElementById('user-avatar');
         const nameElem = document.getElementById('user-name');
         const roleElem = document.getElementById('user-role');
-        if (avatar) avatar.src = currentUser.photo || `https://placehold.co/150x150/1e40af/ffffff?text=${currentUser.name.split(' ').map(n=>n[0]).join('').toUpperCase()}`;
+        const photo = currentUser.photo || `https://placehold.co/150x150/${currentUser.isWaliKelas ? '1e40af' : '64748b'}/ffffff?text=${currentUser.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}`;
+        if (avatar) avatar.src = photo;
         if (nameElem) nameElem.innerText = currentUser.name.split(',')[0];
         if (roleElem) {
             let roleText = currentUser.role;
             if (currentUser.isWaliKelas) {
                 roleText += ` 🏫 Wali Kelas ${currentUser.waliKelas}`;
+            }
+            if (currentUser.isSuperAdmin) {
+                roleText += ' ⭐ Admin';
             }
             roleElem.innerText = roleText;
         }
@@ -329,29 +235,32 @@ function handleLogin(e) {
     const nip = document.getElementById('login-nip').value.trim();
     const pass = document.getElementById('login-pass').value;
 
+    // Cari user berdasarkan NIP
     let user = appState.teachers.find(t => t.nip === nip);
+
+    // Jika tidak ditemukan, coba dengan username alternatif
     if (!user) {
         const lowerNip = nip.toLowerCase();
         if (lowerNip.includes('maha') || lowerNip === 'srd') {
             user = appState.teachers.find(t => t.isWaliKelas && t.waliKelas === 'SD');
         } else if (lowerNip.includes('meliana') || lowerNip === '7a') {
             user = appState.teachers.find(t => t.isWaliKelas && t.waliKelas === '7A');
-        } else if (lowerNip.includes('fauzi') || lowerNip === '7b') {
+        } else if (lowerNip.includes('fauzi') || lowerNip === '7b' || lowerNip === 'wakasek') {
             user = appState.teachers.find(t => t.isWaliKelas && t.waliKelas === '7B');
+        } else if (lowerNip === 'kepsek') {
+            user = appState.teachers.find(t => t.role === 'Kepala Sekolah');
         }
-    }
-    if (!user && nip === 'kepsek') {
-        user = appState.teachers.find(t => t.role === 'Kepala Sekolah');
     }
 
     if (user && pass === 'srt2026') {
         currentUser = user;
+        // Generate foto jika belum ada
         if (!currentUser.photo) {
             const initials = currentUser.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase();
-            currentUser.photo = `https://placehold.co/150x150/1e40af/ffffff?text=${initials}`;
+            currentUser.photo = `https://placehold.co/150x150/${currentUser.isWaliKelas ? '1e40af' : '64748b'}/ffffff?text=${initials}`;
         }
         localStorage.setItem('srt39_user', JSON.stringify(currentUser));
-        showToast(`Selamat datang, ${user.name.split(',')[0]}! ${user.isWaliKelas ? '👨‍🏫 Wali Kelas ' + user.waliKelas : ''}`);
+        showToast(`Selamat datang, ${user.name.split(',')[0]}! ${user.isWaliKelas ? '👨‍🏫 Wali Kelas ' + user.waliKelas : ''} ${user.isSuperAdmin ? '⭐ Admin' : ''}`);
         initAuth();
     } else {
         showToast('NIP atau Password salah!', 'error');
@@ -362,6 +271,38 @@ function handleLogout() {
     currentUser = null;
     localStorage.removeItem('srt39_user');
     initAuth();
+}
+
+// ================================================================
+// ROLE-BASED ACCESS CHECK
+// ================================================================
+
+function isSuperAdmin() {
+    return currentUser && currentUser.isSuperAdmin === true;
+}
+
+function isAdminOrSuperAdmin() {
+    return currentUser && (currentUser.role === 'Kepala Sekolah' || currentUser.isSuperAdmin === true);
+}
+
+function canEditAllData() {
+    return currentUser && (currentUser.isSuperAdmin === true || currentUser.role === 'Kepala Sekolah');
+}
+
+function canAccessGuru() {
+    return currentUser && (currentUser.isSuperAdmin === true || currentUser.role === 'Kepala Sekolah');
+}
+
+function canAccessAdministrasi() {
+    return currentUser && true; // Semua guru bisa akses administrasi (upload)
+}
+
+function canAccessMurid() {
+    return currentUser && true; // Semua guru bisa akses data murid
+}
+
+function isWaliKelas() {
+    return currentUser && currentUser.isWaliKelas === true;
 }
 
 // ================================================================
@@ -379,18 +320,60 @@ function router() {
         if (link.getAttribute('href') === hash) link.classList.add('active');
     });
 
+    // Periksa akses untuk menu tertentu
+    const restrictedMenus = {
+        '#guru': canAccessGuru,
+        '#administrasi': canAccessAdministrasi,
+        '#murid': canAccessMurid
+    };
+
+    if (restrictedMenus[hash] && !restrictedMenus[hash]()) {
+        window.location.hash = '#dashboard';
+        showToast('Anda tidak memiliki akses ke menu ini.', 'error');
+        return;
+    }
+
     if (!container) return;
     switch (hash) {
-        case '#dashboard': pageTitle.innerText = "Dashboard"; container.innerHTML = renderDashboard(); break;
-        case '#profil': pageTitle.innerText = "Profil Sekolah"; container.innerHTML = renderProfile(); break;
-        case '#kalender': pageTitle.innerText = "Kalender Akademik"; container.innerHTML = renderCalendarGrid(); break;
-        case '#jadwal': pageTitle.innerText = "Jadwal Intrakurikuler"; container.innerHTML = renderSchedule(); break;
-        case '#ekstra': pageTitle.innerText = "Jadwal Ekstrakurikuler"; container.innerHTML = renderEkstra(); break;
-        case '#murid': pageTitle.innerText = "Data & Nilai Murid"; container.innerHTML = renderStudents(); setTimeout(() => { const s = document.getElementById('search-murid'); if (s) s.addEventListener('input', filterStudents); }, 100); break;
-        case '#guru': pageTitle.innerText = "Data Guru"; container.innerHTML = renderTeachers(); break;
-        case '#administrasi': pageTitle.innerText = "Administrasi"; container.innerHTML = renderAdmin(); break;
-        case '#rkt': pageTitle.innerText = "RKT & KSP"; container.innerHTML = renderRKT_KSP(); break;
-        default: window.location.hash = '#dashboard';
+        case '#dashboard':
+            pageTitle.innerText = "Dashboard";
+            container.innerHTML = renderDashboard();
+            break;
+        case '#profil':
+            pageTitle.innerText = "Profil Sekolah";
+            container.innerHTML = renderProfile();
+            break;
+        case '#kalender':
+            pageTitle.innerText = "Kalender Akademik";
+            container.innerHTML = renderCalendarGrid();
+            break;
+        case '#jadwal':
+            pageTitle.innerText = "Jadwal Intrakurikuler";
+            container.innerHTML = renderSchedule();
+            break;
+        case '#ekstra':
+            pageTitle.innerText = "Jadwal Ekstrakurikuler";
+            container.innerHTML = renderEkstra();
+            break;
+        case '#murid':
+            pageTitle.innerText = "Data & Nilai Murid";
+            container.innerHTML = renderStudents();
+            setTimeout(() => { const s = document.getElementById('search-murid'); if (s) s.addEventListener('input', filterStudents); }, 100);
+            break;
+        case '#guru':
+            pageTitle.innerText = "Data Guru";
+            container.innerHTML = renderTeachers();
+            break;
+        case '#administrasi':
+            pageTitle.innerText = "Administrasi";
+            container.innerHTML = renderAdmin();
+            break;
+        case '#rkt':
+            pageTitle.innerText = "RKT & KSP";
+            container.innerHTML = renderRKT_KSP();
+            break;
+        default:
+            window.location.hash = '#dashboard';
     }
 }
 window.addEventListener('hashchange', router);
@@ -400,6 +383,10 @@ window.addEventListener('hashchange', router);
 // ================================================================
 
 function deleteData(type, id) {
+    if (!isSuperAdmin()) {
+        showToast('Hanya Admin yang dapat menghapus data!', 'error');
+        return;
+    }
     if (!confirm('Yakin ingin menghapus data ini?')) return;
     if (type === 'student') {
         appState.students = appState.students.filter(s => s.id !== id);
@@ -417,7 +404,42 @@ function deleteData(type, id) {
 }
 
 // ================================================================
-// AI ASSISTANT — Pintar dan dapat menjawab semua pertanyaan data
+// UPLOAD FOTO PROFIL GURU
+// ================================================================
+
+function uploadTeacherPhoto(nip) {
+    if (!currentUser || (currentUser.nip !== nip && !isSuperAdmin())) {
+        showToast('Anda hanya dapat mengubah foto profil sendiri!', 'error');
+        return;
+    }
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const teacher = appState.teachers.find(t => t.nip === nip);
+            if (teacher) {
+                teacher.photo = ev.target.result;
+                saveState();
+                router();
+                showToast('Foto profil berhasil diunggah!');
+                // Update avatar sidebar
+                const avatar = document.getElementById('user-avatar');
+                if (currentUser && currentUser.nip === nip && avatar) {
+                    avatar.src = ev.target.result;
+                }
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+    input.click();
+}
+
+// ================================================================
+// AI ASSISTANT
 // ================================================================
 
 function toggleAI() {
@@ -448,7 +470,6 @@ function sendAIMessage() {
         const lower = text.toLowerCase();
         let reply = '';
 
-        // Data Siswa
         if (lower.includes('total siswa') || lower.includes('jumlah siswa') || lower.includes('berapa siswa')) {
             const total = appState.students.length;
             const sd = appState.students.filter(s => s.level === 'SD').length;
@@ -463,10 +484,10 @@ function sendAIMessage() {
                 const found = appState.students.filter(s => s.name.toLowerCase().includes(searchName));
                 if (found.length > 0) {
                     reply = `🔍 <b>Hasil pencarian "${searchName}":</b>\n`;
-                    found.slice(0, 10).forEach(s => {
+                    found.slice(0, 15).forEach(s => {
                         reply += `• ${s.name} (${s.nisn}) - ${s.school} - ${s.level} - ${s.rombel}\n`;
                     });
-                    if (found.length > 10) reply += `\n<i>... dan ${found.length - 10} siswa lainnya</i>`;
+                    if (found.length > 15) reply += `\n<i>... dan ${found.length - 15} siswa lainnya</i>`;
                 } else {
                     reply = `🔍 Tidak ditemukan siswa dengan nama "${searchName}".`;
                 }
@@ -487,32 +508,15 @@ function sendAIMessage() {
             wali.forEach(w => {
                 reply += `• Kelas ${w.waliKelas}: ${w.name.split(',')[0]}\n`;
             });
-        } else if (lower.includes('siswa 7a') || lower.includes('kelas 7a')) {
-            const students = appState.students.filter(s => s.rombel === '7A');
-            reply = `📚 <b>Siswa Kelas 7A (${students.length} siswa)</b>\n${students.slice(0, 15).map(s => `• ${s.name}`).join('\n')}${students.length > 15 ? `\n<i>... dan ${students.length - 15} siswa lainnya</i>` : ''}`;
-        } else if (lower.includes('siswa 7b') || lower.includes('kelas 7b')) {
-            const students = appState.students.filter(s => s.rombel === '7B');
-            reply = `📚 <b>Siswa Kelas 7B (${students.length} siswa)</b>\n${students.slice(0, 15).map(s => `• ${s.name}`).join('\n')}${students.length > 15 ? `\n<i>... dan ${students.length - 15} siswa lainnya</i>` : ''}`;
-        }
-        // Data Guru
-        else if (lower.includes('total guru') || lower.includes('jumlah guru') || lower.includes('berapa guru')) {
+        } else if (lower.includes('total guru') || lower.includes('jumlah guru') || lower.includes('berapa guru')) {
             const total = appState.teachers.length;
             const wali = appState.teachers.filter(t => t.isWaliKelas).length;
             reply = `👨‍🏫 <b>Data Guru SRT 39 Garut</b>\nTotal: <span class="highlight">${total}</span> guru\n• Wali Kelas: ${wali} orang\n• Guru Mapel: ${total - wali} orang`;
-        } else if (lower.includes('daftar guru') || lower.includes('guru apa saja')) {
-            reply = `👨‍🏫 <b>Daftar Guru SRT 39 Garut</b>\n`;
-            appState.teachers.forEach(t => {
-                reply += `• ${t.name.split(',')[0]} - ${t.role}${t.isWaliKelas ? ' (Wali Kelas ' + t.waliKelas + ')' : ''}\n`;
-            });
-        }
-        // Jadwal
-        else if (lower.includes('jadwal intra') || lower.includes('jadwal pelajaran') || lower.includes('pelajaran hari')) {
+        } else if (lower.includes('jadwal intra') || lower.includes('jadwal pelajaran')) {
             reply = `📅 <b>Jadwal Intrakurikuler</b>\nTerdapat ${appState.jadwal.length} sesi pelajaran per hari.\nMulai pukul 08.00 - 15.00.\n\nRincian lengkap dapat dilihat di menu "Jadwal Intrakurikuler".`;
         } else if (lower.includes('jadwal ekstra') || lower.includes('ekstrakurikuler') || lower.includes('ekskul')) {
             reply = `⚽ <b>Jadwal Ekstrakurikuler</b>\n${appState.ekstra.map((e, i) => `Sesi ${i+1}: ${e.senin || '-'} | ${e.selasa || '-'} | ${e.rabu || '-'} | ${e.kamis || '-'} | ${e.jumat || '-'}`).join('\n')}\n\nSabtu: Pramuka (09.00)\nMinggu: Paskibra (15.30)`;
-        }
-        // Kalender
-        else if (lower.includes('kalender') || lower.includes('event') || lower.includes('acara') || lower.includes('bulan ini')) {
+        } else if (lower.includes('kalender') || lower.includes('event') || lower.includes('acara') || lower.includes('bulan ini')) {
             const now = new Date();
             const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
             const currentMonth = monthNames[now.getMonth()] + ' ' + now.getFullYear();
@@ -525,21 +529,13 @@ function sendAIMessage() {
             } else {
                 reply = `📅 <b>Kalender Akademik</b>\nTerdapat ${appState.calendar.length} bulan dengan berbagai event.\nLihat menu "Kalender Akademik" untuk detail lengkap.`;
             }
-        }
-        // RKT & KSP
-        else if (lower.includes('rkt') || lower.includes('ksp') || lower.includes('kurikulum') || lower.includes('rencana kerja')) {
+        } else if (lower.includes('rkt') || lower.includes('ksp') || lower.includes('kurikulum') || lower.includes('rencana kerja')) {
             reply = `📋 <b>RKT & KSP SRT 39 Garut</b>\n\n<b>RKT (Rencana Kerja Tahunan)</b>\n• Berisi program kerja 8 Standar Nasional Pendidikan\n• Target: meningkatkan literasi, numerasi, dan karakter siswa\n\n<b>KSP (Kurikulum Satuan Pendidikan)</b>\n• Menggunakan Kurikulum Merdeka\n• Terdiri dari Intrakurikuler, Kokurikuler, dan Ekstrakurikuler\n\nDetail lengkap di menu "RKT & KSP".`;
-        }
-        // Visi Misi
-        else if (lower.includes('visi') || lower.includes('misi')) {
+        } else if (lower.includes('visi') || lower.includes('misi')) {
             reply = `🎯 <b>Visi & Misi SRT 39 Garut</b>\n\n<b>Visi:</b>\n"${appState.school.visi}"\n\n<b>Misi:</b>\n${appState.school.misi.map((m, i) => `${i+1}. ${m}`).join('\n')}\n\n<b>Moto:</b> "${appState.school.moto}"`;
-        }
-        // Informasi Sekolah
-        else if (lower.includes('sekolah') || lower.includes('info sekolah') || lower.includes('profil sekolah')) {
+        } else if (lower.includes('sekolah') || lower.includes('info sekolah') || lower.includes('profil sekolah')) {
             reply = `🏫 <b>Informasi Sekolah</b>\n\nNama: ${appState.school.name}\nAlamat: ${appState.school.address}\nNPSN SRD: ${appState.school.npsn_srd}\nNPSN SRMP: ${appState.school.npsn_srmp}\nKepala Sekolah: ${appState.school.kepsek}\nWakasek Kurikulum: ${appState.school.wakakur}\nTahun Ajaran: ${appState.school.tahun}\nLuas Tanah: ${appState.school.luasTanah}\nLuas Bangunan: ${appState.school.luasBangunan}`;
-        }
-        // Default
-        else {
+        } else {
             reply = `🤖 <b>Saya siap membantu!</b>\n\nSaya dapat menjawab pertanyaan tentang:\n• 📊 Data siswa (total, cari nama, kelas)\n• 👨‍🏫 Data guru & wali kelas\n• 📅 Jadwal intra & ekstrakurikuler\n• 🎯 Visi, misi, profil sekolah\n• 📋 RKT & KSP\n• 📆 Kalender akademik\n\nContoh pertanyaan:\n• "Berapa total siswa?"\n• "Siapa wali kelas 7A?"\n• "Ada event apa bulan ini?"\n• "Cari siswa bernama Ade"`;
         }
 
@@ -547,6 +543,7 @@ function sendAIMessage() {
         body.scrollTop = body.scrollHeight;
     }, 500);
 }
+
 
 // ================================================================
 // RENDER FUNCTIONS (Dashboard, Profil, Kalender, Jadwal, Ekstra, Students, Teachers, Admin, RKT)
@@ -558,60 +555,66 @@ function renderDashboard() {
     const smp = appState.students.filter(s => s.level === 'SMP').length;
     const guru = appState.teachers.length;
     const wali = appState.teachers.filter(t => t.isWaliKelas).length;
+
+    // Cek akses untuk menampilkan tombol admin
+    const isAdmin = isSuperAdmin() || currentUser.role === 'Kepala Sekolah';
+
     return `
-        <div class="fade-in space-y-6">
-            <div class="bg-gradient-to-br from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 opacity-10"><i class="fas fa-school" style="font-size:16rem;"></i></div>
-                <div class="relative z-10">
-                    <h2 class="text-3xl font-extrabold mb-2">Halo, ${currentUser.name.split(',')[0]}! 👋</h2>
-                    <p class="text-white/80 text-lg max-w-2xl">Selamat datang di SIMAKUR — Sistem Manajemen Kurikulum ${appState.school.name}</p>
-                    ${currentUser.isWaliKelas ? `<p class="text-white/70 text-sm mt-1">🏫 <b>Wali Kelas ${currentUser.waliKelas}</b> — ${appState.students.filter(s => s.rombel === currentUser.waliKelas).length} siswa</p>` : ''}
-                    <div class="mt-3 flex flex-wrap gap-3">
-                        <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-calendar-alt mr-2"></i>TA ${appState.school.tahun}</span>
-                        <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-quote-left mr-2"></i>${appState.school.moto}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="stat-card flex items-center gap-4">
-                    <div class="icon bg-blue-50 text-blue-600"><i class="fas fa-user-graduate"></i></div>
-                    <div><p class="text-xs text-slate-500 font-medium">Total Siswa</p><p class="text-2xl font-extrabold text-dark">${total}</p></div>
-                </div>
-                <div class="stat-card flex items-center gap-4">
-                    <div class="icon bg-emerald-50 text-emerald-600"><i class="fas fa-school"></i></div>
-                    <div><p class="text-xs text-slate-500 font-medium">SRD</p><p class="text-2xl font-extrabold text-dark">${sd}</p></div>
-                </div>
-                <div class="stat-card flex items-center gap-4">
-                    <div class="icon bg-purple-50 text-purple-600"><i class="fas fa-school"></i></div>
-                    <div><p class="text-xs text-slate-500 font-medium">SRMP</p><p class="text-2xl font-extrabold text-dark">${smp}</p></div>
-                </div>
-                <div class="stat-card flex items-center gap-4">
-                    <div class="icon bg-amber-50 text-amber-600"><i class="fas fa-users"></i></div>
-                    <div><p class="text-xs text-slate-500 font-medium">GTK</p><p class="text-2xl font-extrabold text-dark">${guru}</p></div>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-dark text-sm mb-3"><i class="fas fa-info-circle text-primary mr-2"></i>Informasi Sekolah</h3>
-                    <div class="space-y-1.5 text-sm text-slate-600">
-                        <div class="flex justify-between"><span class="font-medium">Kepala Sekolah</span><span>${appState.school.kepsek}</span></div>
-                        <div class="flex justify-between"><span class="font-medium">Wakasek Kurikulum</span><span>${appState.school.wakakur}</span></div>
-                        <div class="flex justify-between"><span class="font-medium">Tahun Ajaran</span><span>${appState.school.tahun}</span></div>
-                        <div class="flex justify-between"><span class="font-medium">Status</span><span>Sekolah Rakyat Negeri</span></div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-dark text-sm mb-3"><i class="fas fa-flag-checkered text-amber-500 mr-2"></i>Target 2026/2027</h3>
-                    <div class="space-y-2">
-                        <div><span class="badge-status bg-emerald-100 text-emerald-700">100%</span> Guru bersertifikat</div>
-                        <div><span class="badge-status bg-blue-100 text-blue-700">75</span> Siswa (25 SD + 50 SMP)</div>
-                        <div><span class="badge-status bg-purple-100 text-purple-700">${guru}</span> GTK aktif</div>
-                        <div><span class="badge-status bg-amber-100 text-amber-700">8</span> Ekstrakurikuler</div>
-                    </div>
+    <div class="fade-in space-y-6">
+        <div class="bg-gradient-to-br from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+            <div class="absolute -right-12 -top-12 opacity-10"><i class="fas fa-school" style="font-size:16rem;"></i></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-extrabold mb-2">Halo, ${currentUser.name.split(',')[0]}! 👋</h2>
+                <p class="text-white/80 text-lg max-w-2xl">Selamat datang di SIMAKUR — Sistem Manajemen Kurikulum ${appState.school.name}</p>
+                ${currentUser.isWaliKelas ? `<p class="text-white/70 text-sm mt-1">🏫 <b>Wali Kelas ${currentUser.waliKelas}</b> — ${appState.students.filter(s => s.rombel === currentUser.waliKelas).length} siswa</p>` : ''}
+                ${isAdmin ? `<p class="text-white/70 text-sm mt-1">⭐ <b>Akses Admin Penuh</b> — Anda dapat mengelola semua data</p>` : `<p class="text-white/70 text-sm mt-1">📝 <b>Akses Guru</b> — Kelola data guru, administrasi, dan nilai murid</p>`}
+                <div class="mt-3 flex flex-wrap gap-3">
+                    <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-calendar-alt mr-2"></i>TA ${appState.school.tahun}</span>
+                    <span class="bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm font-medium"><i class="fas fa-quote-left mr-2"></i>${appState.school.moto}</span>
                 </div>
             </div>
         </div>
-    `;
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="stat-card flex items-center gap-4">
+                <div class="icon bg-blue-50 text-blue-600"><i class="fas fa-user-graduate"></i></div>
+                <div><p class="text-xs text-slate-500 font-medium">Total Siswa</p><p class="text-2xl font-extrabold text-dark">${total}</p></div>
+            </div>
+            <div class="stat-card flex items-center gap-4">
+                <div class="icon bg-emerald-50 text-emerald-600"><i class="fas fa-school"></i></div>
+                <div><p class="text-xs text-slate-500 font-medium">SRD</p><p class="text-2xl font-extrabold text-dark">${sd}</p></div>
+            </div>
+            <div class="stat-card flex items-center gap-4">
+                <div class="icon bg-purple-50 text-purple-600"><i class="fas fa-school"></i></div>
+                <div><p class="text-xs text-slate-500 font-medium">SRMP</p><p class="text-2xl font-extrabold text-dark">${smp}</p></div>
+            </div>
+            <div class="stat-card flex items-center gap-4">
+                <div class="icon bg-amber-50 text-amber-600"><i class="fas fa-users"></i></div>
+                <div><p class="text-xs text-slate-500 font-medium">GTK</p><p class="text-2xl font-extrabold text-dark">${guru}</p></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+                <h3 class="font-bold text-dark text-sm mb-3"><i class="fas fa-info-circle text-primary mr-2"></i>Informasi Sekolah</h3>
+                <div class="space-y-1.5 text-sm text-slate-600">
+                    <div class="flex justify-between"><span class="font-medium">Kepala Sekolah</span><span>${appState.school.kepsek}</span></div>
+                    <div class="flex justify-between"><span class="font-medium">Wakasek Kurikulum</span><span>${appState.school.wakakur}</span></div>
+                    <div class="flex justify-between"><span class="font-medium">Tahun Ajaran</span><span>${appState.school.tahun}</span></div>
+                    <div class="flex justify-between"><span class="font-medium">Status</span><span>Sekolah Rakyat Negeri</span></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+                <h3 class="font-bold text-dark text-sm mb-3"><i class="fas fa-flag-checkered text-amber-500 mr-2"></i>Target 2026/2027</h3>
+                <div class="space-y-2">
+                    <div><span class="badge-status bg-emerald-100 text-emerald-700">100%</span> Guru bersertifikat</div>
+                    <div><span class="badge-status bg-blue-100 text-blue-700">75</span> Siswa (25 SD + 50 SMP)</div>
+                    <div><span class="badge-status bg-purple-100 text-purple-700">${guru}</span> GTK aktif</div>
+                    <div><span class="badge-status bg-amber-100 text-amber-700">8</span> Ekstrakurikuler</div>
+                </div>
+            </div>
+        </div>
+    </div>`;
 }
 
 function renderProfile() {
@@ -622,42 +625,43 @@ function renderProfile() {
         </li>
     `).join('');
     return `
-        <div class="fade-in space-y-6">
-            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row gap-8 items-center text-center md:text-left">
-                <div class="w-32 h-32 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full border-4 border-white shadow-lg flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-school text-5xl text-primary/60"></i>
-                </div>
-                <div class="flex-1">
-                    <h1 class="text-2xl md:text-3xl font-extrabold text-dark">${appState.school.name}</h1>
-                    <p class="text-slate-500 mt-2 flex items-center justify-center md:justify-start gap-2"><i class="fas fa-map-marker-alt text-rose-500"></i> ${appState.school.address}</p>
-                    <div class="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
-                        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold">NPSN SRD: ${appState.school.npsn_srd}</span>
-                        <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-semibold">NPSN SRMP: ${appState.school.npsn_srmp}</span>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">Berdiri: ${appState.school.tahunBerdiri}</span>
-                    </div>
-                </div>
+    <div class="fade-in space-y-6">
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row gap-8 items-center text-center md:text-left">
+            <div class="w-32 h-32 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full border-4 border-white shadow-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-school text-5xl text-primary/60"></i>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                    <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-eye text-amber-500 mr-2"></i>Visi Sekolah</h2>
-                    <p class="text-slate-600 leading-relaxed font-medium p-5 bg-slate-50 rounded-2xl italic text-center">"${appState.school.visi}"</p>
-                </div>
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                    <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-bullseye text-emerald-500 mr-2"></i>Misi Sekolah</h2>
-                    <ul class="text-slate-600">${misiHTML}</ul>
-                </div>
-            </div>
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-building text-sky-500 mr-2"></i>Data Fisik</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">${appState.school.luasTanah}</span><span class="text-slate-500 text-xs">Luas Tanah</span></div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">${appState.school.luasBangunan}</span><span class="text-slate-500 text-xs">Luas Bangunan</span></div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">${appState.school.statusTanah}</span><span class="text-slate-500 text-xs">Status Tanah</span></div>
-                    <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">3</span><span class="text-slate-500 text-xs">Rombel</span></div>
+            <div class="flex-1">
+                <h1 class="text-2xl md:text-3xl font-extrabold text-dark">${appState.school.name}</h1>
+                <p class="text-slate-500 mt-2 flex items-center justify-center md:justify-start gap-2"><i class="fas fa-map-marker-alt text-rose-500"></i> ${appState.school.address}</p>
+                <div class="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
+                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold">NPSN SRD: ${appState.school.npsn_srd}</span>
+                    <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-semibold">NPSN SRMP: ${appState.school.npsn_srmp}</span>
+                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">Berdiri: ${appState.school.tahunBerdiri}</span>
                 </div>
             </div>
         </div>
-    `;
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-eye text-amber-500 mr-2"></i>Visi Sekolah</h2>
+                <p class="text-slate-600 leading-relaxed font-medium p-5 bg-slate-50 rounded-2xl italic text-center">"${appState.school.visi}"</p>
+            </div>
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-bullseye text-emerald-500 mr-2"></i>Misi Sekolah</h2>
+                <ul class="text-slate-600">${misiHTML}</ul>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+            <h2 class="text-xl font-bold text-dark mb-4"><i class="fas fa-building text-sky-500 mr-2"></i>Data Fisik</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">${appState.school.luasTanah}</span><span class="text-slate-500 text-xs">Luas Tanah</span></div>
+                <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">${appState.school.luasBangunan}</span><span class="text-slate-500 text-xs">Luas Bangunan</span></div>
+                <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">${appState.school.statusTanah}</span><span class="text-slate-500 text-xs">Status Tanah</span></div>
+                <div class="bg-slate-50 p-4 rounded-xl text-center"><span class="block font-bold text-dark">3</span><span class="text-slate-500 text-xs">Rombel</span></div>
+            </div>
+        </div>
+    </div>`;
 }
 
 // ================================================================
@@ -667,24 +671,27 @@ function renderProfile() {
 function renderCalendarGrid() {
     const months = appState.calendar;
     let output = '<div class="fade-in space-y-8">';
+
     output += `
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap gap-4 items-center text-xs">
-            <span class="font-semibold text-slate-600 mr-2">Legenda:</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-blue-100 border-l-4 border-blue-600"></span> Kegiatan Awal</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-yellow-100 border-l-4 border-yellow-500"></span> Kegiatan Akademik</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-red-100 border-l-4 border-red-600"></span> Libur / Cuti</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-sky-100 border-l-4 border-sky-500"></span> Rapat Dinas</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-100 border-l-4 border-emerald-500"></span> Pembagian Rapor</span>
-        </div>
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap gap-4 items-center text-xs">
+        <span class="font-semibold text-slate-600 mr-2">Legenda:</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-blue-100 border-l-4 border-blue-600"></span> Kegiatan Awal</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-yellow-100 border-l-4 border-yellow-500"></span> Kegiatan Akademik</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-red-100 border-l-4 border-red-600"></span> Libur / Cuti</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-sky-100 border-l-4 border-sky-500"></span> Rapat Dinas</span>
+        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-100 border-l-4 border-emerald-500"></span> Pembagian Rapor</span>
+    </div>
     `;
 
     months.forEach(monthData => {
         const [monthName, year] = monthData.month.split(' ');
         const monthIndex = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'].indexOf(monthName);
         if (monthIndex === -1) return;
+
         const yearNum = parseInt(year);
         const firstDay = new Date(yearNum, monthIndex, 1).getDay();
         const daysInMonth = new Date(yearNum, monthIndex + 1, 0).getDate();
+
         const eventMap = {};
         monthData.events.forEach(ev => {
             const dateStr = ev.date;
@@ -708,9 +715,11 @@ function renderCalendarGrid() {
         let gridHTML = '';
         const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
         gridHTML += dayNames.map(d => `<div class="day-header">${d}</div>`).join('');
+
         for (let i = 0; i < firstDay; i++) {
             gridHTML += `<div class="day-cell other-month"></div>`;
         }
+
         for (let d = 1; d <= daysInMonth; d++) {
             const events = eventMap[`${d}`] || [];
             let displayBadges = events.slice(0, 2).map(ev => {
@@ -725,6 +734,7 @@ function renderCalendarGrid() {
             if (events.length > 2) {
                 displayBadges += `<span class="more-indicator">+${events.length - 2} lagi</span>`;
             }
+
             gridHTML += `
                 <div class="day-cell">
                     <div class="date-num">${d}</div>
@@ -732,21 +742,26 @@ function renderCalendarGrid() {
                 </div>
             `;
         }
+
         const totalCells = firstDay + daysInMonth;
         const remaining = (7 - (totalCells % 7)) % 7;
         for (let i = 0; i < remaining; i++) {
             gridHTML += `<div class="day-cell other-month"></div>`;
         }
+
         output += `
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-4">
                     <h3 class="text-xl font-bold text-dark">${monthData.month}</h3>
                     <span class="text-xs text-slate-400">${daysInMonth} hari</span>
                 </div>
-                <div class="calendar-grid">${gridHTML}</div>
+                <div class="calendar-grid">
+                    ${gridHTML}
+                </div>
             </div>
         `;
     });
+
     output += '</div>';
     return output;
 }
@@ -771,98 +786,95 @@ function renderSchedule() {
     let trMapel = appState.jadwal.map((row, i) => {
         if (row.isBreak) {
             return `
-                <tr class="bg-slate-100 border-b border-slate-300 text-sm text-center font-bold text-slate-700 uppercase tracking-widest">
-                    <td class="py-2 px-1 border-r border-slate-300 bg-white"></td>
-                    <td class="py-2 px-1 whitespace-nowrap text-xs border-r border-slate-300 bg-white">${row.waktu}</td>
-                    <td colspan="12" class="py-2 px-1 border-r border-slate-300">ISTIRAHAT</td>
-                    <td class="py-2 px-1 whitespace-nowrap text-xs border-r border-slate-300 bg-white">09.45 - 10.15</td>
-                    <td colspan="3" class="py-2 px-1 border-r border-slate-300">ISTIRAHAT</td>
-                </tr>
-            `;
+            <tr class="bg-slate-100 border-b border-slate-300 text-sm text-center font-bold text-slate-700 uppercase tracking-widest">
+                <td class="py-2 px-1 border-r border-slate-300 bg-white"></td>
+                <td class="py-2 px-1 whitespace-nowrap text-xs border-r border-slate-300 bg-white">${row.waktu}</td>
+                <td colspan="12" class="py-2 px-1 border-r border-slate-300">ISTIRAHAT</td>
+                <td class="py-2 px-1 whitespace-nowrap text-xs border-r border-slate-300 bg-white">09.45 - 10.15</td>
+                <td colspan="3" class="py-2 px-1 border-r border-slate-300">ISTIRAHAT</td>
+            </tr>`;
         }
         return `
-            <tr class="hover:bg-slate-50 transition border-b border-slate-200 text-sm text-center font-medium">
-                <td class="py-3 px-1 font-bold text-slate-700 border-r border-slate-200 bg-slate-50">${row.jam}</td>
-                <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50">${row.waktu}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[0])}">${row.s[0]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[1])}">${row.s[1]}</td>
-                <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.s[2])}">${row.s[2]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[0])}">${row.sel[0]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[1])}">${row.sel[1]}</td>
-                <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.sel[2])}">${row.sel[2]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[0])}">${row.r[0]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[1])}">${row.r[1]}</td>
-                <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.r[2])}">${row.r[2]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[0])}">${row.k[0]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[1])}">${row.k[1]}</td>
-                <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.k[2])}">${row.k[2]}</td>
-                <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50">${row.jm}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[0])}">${row.j[0]}</td>
-                <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[1])}">${row.j[1]}</td>
-                <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.j[2])}">${row.j[2]}</td>
-            </tr>
-        `;
+        <tr class="hover:bg-slate-50 transition border-b border-slate-200 text-sm text-center font-medium">
+            <td class="py-3 px-1 font-bold text-slate-700 border-r border-slate-200 bg-slate-50">${row.jam}</td>
+            <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50">${row.waktu}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[0])}">${row.s[0]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.s[1])}">${row.s[1]}</td>
+            <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.s[2])}">${row.s[2]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[0])}">${row.sel[0]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.sel[1])}">${row.sel[1]}</td>
+            <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.sel[2])}">${row.sel[2]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[0])}">${row.r[0]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.r[1])}">${row.r[1]}</td>
+            <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.r[2])}">${row.r[2]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[0])}">${row.k[0]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.k[1])}">${row.k[1]}</td>
+            <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.k[2])}">${row.k[2]}</td>
+            <td class="py-3 px-1 whitespace-nowrap text-xs border-r border-slate-200 bg-slate-50">${row.jm}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[0])}">${row.j[0]}</td>
+            <td class="py-3 px-1 border-r border-b ${getSubjColor(row.j[1])}">${row.j[1]}</td>
+            <td class="py-3 px-1 border-r border-b border-slate-200 ${getSubjColor(row.j[2])}">${row.j[2]}</td>
+        </tr>`;
     }).join('');
 
     return `
-        <div class="fade-in">
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden w-full overflow-x-auto">
-                <div class="text-center py-4 border-b border-slate-200 bg-gradient-to-r from-blue-50 to-white">
-                    <h2 class="text-xl font-extrabold text-dark uppercase tracking-wide">Jadwal Intrakurikuler Semester Ganjil</h2>
-                    <h2 class="text-lg font-bold text-dark uppercase">${appState.school.name}</h2>
-                    <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
-                </div>
-                <table class="w-full min-w-[1300px] border-collapse bg-white">
-                    <thead>
-                        <tr class="bg-[#1e40af] text-white text-sm uppercase text-center border-b border-slate-300">
-                            <th rowspan="2" class="py-3 px-1 border-r border-slate-400 font-bold w-12">Jam</th>
-                            <th rowspan="2" class="py-3 px-1 border-r border-slate-400 font-bold w-28">Waktu</th>
-                            <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Senin</th>
-                            <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Selasa</th>
-                            <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Rabu</th>
-                            <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Kamis</th>
-                            <th rowspan="2" class="py-3 px-1 border-r border-slate-400 font-bold w-28">Waktu</th>
-                            <th colspan="3" class="py-2 px-1 border-slate-400 font-bold">Jum'at</th>
-                        </tr>
-                        <tr class="bg-[#2563eb] text-white text-xs text-center border-b border-slate-300 font-bold uppercase tracking-wide">
-                            <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
-                            <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
-                            <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
-                            <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
-                            <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bg-slate-100 text-center text-xs font-bold text-slate-700 border-b border-slate-300">
-                            <td class="border-r border-slate-300 bg-white"></td>
-                            <td class="border-r border-slate-300 py-2">07.30 - 08.00</td>
-                            <td colspan="12" class="py-2 border-r border-slate-300">Apel / Upacara Bendera (Senin)</td>
-                            <td class="border-r border-slate-300 py-2">07.30 - 08.00</td>
-                            <td colspan="3" class="py-2 border-r border-slate-300">Sholat Dhuha / Jumsih</td>
-                        </tr>
-                        ${trMapel}
-                        <tr class="bg-white text-xs text-center border-b border-slate-300 text-slate-800">
-                            <td rowspan="2" colspan="2" class="py-3 px-1 border-r border-slate-300 font-bold uppercase bg-slate-50">Piket</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.senin[0]}</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.selasa[0]}</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.rabu[0]}</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.kamis[0]}</td>
-                            <td rowspan="2" class="border-r border-slate-300"></td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.jumat[0]}</td>
-                        </tr>
-                        <tr class="bg-white text-xs text-center border-b border-slate-300 text-slate-800">
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.senin[1]}</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.selasa[1]}</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.rabu[1]}</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.kamis[1]}</td>
-                            <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.jumat[1]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="p-3 bg-slate-50 text-xs text-slate-500 border-t border-slate-200 text-center">Koordinator Piket: ${appState.petugasPiket.kordinator[0]}</div>
+    <div class="fade-in">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden w-full overflow-x-auto">
+            <div class="text-center py-4 border-b border-slate-200 bg-gradient-to-r from-blue-50 to-white">
+                <h2 class="text-xl font-extrabold text-dark uppercase tracking-wide">Jadwal Intrakurikuler Semester Ganjil</h2>
+                <h2 class="text-lg font-bold text-dark uppercase">${appState.school.name}</h2>
+                <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
             </div>
+            <table class="w-full min-w-[1300px] border-collapse bg-white">
+                <thead>
+                    <tr class="bg-[#1e40af] text-white text-sm uppercase text-center border-b border-slate-300">
+                        <th rowspan="2" class="py-3 px-1 border-r border-slate-400 font-bold w-12">Jam</th>
+                        <th rowspan="2" class="py-3 px-1 border-r border-slate-400 font-bold w-28">Waktu</th>
+                        <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Senin</th>
+                        <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Selasa</th>
+                        <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Rabu</th>
+                        <th colspan="3" class="py-2 px-1 border-r border-slate-400 font-bold">Kamis</th>
+                        <th rowspan="2" class="py-3 px-1 border-r border-slate-400 font-bold w-28">Waktu</th>
+                        <th colspan="3" class="py-2 px-1 border-slate-400 font-bold">Jum'at</th>
+                    </tr>
+                    <tr class="bg-[#2563eb] text-white text-xs text-center border-b border-slate-300 font-bold uppercase tracking-wide">
+                        <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
+                        <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
+                        <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
+                        <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
+                        <th class="py-2 px-1 border-r border-slate-400">SRD</th><th class="py-2 px-1 border-r border-slate-400">SMP-A</th><th class="py-2 px-1 border-r border-slate-400">SMP-B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-slate-100 text-center text-xs font-bold text-slate-700 border-b border-slate-300">
+                        <td class="border-r border-slate-300 bg-white"></td>
+                        <td class="border-r border-slate-300 py-2">07.30 - 08.00</td>
+                        <td colspan="12" class="py-2 border-r border-slate-300">Apel / Upacara Bendera (Senin)</td>
+                        <td class="border-r border-slate-300 py-2">07.30 - 08.00</td>
+                        <td colspan="3" class="py-2 border-r border-slate-300">Sholat Dhuha / Jumsih</td>
+                    </tr>
+                    ${trMapel}
+                    <tr class="bg-white text-xs text-center border-b border-slate-300 text-slate-800">
+                        <td rowspan="2" colspan="2" class="py-3 px-1 border-r border-slate-300 font-bold uppercase bg-slate-50">Piket</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.senin[0]}</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.selasa[0]}</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.rabu[0]}</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.kamis[0]}</td>
+                        <td rowspan="2" class="border-r border-slate-300"></td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.jumat[0]}</td>
+                    </tr>
+                    <tr class="bg-white text-xs text-center border-b border-slate-300 text-slate-800">
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.senin[1]}</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.selasa[1]}</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.rabu[1]}</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.kamis[1]}</td>
+                        <td colspan="3" class="py-1 px-1 border-r border-slate-300">${appState.petugasPiket.jumat[1]}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="p-3 bg-slate-50 text-xs text-slate-500 border-t border-slate-200 text-center">Koordinator Piket: ${appState.petugasPiket.kordinator[0]}</div>
         </div>
-    `;
+    </div>`;
 }
 
 // ================================================================
@@ -872,27 +884,28 @@ function renderSchedule() {
 function renderEkstra() {
     const rows = appState.ekstra;
     let tableRows = '';
+
     rows.forEach((row, idx) => {
         const isFirst = idx === 0;
         const rowNum = isFirst ? '1' : '';
         const waktuDisplay = row.waktu || '';
         const waktuSabtu = row.waktu_sabtu || '';
         const waktuMinggu = row.waktu_minggu || '';
+
         tableRows += `
-            <tr class="border-b border-slate-100 hover:bg-slate-50 transition text-sm">
-                <td class="py-3 px-2 text-center font-bold text-slate-700 ${isFirst ? '' : 'text-slate-300'}">${rowNum}</td>
-                <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuDisplay}</td>
-                <td class="py-3 px-2 text-center">${row.senin || '-'}</td>
-                <td class="py-3 px-2 text-center">${row.selasa || '-'}</td>
-                <td class="py-3 px-2 text-center">${row.rabu || '-'}</td>
-                <td class="py-3 px-2 text-center">${row.kamis || '-'}</td>
-                <td class="py-3 px-2 text-center">${row.jumat || '-'}</td>
-                <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuSabtu}</td>
-                <td class="py-3 px-2 text-center">${row.sabtu || '-'}</td>
-                <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuMinggu}</td>
-                <td class="py-3 px-2 text-center">${row.minggu || '-'}</td>
-            </tr>
-        `;
+        <tr class="border-b border-slate-100 hover:bg-slate-50 transition text-sm">
+            <td class="py-3 px-2 text-center font-bold text-slate-700 ${isFirst ? '' : 'text-slate-300'}">${rowNum}</td>
+            <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuDisplay}</td>
+            <td class="py-3 px-2 text-center">${row.senin || '-'}</td>
+            <td class="py-3 px-2 text-center">${row.selasa || '-'}</td>
+            <td class="py-3 px-2 text-center">${row.rabu || '-'}</td>
+            <td class="py-3 px-2 text-center">${row.kamis || '-'}</td>
+            <td class="py-3 px-2 text-center">${row.jumat || '-'}</td>
+            <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuSabtu}</td>
+            <td class="py-3 px-2 text-center">${row.sabtu || '-'}</td>
+            <td class="py-3 px-2 text-center text-xs ${isFirst ? 'font-semibold text-slate-800' : 'text-slate-400'}">${waktuMinggu}</td>
+            <td class="py-3 px-2 text-center">${row.minggu || '-'}</td>
+        </tr>`;
     });
 
     const pj = appState.ekstra[0]?.penanggung || {};
@@ -906,57 +919,64 @@ function renderEkstra() {
         minggu: pj.minggu || ['-', '-']
     };
 
+    const isAdmin = isSuperAdmin();
+
     return `
-        <div class="fade-in">
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden w-full overflow-x-auto">
-                <div class="text-center py-4 border-b border-slate-200 bg-gradient-to-r from-indigo-50 to-white">
-                    <h2 class="text-xl font-extrabold text-dark uppercase tracking-wide">Jadwal Ekstrakurikuler Semester Ganjil</h2>
-                    <h2 class="text-lg font-bold text-dark uppercase">${appState.school.name}</h2>
-                    <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
+    <div class="fade-in">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden w-full overflow-x-auto">
+            <div class="text-center py-4 border-b border-slate-200 bg-gradient-to-r from-indigo-50 to-white">
+                <h2 class="text-xl font-extrabold text-dark uppercase tracking-wide">Jadwal Ekstrakurikuler Semester Ganjil</h2>
+                <h2 class="text-lg font-bold text-dark uppercase">${appState.school.name}</h2>
+                <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[1000px] border-collapse bg-white ekskul-table">
+                    <thead>
+                        <tr class="bg-[#1e40af] text-white text-xs uppercase text-center border-b border-slate-300">
+                            <th class="py-3 px-2 border-r border-slate-400 w-12">No</th>
+                            <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
+                            <th class="py-3 px-2 border-r border-slate-400">Senin</th>
+                            <th class="py-3 px-2 border-r border-slate-400">Selasa</th>
+                            <th class="py-3 px-2 border-r border-slate-400">Rabu</th>
+                            <th class="py-3 px-2 border-r border-slate-400">Kamis</th>
+                            <th class="py-3 px-2 border-r border-slate-400">Jum'at</th>
+                            <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
+                            <th class="py-3 px-2 border-r border-slate-400">Sabtu</th>
+                            <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
+                            <th class="py-3 px-2">Minggu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="p-4 bg-slate-50 border-t border-slate-200">
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-user-tie mr-2 text-primary"></i>Penanggung Jawab</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-1 text-xs text-slate-600">
+                    <div><span class="font-semibold">Senin:</span> ${pjMap.senin[0]} ${pjMap.senin[1] ? '& ' + pjMap.senin[1] : ''}</div>
+                    <div><span class="font-semibold">Selasa:</span> ${pjMap.selasa[0]} ${pjMap.selasa[1] ? '& ' + pjMap.selasa[1] : ''}</div>
+                    <div><span class="font-semibold">Rabu:</span> ${pjMap.rabu[0]} ${pjMap.rabu[1] ? '& ' + pjMap.rabu[1] : ''}</div>
+                    <div><span class="font-semibold">Kamis:</span> ${pjMap.kamis[0]} ${pjMap.kamis[1] ? '& ' + pjMap.kamis[1] : ''}</div>
+                    <div><span class="font-semibold">Jum'at:</span> ${pjMap.jumat[0]} ${pjMap.jumat[1] ? '& ' + pjMap.jumat[1] : ''}</div>
+                    <div><span class="font-semibold">Sabtu:</span> ${pjMap.sabtu[0]} ${pjMap.sabtu[1] ? '& ' + pjMap.sabtu[1] : ''}</div>
+                    <div><span class="font-semibold">Minggu:</span> ${pjMap.minggu[0]} ${pjMap.minggu[1] ? '& ' + pjMap.minggu[1] : ''}</div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full min-w-[1000px] border-collapse bg-white ekskul-table">
-                        <thead>
-                            <tr class="bg-[#1e40af] text-white text-xs uppercase text-center border-b border-slate-300">
-                                <th class="py-3 px-2 border-r border-slate-400 w-12">No</th>
-                                <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Senin</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Selasa</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Rabu</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Kamis</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Jum'at</th>
-                                <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
-                                <th class="py-3 px-2 border-r border-slate-400">Sabtu</th>
-                                <th class="py-3 px-2 border-r border-slate-400 w-28">Waktu</th>
-                                <th class="py-3 px-2">Minggu</th>
-                            </tr>
-                        </thead>
-                        <tbody>${tableRows}</tbody>
-                    </table>
-                </div>
-                <div class="p-4 bg-slate-50 border-t border-slate-200">
-                    <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"><i class="fas fa-user-tie mr-2 text-primary"></i>Penanggung Jawab</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-1 text-xs text-slate-600">
-                        <div><span class="font-semibold">Senin:</span> ${pjMap.senin[0]} ${pjMap.senin[1] ? '& ' + pjMap.senin[1] : ''}</div>
-                        <div><span class="font-semibold">Selasa:</span> ${pjMap.selasa[0]} ${pjMap.selasa[1] ? '& ' + pjMap.selasa[1] : ''}</div>
-                        <div><span class="font-semibold">Rabu:</span> ${pjMap.rabu[0]} ${pjMap.rabu[1] ? '& ' + pjMap.rabu[1] : ''}</div>
-                        <div><span class="font-semibold">Kamis:</span> ${pjMap.kamis[0]} ${pjMap.kamis[1] ? '& ' + pjMap.kamis[1] : ''}</div>
-                        <div><span class="font-semibold">Jum'at:</span> ${pjMap.jumat[0]} ${pjMap.jumat[1] ? '& ' + pjMap.jumat[1] : ''}</div>
-                        <div><span class="font-semibold">Sabtu:</span> ${pjMap.sabtu[0]} ${pjMap.sabtu[1] ? '& ' + pjMap.sabtu[1] : ''}</div>
-                        <div><span class="font-semibold">Minggu:</span> ${pjMap.minggu[0]} ${pjMap.minggu[1] ? '& ' + pjMap.minggu[1] : ''}</div>
-                    </div>
-                    <div class="mt-2 text-xs text-slate-400 border-t border-slate-200 pt-2">
-                        <span class="font-semibold">Koordinator:</span> Fauzi Faturohman, S.Pd., Gr.
-                    </div>
-                </div>
-                <div class="p-3 bg-white border-t border-slate-200 flex justify-end no-print">
-                    <button onclick="if(confirm('Hapus semua data ekstrakurikuler?')){ appState.ekstra=[]; saveState(); router(); showToast('Data ekstrakurikuler dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium flex items-center gap-1">
-                        <i class="fas fa-trash-alt"></i> Hapus Semua Data
-                    </button>
+                <div class="mt-2 text-xs text-slate-400 border-t border-slate-200 pt-2">
+                    <span class="font-semibold">Koordinator:</span> Fauzi Faturohman, S.Pd., Gr.
                 </div>
             </div>
+
+            ${isAdmin ? `
+            <div class="p-3 bg-white border-t border-slate-200 flex justify-end no-print">
+                <button onclick="if(confirm('Hapus semua data ekstrakurikuler?')){ appState.ekstra=[]; saveState(); router(); showToast('Data ekstrakurikuler dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium flex items-center gap-1">
+                    <i class="fas fa-trash-alt"></i> Hapus Semua Data
+                </button>
+            </div>` : ''}
         </div>
-    `;
+    </div>`;
 }
 
 // ================================================================
@@ -969,6 +989,8 @@ function renderStudents() {
         filteredStudents = appState.students.filter(s => s.rombel === currentUser.waliKelas);
     }
 
+    const isAdmin = isSuperAdmin();
+
     let trs = filteredStudents.map((m, idx) => {
         const genderBadge = m.gender === 'L' ?
             `<span class="w-8 h-8 rounded-full border border-blue-200 bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold mx-auto">L</span>` :
@@ -980,68 +1002,67 @@ function renderStudents() {
         else statusBadge = `<span class="px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">-</span>`;
 
         return `
-            <tr class="border-b border-slate-50 hover:bg-slate-50 transition student-row">
-                <td class="py-4 px-4 text-sm text-slate-600 text-center">${idx+1}</td>
-                <td class="py-4 px-4 text-sm font-bold text-primary whitespace-nowrap uppercase student-name" data-value="${m.name.toLowerCase()}">${m.name}</td>
-                <td class="py-4 px-4 text-sm text-slate-600 font-mono student-nisn" data-value="${m.nisn}">${m.nisn}</td>
-                <td class="py-4 px-4 text-sm text-slate-600">${m.school}</td>
-                <td class="py-4 px-4 text-sm text-slate-600">${m.level}</td>
-                <td class="py-4 px-4 text-center">${genderBadge}</td>
-                <td class="py-4 px-4 text-center">${rombelBadge}</td>
-                <td class="py-4 px-4 text-center">${statusBadge}</td>
-                <td class="py-4 px-4 text-center no-print">
-                    <button onclick="openGradeModal(${m.id})" class="px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 mx-auto border border-primary/20">
-                        <i class="fas fa-edit"></i> Kelola
-                    </button>
-                </td>
-                <td class="py-4 px-4 text-center no-print">
-                    <button onclick="deleteData('student', ${m.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Siswa">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </td>
-            </tr>
-        `;
+        <tr class="border-b border-slate-50 hover:bg-slate-50 transition student-row">
+            <td class="py-4 px-4 text-sm text-slate-600 text-center">${idx+1}</td>
+            <td class="py-4 px-4 text-sm font-bold text-primary whitespace-nowrap uppercase student-name" data-value="${m.name.toLowerCase()}">${m.name}</td>
+            <td class="py-4 px-4 text-sm text-slate-600 font-mono student-nisn" data-value="${m.nisn}">${m.nisn}</td>
+            <td class="py-4 px-4 text-sm text-slate-600">${m.school}</td>
+            <td class="py-4 px-4 text-sm text-slate-600">${m.level}</td>
+            <td class="py-4 px-4 text-center">${genderBadge}</td>
+            <td class="py-4 px-4 text-center">${rombelBadge}</td>
+            <td class="py-4 px-4 text-center">${statusBadge}</td>
+            <td class="py-4 px-4 text-center no-print">
+                <button onclick="openGradeModal(${m.id})" class="px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 mx-auto border border-primary/20">
+                    <i class="fas fa-edit"></i> Kelola
+                </button>
+            </td>
+            ${isAdmin ? `
+            <td class="py-4 px-4 text-center no-print">
+                <button onclick="deleteData('student', ${m.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Siswa">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>` : ''}
+        </tr>`;
     }).join('');
 
     const totalDisplay = filteredStudents.length;
 
     return `
-        <div class="fade-in space-y-6">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4 no-print">
-                <div class="relative w-full sm:w-96">
-                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i class="fas fa-search"></i></span>
-                    <input type="text" id="search-murid" class="w-full pl-11 pr-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm bg-slate-50 focus:bg-white transition" placeholder="Cari nama atau NISN..." />
-                </div>
-                <div class="flex gap-2 text-xs flex-wrap">
-                    <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">Total ${totalDisplay}</span>
-                    <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full font-medium">SD ${filteredStudents.filter(s=>s.level==='SD').length}</span>
-                    <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">SMP ${filteredStudents.filter(s=>s.level==='SMP').length}</span>
-                    ${currentUser && currentUser.isWaliKelas ? `<span class="px-3 py-1 bg-amber-50 text-amber-700 rounded-full font-medium">🏫 Kelas ${currentUser.waliKelas}</span>` : ''}
-                </div>
+    <div class="fade-in space-y-6">
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4 no-print">
+            <div class="relative w-full sm:w-96">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i class="fas fa-search"></i></span>
+                <input type="text" id="search-murid" class="w-full pl-11 pr-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm bg-slate-50 focus:bg-white transition" placeholder="Cari nama atau NISN..." />
             </div>
-            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[1100px]">
-                        <thead>
-                            <tr class="bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-wider border-b-2 border-slate-200">
-                                <th class="py-4 px-4 text-center">No</th>
-                                <th class="py-4 px-4">Nama</th>
-                                <th class="py-4 px-4">NISN</th>
-                                <th class="py-4 px-4">Sekolah</th>
-                                <th class="py-4 px-4">Jenjang</th>
-                                <th class="py-4 px-4 text-center">L/P</th>
-                                <th class="py-4 px-4 text-center">Rombel</th>
-                                <th class="py-4 px-4 text-center">Status</th>
-                                <th class="py-4 px-4 text-center no-print">Aksi</th>
-                                <th class="py-4 px-4 text-center no-print">Hapus</th>
-                            </tr>
-                        </thead>
-                        <tbody>${trs}</tbody>
-                    </table>
-                </div>
+            <div class="flex gap-2 text-xs flex-wrap">
+                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">Total ${totalDisplay}</span>
+                <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full font-medium">SD ${filteredStudents.filter(s=>s.level==='SD').length}</span>
+                <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">SMP ${filteredStudents.filter(s=>s.level==='SMP').length}</span>
+                ${currentUser && currentUser.isWaliKelas ? `<span class="px-3 py-1 bg-amber-50 text-amber-700 rounded-full font-medium">🏫 Kelas ${currentUser.waliKelas}</span>` : ''}
             </div>
         </div>
-    `;
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[1100px]">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-wider border-b-2 border-slate-200">
+                            <th class="py-4 px-4 text-center">No</th>
+                            <th class="py-4 px-4">Nama</th>
+                            <th class="py-4 px-4">NISN</th>
+                            <th class="py-4 px-4">Sekolah</th>
+                            <th class="py-4 px-4">Jenjang</th>
+                            <th class="py-4 px-4 text-center">L/P</th>
+                            <th class="py-4 px-4 text-center">Rombel</th>
+                            <th class="py-4 px-4 text-center">Status</th>
+                            <th class="py-4 px-4 text-center no-print">Aksi</th>
+                            ${isAdmin ? `<th class="py-4 px-4 text-center no-print">Hapus</th>` : ''}
+                        </tr>
+                    </thead>
+                    <tbody>${trs}</tbody>
+                </table>
+            </div>
+        </div>
+    </div>`;
 }
 
 function filterStudents(e) {
@@ -1077,8 +1098,7 @@ function openGradeModal(studentId) {
             <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
                 <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase tracking-wider">${mapel}</label>
                 <input type="number" min="0" max="100" name="grade_${key}" value="${val}" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-sm font-bold text-dark" placeholder="0-100" />
-            </div>
-        `;
+            </div>`;
     });
     document.getElementById('grade-inputs-container').innerHTML = inputsHTML;
 
@@ -1115,30 +1135,38 @@ function saveGrades(e) {
 }
 
 // ================================================================
-// RENDER GURU
+// RENDER GURU (dengan foto dan upload)
 // ================================================================
 
 function renderTeachers() {
     const sorted = [...appState.teachers].sort((a, b) => a.nip.localeCompare(b.nip));
+    const isAdmin = isSuperAdmin();
+
     let html = sorted.map(t => {
         const photo = t.photo || `https://placehold.co/150x150/${t.isWaliKelas ? '1e40af' : '64748b'}/ffffff?text=${t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase()}`;
+        const canEdit = isAdmin || (currentUser && currentUser.nip === t.nip);
+
         return `
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col items-center text-center card-hover">
-                <div class="relative">
-                    <div class="w-24 h-24 rounded-full p-1 border-2 ${t.isWaliKelas ? 'border-amber-400' : 'border-primary/20'} mb-4 overflow-hidden">
-                        <img src="${photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full" />
-                    </div>
-                    ${t.isWaliKelas ? `<span class="absolute -top-1 -right-1 bg-amber-400 text-white text-[8px] font-bold px-2 py-0.5 rounded-full">🏫</span>` : ''}
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col items-center text-center card-hover">
+            <div class="relative">
+                <div class="w-24 h-24 rounded-full p-1 border-2 ${t.isWaliKelas ? 'border-amber-400' : 'border-primary/20'} mb-4 overflow-hidden">
+                    <img src="${photo}" alt="${t.name}" class="w-full h-full object-cover rounded-full" />
                 </div>
-                <h3 class="font-bold text-dark text-base">${t.name}</h3>
-                <p class="text-xs text-slate-500 mb-2">NIP. ${t.nip}</p>
-                <div class="w-full mt-auto pt-4 border-t border-slate-100 flex flex-wrap justify-center gap-2">
-                    <span class="px-3 py-1 ${t.isWaliKelas ? 'bg-amber-50 text-amber-700' : 'bg-primary/10 text-primary'} rounded-lg text-xs font-semibold">${t.role}</span>
-                    <span class="text-xs text-slate-400 bg-slate-50 px-3 py-1 rounded-lg">${t.classes}</span>
-                </div>
-                ${t.isWaliKelas ? `<div class="mt-2 text-xs font-semibold text-amber-600 bg-amber-50 px-3 py-1 rounded-full">👨‍🏫 Wali Kelas ${t.waliKelas}</div>` : ''}
+                ${canEdit ? `
+                <button onclick="uploadTeacherPhoto('${t.nip}')" class="absolute bottom-0 right-0 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center text-xs shadow-lg hover:bg-primary/90 transition" title="Upload Foto">
+                    <i class="fas fa-camera"></i>
+                </button>` : ''}
+                ${t.isWaliKelas ? `<span class="absolute -top-1 -right-1 bg-amber-400 text-white text-[8px] font-bold px-2 py-0.5 rounded-full">🏫</span>` : ''}
             </div>
-        `;
+            <h3 class="font-bold text-dark text-base">${t.name}</h3>
+            <p class="text-xs text-slate-500 mb-2">NIP. ${t.nip}</p>
+            <div class="w-full mt-auto pt-4 border-t border-slate-100 flex flex-wrap justify-center gap-2">
+                <span class="px-3 py-1 ${t.isWaliKelas ? 'bg-amber-50 text-amber-700' : 'bg-primary/10 text-primary'} rounded-lg text-xs font-semibold">${t.role}</span>
+                <span class="text-xs text-slate-400 bg-slate-50 px-3 py-1 rounded-lg">${t.classes}</span>
+            </div>
+            ${t.isWaliKelas ? `<div class="mt-2 text-xs font-semibold text-amber-600 bg-amber-50 px-3 py-1 rounded-full">👨‍🏫 Wali Kelas ${t.waliKelas}</div>` : ''}
+            ${isAdmin && t.isSuperAdmin ? `<div class="mt-1 text-xs font-semibold text-purple-600 bg-purple-50 px-3 py-0.5 rounded-full">⭐ Admin</div>` : ''}
+        </div>`;
     }).join('');
     return `<div class="fade-in"><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">${html}</div></div>`;
 }
@@ -1148,45 +1176,48 @@ function renderTeachers() {
 // ================================================================
 
 function renderAdmin() {
+    const isAdmin = isSuperAdmin();
+
     let trs = appState.adminLinks.length === 0 ?
-        `<tr><td colspan="6" class="py-10 text-center text-slate-400 text-sm">Belum ada dokumen.</td></tr>` :
+        `<tr><td colspan="${isAdmin ? 6 : 5}" class="py-10 text-center text-slate-400 text-sm">Belum ada dokumen.</td></tr>` :
         appState.adminLinks.map(d => `
-            <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
-                <td class="py-3.5 px-4 text-sm font-medium text-dark">${d.name}</td>
-                <td class="py-3.5 px-4"><span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">${d.category}</span></td>
-                <td class="py-3.5 px-4 text-sm text-slate-700">${d.title}</td>
-                <td class="py-3.5 px-4 text-sm text-slate-500">${d.date}</td>
-                <td class="py-3.5 px-4 text-center"><a href="${d.link}" target="_blank" class="w-8 h-8 inline-flex items-center justify-center bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition"><i class="fas fa-external-link-alt text-xs"></i></a></td>
-                <td class="py-3.5 px-4 text-center no-print">
-                    <button onclick="deleteData('admin', ${d.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Dokumen">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </td>
-            </tr>
-        `).join('');
+        <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
+            <td class="py-3.5 px-4 text-sm font-medium text-dark">${d.name}</td>
+            <td class="py-3.5 px-4"><span class="px-2 py-1 bg-slate-100 text-slate-600 rounded-md text-xs">${d.category}</span></td>
+            <td class="py-3.5 px-4 text-sm text-slate-700">${d.title}</td>
+            <td class="py-3.5 px-4 text-sm text-slate-500">${d.date}</td>
+            <td class="py-3.5 px-4 text-center"><a href="${d.link}" target="_blank" class="w-8 h-8 inline-flex items-center justify-center bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition"><i class="fas fa-external-link-alt text-xs"></i></a></td>
+            ${isAdmin ? `
+            <td class="py-3.5 px-4 text-center no-print">
+                <button onclick="deleteData('admin', ${d.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Dokumen">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>` : ''}
+        </tr>`).join('');
+
     return `
-        <div class="fade-in space-y-6">
-            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="p-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex justify-between items-center">
-                    <h3 class="font-bold text-dark"><i class="fas fa-folder-open text-amber-500 mr-2"></i>Dokumen Administrasi</h3>
-                    <button onclick="if(confirm('Hapus semua dokumen?')){ appState.adminLinks=[]; saveState(); router(); showToast('Semua dokumen dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium no-print">
-                        <i class="fas fa-trash-alt"></i> Hapus Semua
-                    </button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead><tr class="bg-slate-50 text-slate-500 text-xs uppercase border-b border-slate-100">
-                            <th class="py-3.5 px-4">Guru</th><th class="py-3.5 px-4">Kategori</th><th class="py-3.5 px-4">Judul</th><th class="py-3.5 px-4">Tanggal</th><th class="py-3.5 px-4 text-center">Link</th><th class="py-3.5 px-4 text-center no-print">Hapus</th>
-                        </tr></thead>
-                        <tbody>${trs}</tbody>
-                    </table>
-                </div>
+    <div class="fade-in space-y-6">
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex justify-between items-center">
+                <h3 class="font-bold text-dark"><i class="fas fa-folder-open text-amber-500 mr-2"></i>Dokumen Administrasi</h3>
+                ${isAdmin ? `<button onclick="if(confirm('Hapus semua dokumen?')){ appState.adminLinks=[]; saveState(); router(); showToast('Semua dokumen dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium no-print">
+                    <i class="fas fa-trash-alt"></i> Hapus Semua
+                </button>` : ''}
             </div>
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 text-center text-sm text-slate-500 no-print">
-                <i class="fas fa-info-circle text-primary mr-2"></i>Gunakan menu <b>Data → Impor dari Excel</b> untuk menambah atau memperbarui dokumen.
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead><tr class="bg-slate-50 text-slate-500 text-xs uppercase border-b border-slate-100">
+                        <th class="py-3.5 px-4">Guru</th><th class="py-3.5 px-4">Kategori</th><th class="py-3.5 px-4">Judul</th><th class="py-3.5 px-4">Tanggal</th><th class="py-3.5 px-4 text-center">Link</th>
+                        ${isAdmin ? `<th class="py-3.5 px-4 text-center no-print">Hapus</th>` : ''}
+                    </tr></thead>
+                    <tbody>${trs}</tbody>
+                </table>
             </div>
         </div>
-    `;
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 text-center text-sm text-slate-500 no-print">
+            <i class="fas fa-info-circle text-primary mr-2"></i>Gunakan menu <b>Data → Impor dari Excel</b> untuk menambah atau memperbarui dokumen.
+        </div>
+    </div>`;
 }
 
 // ================================================================
@@ -1195,85 +1226,80 @@ function renderAdmin() {
 
 function renderRKT_KSP() {
     return `
-        <div class="fade-in space-y-6">
-            <div class="bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl">
-                <h2 class="text-2xl font-extrabold"><i class="fas fa-file-alt mr-3"></i>RKT & KSP</h2>
-                <p class="text-white/80 text-sm mt-1">Rencana Kerja Tahunan & Kurikulum Satuan Pendidikan — ${appState.school.name}</p>
-                <p class="text-white/60 text-xs mt-1">Tahun Ajaran ${appState.school.tahun}</p>
+    <div class="fade-in space-y-6">
+        <div class="bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl">
+            <h2 class="text-2xl font-extrabold"><i class="fas fa-file-alt mr-3"></i>RKT & KSP</h2>
+            <p class="text-white/80 text-sm mt-1">Rencana Kerja Tahunan & Kurikulum Satuan Pendidikan — ${appState.school.name}</p>
+            <p class="text-white/60 text-xs mt-1">Tahun Ajaran ${appState.school.tahun}</p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-5 bg-gradient-to-r from-blue-50 to-white border-b border-slate-100">
+                <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-tasks text-primary"></i> Rencana Kerja Tahunan (RKT)</h3>
             </div>
-            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="p-5 bg-gradient-to-r from-blue-50 to-white border-b border-slate-100">
-                    <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-tasks text-primary"></i> Rencana Kerja Tahunan (RKT)</h3>
-                </div>
-                <div class="p-6 space-y-4">
-                    <div class="section-card">
-                        <div class="title"><i class="fas fa-book-open"></i> BAB I — Pendahuluan</div>
-                        <div class="body">
-                            <p><strong>Latar Belakang:</strong> Sekolah Rakyat merupakan program pendidikan yang diinisiasi Presiden Prabowo Subianto untuk menyediakan akses pendidikan gratis bagi anak-anak dari keluarga miskin dan miskin ekstrem.</p>
-                            <ul class="mt-2">
-                                <li>Sekolah Rakyat adalah Program Strategis Nasional untuk memutus mata rantai kemiskinan.</li>
-                                <li>SRT 39 Garut harus menghasilkan lulusan yang kompeten dan mampu bersaing secara global.</li>
-                            </ul>
-                            <p class="mt-2"><strong>Sejarah Berdirinya:</strong> SRT 39 Garut mulai beroperasi pada 30 Desember 2025 dengan 75 siswa (25 SD + 50 SMP) dari keluarga Desil 1 dan 2.</p>
-                        </div>
-                    </div>
-                    <div class="section-card">
-                        <div class="title"><i class="fas fa-flag"></i> BAB II — Visi, Misi, dan Tujuan</div>
-                        <div class="body">
-                            <p><strong>Visi:</strong> "${appState.school.visi}"</p>
-                            <p class="mt-2"><strong>Moto:</strong> "${appState.school.moto}"</p>
-                        </div>
-                    </div>
-                    <div class="section-card">
-                        <div class="title"><i class="fas fa-building"></i> BAB III — Profil Sekolah</div>
-                        <div class="body">
-                            <p><strong>Identitas Sekolah:</strong></p>
-                            <ul>
-                                <li>Nama: ${appState.school.name}</li>
-                                <li>Alamat: ${appState.school.address}</li>
-                                <li>NPSN SRD: ${appState.school.npsn_srd} | SRMP: ${appState.school.npsn_srmp}</li>
-                                <li>Luas Tanah: ${appState.school.luasTanah} | Luas Bangunan: ${appState.school.luasBangunan}</li>
-                                <li>Rombel: 3 | Jumlah Siswa: ${appState.students.length}</li>
-                            </ul>
-                        </div>
+            <div class="p-6 space-y-4">
+                <div class="section-card">
+                    <div class="title"><i class="fas fa-book-open"></i> BAB I — Pendahuluan</div>
+                    <div class="body">
+                        <p><strong>Latar Belakang:</strong> Sekolah Rakyat merupakan program pendidikan yang diinisiasi Presiden Prabowo Subianto untuk menyediakan akses pendidikan gratis bagi anak-anak dari keluarga miskin dan miskin ekstrem. Sekolah Rakyat Terintegrasi 39 Garut didirikan pada tahun 2025.</p>
+                        <ul class="mt-2">
+                            <li>Sekolah Rakyat adalah Program Strategis Nasional untuk memutus mata rantai kemiskinan.</li>
+                            <li>SRT 39 Garut harus menghasilkan lulusan yang kompeten dan mampu bersaing secara global.</li>
+                        </ul>
+                        <p class="mt-2"><strong>Sejarah Berdirinya:</strong> SRT 39 Garut mulai beroperasi pada 30 Desember 2025 dengan 75 siswa (25 SD + 50 SMP) dari keluarga Desil 1 dan 2.</p>
                     </div>
                 </div>
-            </div>
-            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mt-6">
-                <div class="p-5 bg-gradient-to-r from-indigo-50 to-white border-b border-slate-100">
-                    <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Kurikulum Satuan Pendidikan (KSP)</h3>
+                <div class="section-card">
+                    <div class="title"><i class="fas fa-flag"></i> BAB II — Visi, Misi, dan Tujuan</div>
+                    <div class="body">
+                        <p><strong>Visi:</strong> "${appState.school.visi}"</p>
+                        <p class="mt-2"><strong>Moto:</strong> "${appState.school.moto}"</p>
+                    </div>
                 </div>
-                <div class="p-6 space-y-4">
-                    <div class="section-card">
-                        <div class="title"><i class="fas fa-graduation-cap"></i> BAB I — Pendahuluan</div>
-                        <div class="body">
-                            <p><strong>Rasional:</strong> Pendidikan memegang peranan penting bagi perkembangan individu dan bangsa. Sekolah sebagai miniatur dunia harus menyiapkan siswa menjadi pribadi tangguh, kritis, kreatif, dan berkarakter.</p>
-                        </div>
-                    </div>
-                    <div class="section-card">
-                        <div class="title"><i class="fas fa-eye"></i> BAB II — Visi, Misi, dan Tujuan</div>
-                        <div class="body">
-                            <p><strong>Visi:</strong> "${appState.school.visi}"</p>
-                            <p class="mt-2"><strong>Misi:</strong> ${appState.school.misi.length} misi sekolah.</p>
-                        </div>
-                    </div>
-                    <div class="section-card">
-                        <div class="title"><i class="fas fa-layer-group"></i> BAB III — Pengorganisasian Pembelajaran</div>
-                        <div class="body">
-                            <p><strong>Intrakurikuler:</strong> Menggunakan Kurikulum Merdeka. Beban belajar 41 JP/minggu.</p>
-                            <p class="mt-2"><strong>Ekstrakurikuler:</strong> OSIS, Pramuka, Paskibra, Futsal, Silat, English Club, Hadroh, Computer Club, dan lainnya.</p>
-                        </div>
-                    </div>
-                    <div class="section-card">
-                        <div class="title"><i class="fas fa-clipboard-check"></i> BAB V — Pendampingan, Evaluasi</div>
-                        <div class="body">
-                            <p>Supervisi rutin, KKG SRT 39 Garut, IHT/FGD, dan evaluasi harian, per unit, per semester, per tahun.</p>
-                        </div>
+                <div class="section-card">
+                    <div class="title"><i class="fas fa-building"></i> BAB III — Profil Sekolah</div>
+                    <div class="body">
+                        <p><strong>Identitas Sekolah:</strong></p>
+                        <ul>
+                            <li>Nama: ${appState.school.name}</li>
+                            <li>Alamat: ${appState.school.address}</li>
+                            <li>NPSN SRD: ${appState.school.npsn_srd} | SRMP: ${appState.school.npsn_srmp}</li>
+                            <li>Luas Tanah: ${appState.school.luasTanah} | Luas Bangunan: ${appState.school.luasBangunan}</li>
+                            <li>Rombel: 3 | Jumlah Siswa: ${appState.students.length}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    `;
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mt-6">
+            <div class="p-5 bg-gradient-to-r from-indigo-50 to-white border-b border-slate-100">
+                <h3 class="text-lg font-extrabold text-dark flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Kurikulum Satuan Pendidikan (KSP)</h3>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="section-card">
+                    <div class="title"><i class="fas fa-graduation-cap"></i> BAB I — Pendahuluan</div>
+                    <div class="body">
+                        <p><strong>Rasional:</strong> Pendidikan memegang peranan penting bagi perkembangan individu dan bangsa. Sekolah sebagai miniatur dunia harus menyiapkan siswa menjadi pribadi tangguh, kritis, kreatif, dan berkarakter.</p>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <div class="title"><i class="fas fa-eye"></i> BAB II — Visi, Misi, dan Tujuan</div>
+                    <div class="body">
+                        <p><strong>Visi:</strong> "${appState.school.visi}"</p>
+                        <p class="mt-2"><strong>Misi:</strong> ${appState.school.misi.length} misi sekolah.</p>
+                    </div>
+                </div>
+                <div class="section-card">
+                    <div class="title"><i class="fas fa-layer-group"></i> BAB III — Pengorganisasian Pembelajaran</div>
+                    <div class="body">
+                        <p><strong>Intrakurikuler:</strong> Menggunakan Kurikulum Merdeka. Beban belajar 41 JP/minggu.</p>
+                        <p class="mt-2"><strong>Ekstrakurikuler:</strong> OSIS, Pramuka, Paskibra, Futsal, Silat, English Club, Hadroh, Computer Club, dan lainnya.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`;
 }
 
 // ================================================================
@@ -1409,7 +1435,8 @@ function importExcel(event) {
                             classes: row[3] || '',
                             isWaliKelas: isWali,
                             waliKelas: isWali ? (row[5] || '') : '',
-                            photo: ''
+                            photo: '',
+                            isSuperAdmin: row[0] === '199409082025211128'
                         });
                     }
                 });
@@ -1477,7 +1504,11 @@ function importExcel(event) {
                 rows.forEach((row, idx) => {
                     if (idx > 0 && row[0] && row[1]) {
                         if (!calMap[row[0]]) calMap[row[0]] = [];
-                        calMap[row[0]].push({ date: row[1] || '', name: row[2] || '', type: row[3] || 'info' });
+                        calMap[row[0]].push({
+                            date: row[1] || '',
+                            name: row[2] || '',
+                            type: row[3] || 'info'
+                        });
                     }
                 });
                 appState.calendar = Object.keys(calMap).map(month => ({ month: month, events: calMap[month] }));
@@ -1554,9 +1585,9 @@ function downloadTemplate() {
 
         const guruTemplate = [
             ['NIP', 'Nama', 'Jabatan', 'Kelas', 'Wali Kelas', 'Kelas Wali'],
-            ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wali Kelas 7B / PPKn', 'SRMP-B (7B)', 'Ya', '7B'],
-            ['199901222025212077', 'Maha Ikhlas Sulfitrah, S.Pd., Gr.', 'Wali Kelas SRD / Guru Kelas', 'SRD', 'Ya', 'SD'],
-            ['200003282025212060', 'Meliana Dwi Rahmawati, S.Pd., Gr.', 'Wali Kelas 7A / B. Inggris', 'SRMP-A (7A)', 'Ya', '7A'],
+            ['199409082025211128', 'Fauzi Faturohman, S.Pd., Gr.', 'Wakasek Kurikulum / PPKn', 'SRMP-B (7B)', 'Ya', '7B'],
+            ['199901222025212077', 'Maha Ikhlas Sulfitrah, S.Pd., Gr.', 'Wali Kelas SRD', 'SRD', 'Ya', 'SD'],
+            ['200003282025212060', 'Meliana Dwi Rahmawati, S.Pd., Gr.', 'Wali Kelas 7A', 'SRMP-A (7A)', 'Ya', '7A'],
             ['', '', '', '', 'Tidak', '']
         ];
         const ws3 = XLSX.utils.aoa_to_sheet(guruTemplate);
