@@ -213,11 +213,6 @@
             display: block;
         }
 
-        /* Tabel data siswa responsif */
-        .table-wrap {
-            overflow-x: auto;
-        }
-
         .file-input-label {
             cursor: pointer;
             transition: 0.2s;
@@ -462,7 +457,7 @@
                 { nip: "200102142025212047", name: "Syifa Nurlathifah Al Azmi, S.Pd., Gr.", role: "Guru KKA",
                     classes: "SRD & SRMP" },
                 { nip: "200109122025212039", name: "Yulistina, S.Pd., Gr.", role: "Guru B. Indonesia",
-                classes: "SRMP" }
+                    classes: "SRMP" }
             ],
             calendar: [
                 { month: "Juli 2026", events: [{ date: "6 Jul", name: "Hari Pertama Sekolah / Awal Tahun Ajaran",
@@ -710,10 +705,11 @@
         // Generate avatar untuk guru
         defaultData.teachers.forEach(t => {
             const initials = t.name.replace(/[^a-zA-Z ]/g, "").split(' ').slice(0, 2).map(n => n[0]).join('')
-            .toUpperCase();
+                .toUpperCase();
             const colors = ['1e40af', '0ea5e9', '10b981', 'f59e0b', 'ec4899', '8b5cf6'];
             const hash = Array.from(t.nip).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-            t.photo = `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
+            t.photo =
+                `https://placehold.co/150x150/${colors[hash % colors.length]}/ffffff?text=${initials}`;
         });
 
         // ================================================================
@@ -862,7 +858,7 @@
         window.addEventListener('hashchange', router);
 
         // ================================================================
-        // FUNGSI RENDER (Dashboard, Profil, Kalender, Jadwal, Ekstra, Siswa, Guru, Admin, RKT-KSP)
+        // FUNGSI RENDER
         // ================================================================
 
         function renderDashboard() {
@@ -1002,7 +998,7 @@
             if (l.includes('ipa') || l.includes('ips') || l.includes('ipas')) return 'bg-green-50 text-green-800 border-green-200';
             if (l.includes('matematika') || l.includes('tik')) return 'bg-yellow-50 text-yellow-800 border-yellow-200';
             if (l.includes('pjok') || l.includes('seni') || l.includes('prakarya') || l.includes('calistung'))
-            return 'bg-rose-50 text-rose-800 border-rose-200';
+                return 'bg-rose-50 text-rose-800 border-rose-200';
             if (l.includes('pai') || l.includes('kka') || l.includes('pancasila')) return 'bg-blue-50 text-blue-800 border-blue-200';
             if (l.includes('bk')) return 'bg-purple-50 text-purple-800 border-purple-200';
             return 'bg-white';
@@ -1332,7 +1328,6 @@
             return `
             <div class="fade-in space-y-6">
 
-                <!-- Header -->
                 <div class="bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl p-8 text-white shadow-xl">
                     <h2 class="text-2xl font-extrabold"><i class="fas fa-file-alt mr-3"></i>RKT & KSP</h2>
                     <p class="text-white/80 text-sm mt-1">Rencana Kerja Tahunan & Kurikulum Satuan Pendidikan — ${appState.school.name}</p>
@@ -1635,13 +1630,13 @@
                         const rows = XLSX.utils.sheet_to_json(wsSchool, { header: 1 });
                         rows.forEach(row => {
                             if (row[0] === 'Nama Sekolah') appState.school.name = row[1] || appState.school
-                            .name;
+                                .name;
                             if (row[0] === 'NPSN SRD') appState.school.npsn_srd = row[1] || appState.school
                                 .npsn_srd;
                             if (row[0] === 'NPSN SRMP') appState.school.npsn_srmp = row[1] || appState.school
                                 .npsn_srmp;
                             if (row[0] === 'Alamat') appState.school.address = row[1] || appState.school
-                            .address;
+                                .address;
                             if (row[0] === 'Kepala Sekolah') appState.school.kepsek = row[1] || appState.school
                                 .kepsek;
                             if (row[0] === 'NIP Kepsek') appState.school.kepsekNip = row[1] || appState.school
@@ -1863,6 +1858,12 @@
                 const ws4 = XLSX.utils.aoa_to_sheet(siswaTemplate);
                 XLSX.utils.book_append_sheet(wb, ws4, 'Siswa');
 
-                // Template Ekstra
+                // Template Ekstrakurikuler
                 const ekstraTemplate = [
-                    ['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', '
+                    ['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', 'Sabtu', 'Waktu Minggu',
+                        'Minggu'
+                    ],
+                    ['15.30-Selesai', 'OSIS', 'Literasi & Numerasi', 'Futsal', 'Paskibra', 'Hadroh', '09.00-Selesai',
+                        'Pramuka', '15.30-Selesai', 'Paskibra'
+                    ],
+                    ['', 'English Club', 'Karya Ilmiah Remaja', 'J
