@@ -197,14 +197,6 @@
             font-size: 1.4rem;
         }
 
-        .btn-excel {
-            transition: all 0.2s ease;
-        }
-        .btn-excel:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
         .dropdown-menu {
             display: none;
             animation: fadeIn 0.2s ease;
@@ -219,6 +211,154 @@
         }
         .file-input-label:hover {
             background: #f1f5f9;
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        .calendar-grid .day-header {
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0.5rem 0;
+            color: #64748b;
+        }
+        .calendar-grid .day-cell {
+            background: white;
+            border-radius: 8px;
+            min-height: 70px;
+            padding: 0.25rem;
+            font-size: 0.75rem;
+            border: 1px solid #f1f5f9;
+            transition: 0.2s;
+            position: relative;
+        }
+        .calendar-grid .day-cell:hover {
+            border-color: #94a3b8;
+        }
+        .calendar-grid .day-cell .date-num {
+            font-weight: 700;
+            color: #0f172a;
+            padding: 0.25rem 0.5rem;
+        }
+        .calendar-grid .day-cell .event-badge {
+            background: #e0e7ff;
+            color: #1e40af;
+            font-size: 0.6rem;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            margin: 0.1rem 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            cursor: default;
+        }
+        .calendar-grid .day-cell .event-badge.danger {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .calendar-grid .day-cell .event-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .calendar-grid .day-cell .event-badge.primary {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .calendar-grid .day-cell.other-month .date-num {
+            color: #94a3b8;
+        }
+
+        /* AI Chat */
+        .ai-chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 380px;
+            max-height: 500px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e2e8f0;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            transition: 0.3s ease;
+        }
+        .ai-chat-window.open {
+            display: flex;
+        }
+        .ai-chat-header {
+            background: #1e40af;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ai-chat-body {
+            padding: 1rem;
+            overflow-y: auto;
+            flex: 1;
+            max-height: 350px;
+            background: #f8fafc;
+        }
+        .ai-chat-footer {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .ai-chat-footer input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            outline: none;
+            font-size: 0.875rem;
+        }
+        .ai-chat-footer input:focus {
+            border-color: #1e40af;
+        }
+        .ai-chat-footer button {
+            background: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .ai-chat-footer button:hover {
+            background: #1e3a8a;
+        }
+        .ai-msg {
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 0.85rem;
+        }
+        .ai-msg.user {
+            background: #dbeafe;
+            color: #1e40af;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        .ai-msg.bot {
+            background: white;
+            color: #0f172a;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 4px;
         }
     </style>
 </head>
@@ -289,10 +429,10 @@
                     <i class="fas fa-calendar-alt w-5 text-center text-base"></i> Kalender Akademik
                 </a>
                 <a href="#jadwal" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 transition-colors text-sm font-medium">
-                    <i class="fas fa-clock w-5 text-center text-base"></i> Jadwal Pelajaran
+                    <i class="fas fa-clock w-5 text-center text-base"></i> Jadwal Intrakurikuler
                 </a>
                 <a href="#ekstra" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 transition-colors text-sm font-medium">
-                    <i class="fas fa-futbol w-5 text-center text-base"></i> Ekstrakurikuler
+                    <i class="fas fa-futbol w-5 text-center text-base"></i> Jadwal Ekstrakurikuler
                 </a>
                 <a href="#murid" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 transition-colors text-sm font-medium">
                     <i class="fas fa-user-graduate w-5 text-center text-base"></i> Data & Nilai Murid
@@ -392,6 +532,17 @@
                 <form id="grade-form" onsubmit="saveGrades(event)" class="space-y-4">
                     <input type="hidden" id="grade-student-id" />
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="grade-inputs-container"></div>
+
+                    <!-- Status Kenaikan Kelas -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mt-2">
+                        <label class="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Status Kenaikan Kelas</label>
+                        <select id="promotion-status-select" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none text-sm font-semibold text-dark">
+                            <option value="Naik Kelas">Naik Kelas</option>
+                            <option value="Tidak Naik Kelas">Tidak Naik Kelas</option>
+                            <option value="Belum Ditentukan">Belum Ditentukan</option>
+                        </select>
+                    </div>
+
                     <div class="pt-6 mt-6 border-t border-slate-100 flex justify-end gap-3">
                         <button type="button" onclick="closeGradeModal()" class="px-5 py-2.5 rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 font-medium text-sm transition">Batal</button>
                         <button type="submit" class="px-5 py-2.5 rounded-xl text-white bg-primary hover:bg-primary/90 font-medium text-sm transition shadow-sm flex items-center gap-2"><i class="fas fa-save"></i> Simpan</button>
@@ -401,12 +552,30 @@
         </div>
     </div>
 
+    <!-- ===== AI CHAT WIDGET ===== -->
+    <button id="ai-toggle-btn" onclick="toggleAI()" class="fixed bottom-6 right-6 z-[999] w-14 h-14 bg-primary text-white rounded-full shadow-xl hover:bg-primary/90 transition-all flex items-center justify-center no-print hover:scale-105">
+        <i class="fas fa-robot text-2xl"></i>
+    </button>
+    <div id="ai-chat-window" class="ai-chat-window no-print">
+        <div class="ai-chat-header">
+            <span><i class="fas fa-robot mr-2"></i>Asisten AI (DeepSeek)</span>
+            <button onclick="toggleAI()" class="text-white/80 hover:text-white"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="ai-chat-body" class="ai-chat-body">
+            <div class="ai-msg bot">Halo! Saya asisten AI berbasis DeepSeek. Saya siap membantu Anda mengelola data kurikulum SRT 39 Garut. Tanyakan apa saja tentang data siswa, jadwal, atau RKT.</div>
+        </div>
+        <div class="ai-chat-footer">
+            <input type="text" id="ai-input" placeholder="Tanyakan sesuatu..." onkeydown="if(event.key==='Enter') sendAIMessage()" />
+            <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <!-- ============================================================ -->
     <!-- JAVASCRIPT -->
     <!-- ============================================================ -->
     <script>
         // ================================================================
-        // DATA MASTER — Lengkap dari file yang diupload
+        // DATA MASTER — Lengkap dari file yang diupload + Extra Fields
         // ================================================================
 
         const defaultData = {
@@ -460,30 +629,21 @@
                     classes: "SRMP" }
             ],
             calendar: [
-                { month: "Juli 2026", events: [{ date: "6 Jul", name: "Hari Pertama Sekolah / Awal Tahun Ajaran",
-                        type: "primary" },
-                    { date: "6-10 Jul", name: "MPLS / Asesmen Diagnostik / DNA Talent", type: "info" }] },
+                { month: "Juli 2026", events: [{ date: "6 Jul", name: "Hari Pertama Sekolah", type: "primary" },
+                    { date: "6-10 Jul", name: "MPLS / Asesmen", type: "info" }] },
                 { month: "Agustus 2026", events: [{ date: "17 Agu", name: "Hari Kemerdekaan RI", type: "danger" },
-                    { date: "25-26 Agu", name: "Maulid Nabi Muhammad SAW", type: "warning" }] },
-                { month: "September 2026", events: [{ date: "7-11 Sep", name: "Penilaian Sumatif Tengah Semester",
-                        type: "warning" },
-                    { date: "30 Sep", name: "HUT SRT 39 Garut", type: "primary" }] },
-                { month: "Desember 2026", events: [{ date: "7-11 Des", name: "Penilaian Sumatif Akhir Semester",
-                        type: "warning" },
+                    { date: "25-26 Agu", name: "Maulid Nabi", type: "warning" }] },
+                { month: "September 2026", events: [{ date: "7-11 Sep", name: "PTS Ganjil", type: "warning" },
+                    { date: "30 Sep", name: "HUT SRT 39", type: "primary" }] },
+                { month: "Desember 2026", events: [{ date: "7-11 Des", name: "PAS Ganjil", type: "warning" },
                     { date: "18 Des", name: "Pembagian Rapor", type: "info" }, { date: "21-31 Des",
-                        name: "Libur Semester 1", type: "danger" }] },
+                        name: "Libur Semester", type: "danger" }] },
                 { month: "Januari 2027", events: [{ date: "4 Jan", name: "Awal Semester Genap", type: "primary" },
-                    { date: "4-8 Jan", name: "Asesmen Diagnostik / DNA Talent", type: "info" },
-                    { date: "18 Jan", name: "Pemilihan Ketua OSIS", type: "info" },
-                    { date: "25 Jan", name: "Pelantikan Pengurus OSIS", type: "info" }] },
-                { month: "Maret 2027", events: [{ date: "8-12 Mar", name: "Penilaian Sumatif Tengah Semester",
-                        type: "warning" },
+                    { date: "4-8 Jan", name: "Asesmen Diagnostik", type: "info" }, { date: "18 Jan",
+                        name: "Pemilihan Ketua OSIS", type: "info" }] },
+                { month: "Maret 2027", events: [{ date: "8-12 Mar", name: "PTS Genap", type: "warning" },
                     { date: "15-26 Mar", name: "Libur Idul Fitri", type: "danger" }] },
-                { month: "Mei 2027", events: [{ date: "3-7 Mei", name: "Penilaian Sumatif Akhir Jenjang",
-                        type: "warning" },
-                    { date: "17-21 Mei", name: "Penilaian Sumatif Akhir Jenjang", type: "warning" }] },
-                { month: "Juni 2027", events: [{ date: "7-11 Jun", name: "Penilaian Sumatif Akhir Tahun",
-                        type: "warning" },
+                { month: "Juni 2027", events: [{ date: "7-11 Jun", name: "PAT", type: "warning" },
                     { date: "25 Jun", name: "Pembagian Rapor", type: "info" }, { date: "28 Jun - 9 Jul",
                         name: "Libur Kenaikan Kelas", type: "danger" }] }
             ],
@@ -539,158 +699,157 @@
                 { waktu: "", s: "", sel: "Computer Club", r: "Sahabat Literasi", k: "", j: "", ws: "", sab: "",
                     wm: "", m: "" }
             ],
-            // 75 siswa dari screenshot
             students: [
                 { id: 1, name: "ADE MUSTOPA", nisn: "3139453861", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 2, name: "AGUS RAMDANI", nisn: "0104915906", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 3, name: "AHMAD PADILAH", nisn: "3137836817", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 4, name: "AI SITI NUROHMAH", nisn: "3158260386", school: "SRDT 39 Garut", level: "SD",
-                    gender: "P", rombel: "SD", grades: {} },
+                    gender: "P", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 5, name: "ANDIKA NUROHMAN", nisn: "0141419382", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 6, name: "ANISA SAPUTRI", nisn: "0123595071", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 7, name: "ARDIANSYAH SAPUTRA", nisn: "3162522983", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 8, name: "ARIF FIRMANSYAH", nisn: "3120690349", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 9, name: "ARMAN MAULANA", nisn: "3132152714", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 10, name: "DE PAHRI PUTRA RAMADAN", nisn: "3111636292", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 11, name: "DERI MUHAMMAD", nisn: "3122527422", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 12, name: "DEWANGGA NUGRAHA", nisn: "3124835417", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 13, name: "DEWI TANIA", nisn: "3124764226", school: "SRDT 39 Garut", level: "SD", gender: "P",
-                    rombel: "SD", grades: {} },
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 14, name: "ELSA SABILA NURHALIMAH", nisn: "3130228888", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 15, name: "EVA FAUZIAH", nisn: "0094884752", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 16, name: "FANESA ANASTASYA", nisn: "0106857181", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 17, name: "FEBI", nisn: "0129226857", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 18, name: "HISMA HOLIPATUL PADILAH", nisn: "0113316745", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 19, name: "IHSAN MAULANA", nisn: "3126090468", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 20, name: "INDRIA DELIA PUTRI", nisn: "97311050", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 21, name: "IRNA RAODOTUL ZANAH", nisn: "3133143373", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 22, name: "IRSAL KHAERUNA", nisn: "3146716444", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 23, name: "LESTI JULIANTI", nisn: "3128365677", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 24, name: "M RIZKY MAULANA", nisn: "3159241108", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 25, name: "M. FATIR", nisn: "0135531105", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {} },
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 26, name: "MOCH AKBAR TRI HERMAWAN", nisn: "0107125765", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 27, name: "MOH PAISAL APRILIANSAH", nisn: "0125649737", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 28, name: "MUHAMAD FATTAN SAPUTRA", nisn: "3162907074", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 29, name: "MUHAMAD HANIF ALIYUDIN", nisn: "0104784680", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 30, name: "MUHAMAD HASANUDIN", nisn: "0113191027", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 31, name: "MUHAMAD REHAN NURUL JANAH", nisn: "0111987988", school: "SRMPT 39 Garut",
-                    level: "SMP", gender: "L", rombel: "7A", grades: {} },
+                    level: "SMP", gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 32, name: "MUHAMAD RISKI ABDULLOH", nisn: "3161059263", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 33, name: "MUHAMAD RIVAL ALFARIZI", nisn: "3169279715", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 34, name: "MUHAMAD SAMIN NUGRAHA", nisn: "0119673298", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 35, name: "MUHAMAD SANDI", nisn: "0115109325", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 36, name: "MUHAMMAD IDRUS PAHMI JAHARSAH", nisn: "0115015547", school: "SRMPT 39 Garut",
-                    level: "SMP", gender: "L", rombel: "7B", grades: {} },
+                    level: "SMP", gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 37, name: "MUHAMMAD RAEHAN", nisn: "3094108589", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 38, name: "MUHAMMAD ZAKI ARIPIN", nisn: "0127300770", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 39, name: "MUSNAN FIRDAUS", nisn: "3108593390", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 40, name: "NAZHAN", nisn: "0102332909", school: "SRDT 39 Garut", level: "SD", gender: "L",
-                    rombel: "SD", grades: {} },
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 41, name: "NOVI RAHMADANI", nisn: "0127825608", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 42, name: "PARHAN HERIYANSAH", nisn: "3137252816", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 43, name: "PERDIANSAH PRATAMA", nisn: "0128988677", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 44, name: "PIRMANSYAH RAMDANI", nisn: "3108187441", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 45, name: "PONI YULIA", nisn: "0124893928", school: "SRDT 39 Garut", level: "SD", gender: "P",
-                    rombel: "SD", grades: {} },
+                    rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 46, name: "RAIHAN SAPUTRA", nisn: "0119552685", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 47, name: "RAISA AURELIA PUTRI", nisn: "3142169447", school: "SRDT 39 Garut", level: "SD",
-                    gender: "P", rombel: "SD", grades: {} },
+                    gender: "P", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 48, name: "RAISYA NURPADILAH", nisn: "0104449370", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 49, name: "RANI", nisn: "3128636723", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {} },
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 50, name: "RAYAA RAFSANJANI", nisn: "3151327926", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 51, name: "REGI", nisn: "0092815396", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {} },
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 52, name: "REHAN", nisn: "0098060608", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7B", grades: {} },
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 53, name: "REZA HANAFIYAH", nisn: "3129196277", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 54, name: "RINA", nisn: "3129604730", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {} },
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 55, name: "RISKY", nisn: "0103304248", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7B", grades: {} },
+                    rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 56, name: "RIYAD FADILAH", nisn: "0131133087", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 57, name: "RIYAN AGUNG FAUZI", nisn: "3129425558", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 58, name: "RIZKI MIRAJ NAWAWI", nisn: "3120958649", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 59, name: "SABIT MAULANA", nisn: "3117684281", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 60, name: "SALMAN SAEPUL BAGRI", nisn: "0115635878", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7B", grades: {} },
+                    gender: "L", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 61, name: "SALSA BILA", nisn: "0124232598", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 62, name: "SALWA AULIA ZAKIAWAN", nisn: "0109385868", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 63, name: "SELLI KHAIRUNNISA", nisn: "3124008773", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 64, name: "SIFA NURAINI", nisn: "0103955647", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 65, name: "SITI FADILAH", nisn: "3154325333", school: "SRDT 39 Garut", level: "SD",
-                    gender: "P", rombel: "SD", grades: {} },
+                    gender: "P", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 66, name: "SITIMASITOH", nisn: "3125474904", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7A", grades: {} },
+                    gender: "P", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 67, name: "SITIPASWA", nisn: "3131493765", school: "SRMPT 39 Garut", level: "SMP", gender: "P",
-                    rombel: "7A", grades: {} },
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 68, name: "SRIMULYANI", nisn: "0108334564", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 69, name: "SUDIRMAN", nisn: "0119440168", school: "SRMPT 39 Garut", level: "SMP", gender: "L",
-                    rombel: "7A", grades: {} },
+                    rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 70, name: "SYIFANURHAYATI", nisn: "0103927661", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "P", rombel: "7B", grades: {} },
+                    gender: "P", rombel: "7B", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 71, name: "YAN YAN ABDUL HADI", nisn: "0106183939", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 72, name: "YANA MULYANA", nisn: "3138754482", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 73, name: "YUSUP AWALUDIN", nisn: "0114870689", school: "SRMPT 39 Garut", level: "SMP",
-                    gender: "L", rombel: "7A", grades: {} },
+                    gender: "L", rombel: "7A", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 74, name: "ZAKI MUHAMAD KUSUMAH", nisn: "3133946425", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} },
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" },
                 { id: 75, name: "ZIDAN ABDUL JAILANI", nisn: "3169526039", school: "SRDT 39 Garut", level: "SD",
-                    gender: "L", rombel: "SD", grades: {} }
+                    gender: "L", rombel: "SD", grades: {}, promotionStatus: "Belum Ditentukan" }
             ],
             adminLinks: [
                 { id: Date.now(), nip: "199409082025211128", name: "Fauzi Faturohman", category: "Modul Ajar",
@@ -823,14 +982,14 @@
                     break;
                 case '#kalender':
                     pageTitle.innerText = "Kalender Akademik";
-                    container.innerHTML = renderCalendar();
+                    container.innerHTML = renderCalendarGrid();
                     break;
                 case '#jadwal':
-                    pageTitle.innerText = "Jadwal Pelajaran";
+                    pageTitle.innerText = "Jadwal Intrakurikuler";
                     container.innerHTML = renderSchedule();
                     break;
                 case '#ekstra':
-                    pageTitle.innerText = "Ekstrakurikuler";
+                    pageTitle.innerText = "Jadwal Ekstrakurikuler";
                     container.innerHTML = renderEkstra();
                     break;
                 case '#murid':
@@ -858,7 +1017,115 @@
         window.addEventListener('hashchange', router);
 
         // ================================================================
-        // FUNGSI RENDER
+        // DELETE DATA FUNCTION
+        // ================================================================
+
+        function deleteData(type, id) {
+            if (!confirm('Yakin ingin menghapus data ini?')) return;
+
+            if (type === 'student') {
+                appState.students = appState.students.filter(s => s.id !== id);
+            } else if (type === 'admin') {
+                appState.adminLinks = appState.adminLinks.filter(a => a.id !== id);
+            } else if (type === 'ekstra') {
+                appState.ekstra.splice(id, 1);
+            } else {
+                showToast('Tipe data tidak dikenal.', 'error');
+                return;
+            }
+            saveState();
+            router();
+            showToast('Data berhasil dihapus!');
+        }
+
+        // ================================================================
+        // AI ASSISTANT
+        // ================================================================
+
+        function toggleAI() {
+            const win = document.getElementById('ai-chat-window');
+            win.classList.toggle('open');
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('ai-input');
+            const body = document.getElementById('ai-chat-body');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'ai-msg user';
+            userMsg.innerText = text;
+            body.appendChild(userMsg);
+
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+
+            // Simulate AI thinking
+            const botMsg = document.createElement('div');
+            botMsg.className = 'ai-msg bot';
+            botMsg.innerText = '⏳ Sedang memproses...';
+            body.appendChild(botMsg);
+            body.scrollTop = body.scrollHeight;
+
+            // --- INTEGRASI DEEPSEEK AI ---
+            // Ganti URL dan API Key sesuai kebutuhan Anda
+            // const API_KEY = 'YOUR_DEEPSEEK_API_KEY';
+            // const API_URL = 'https://api.deepseek.com/v1/chat/completions';
+
+            setTimeout(() => {
+                // Simulasi respons AI (tanpa API key)
+                const lower = text.toLowerCase();
+                let reply = 'Maaf, saya belum bisa memproses permintaan itu. Silakan hubungkan dengan API DeepSeek untuk fungsi penuh.';
+                if (lower.includes('siswa') || lower.includes('murid')) {
+                    reply =
+                        `Total siswa: ${appState.students.length}. SD: ${appState.students.filter(s=>s.level==='SD').length}, SMP: ${appState.students.filter(s=>s.level==='SMP').length}.`;
+                } else if (lower.includes('guru')) {
+                    reply = `Total guru: ${appState.teachers.length}.`;
+                } else if (lower.includes('jadwal')) {
+                    reply =
+                    `Jadwal intrakurikuler memiliki ${appState.jadwal.length} sesi per hari. Ekstrakurikuler: ${appState.ekstra.length} kegiatan utama.`;
+                } else if (lower.includes('rkt') || lower.includes('ksp')) {
+                    reply =
+                        `Dokumen RKT dan KSP tersedia di menu RKT & KSP. Terdapat ${appState.school.misi.length} misi sekolah.`;
+                } else {
+                    reply =
+                        `Saya siap membantu! Tanyakan tentang data siswa, guru, jadwal, atau RKT. Saat ini dalam mode simulasi. Hubungkan dengan API DeepSeek untuk jawaban real-time.`;
+                }
+
+                botMsg.innerText = reply;
+                body.scrollTop = body.scrollHeight;
+
+                // Contoh kode untuk API DeepSeek (di-comment):
+                /*
+                fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: "deepseek-chat",
+                        messages: [{ role: "user", content: text }],
+                        stream: false
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    botMsg.innerText = data.choices[0].message.content;
+                    body.scrollTop = body.scrollHeight;
+                })
+                .catch(err => {
+                    botMsg.innerText = 'Error: ' + err.message;
+                });
+                */
+            }, 600);
+        }
+
+
+        // ================================================================
+        // RENDER FUNCTIONS
         // ================================================================
 
         function renderDashboard() {
@@ -969,27 +1236,98 @@
             </div>`;
         }
 
-        function renderCalendar() {
-            let calHTML = appState.calendar.map((monthData, mIdx) => {
-                let eventsList = monthData.events.map((ev, eIdx) => {
-                    const badgeColor = ev.type === 'primary' ? 'bg-blue-500' : ev.type === 'danger' ? 'bg-rose-500' :
-                        ev.type === 'warning' ? 'bg-amber-500' : 'bg-sky-500';
-                    return `
-                    <div class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
-                        <div class="w-2 h-2 mt-2 rounded-full ${badgeColor} flex-shrink-0"></div>
-                        <div class="flex-1">
-                            <p class="font-bold text-slate-700 text-sm">${ev.date}</p>
-                            <p class="text-slate-600 text-sm mt-0.5">${ev.name}</p>
+        // ================================================================
+        // KALENDER GRID
+        // ================================================================
+
+        function renderCalendarGrid() {
+            const months = appState.calendar;
+            let output = '<div class="fade-in space-y-8">';
+
+            months.forEach(monthData => {
+                const [monthName, year] = monthData.month.split(' ');
+                const monthIndex = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+                    'September', 'Oktober', 'November', 'Desember'
+                ].indexOf(monthName);
+                if (monthIndex === -1) return;
+
+                const yearNum = parseInt(year);
+                const firstDay = new Date(yearNum, monthIndex, 1).getDay();
+                const daysInMonth = new Date(yearNum, monthIndex + 1, 0).getDate();
+
+                // Parse events
+                const eventMap = {};
+                monthData.events.forEach(ev => {
+                    const dateStr = ev.date;
+                    if (dateStr.includes('-')) {
+                        const [start, end] = dateStr.split('-');
+                        const startDay = parseInt(start);
+                        const endDay = parseInt(end);
+                        for (let d = startDay; d <= endDay; d++) {
+                            const key = `${d}`;
+                            if (!eventMap[key]) eventMap[key] = [];
+                            eventMap[key].push(ev);
+                        }
+                    } else {
+                        const day = parseInt(dateStr);
+                        const key = `${day}`;
+                        if (!eventMap[key]) eventMap[key] = [];
+                        eventMap[key].push(ev);
+                    }
+                });
+
+                // Build Grid
+                let gridHTML = '';
+                const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+                gridHTML += dayNames.map(d => `<div class="day-header">${d}</div>`).join('');
+
+                // Empty days before first day
+                for (let i = 0; i < firstDay; i++) {
+                    gridHTML += `<div class="day-cell other-month"></div>`;
+                }
+
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const events = eventMap[`${d}`] || [];
+                    let eventBadges = events.map(ev => {
+                        let cls = 'event-badge';
+                        if (ev.type === 'danger') cls += ' danger';
+                        else if (ev.type === 'warning') cls += ' warning';
+                        else if (ev.type === 'primary') cls += ' primary';
+                        return `<span class="${cls}" title="${ev.name}">${ev.name}</span>`;
+                    }).join('');
+
+                    gridHTML += `
+                        <div class="day-cell">
+                            <div class="date-num">${d}</div>
+                            ${eventBadges}
                         </div>
-                    </div>`;
-                }).join('');
-                return `<div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 mb-6">
-                    <h3 class="text-lg font-bold text-dark border-b border-slate-100 pb-3 mb-3">${monthData.month}</h3>
-                    <div class="space-y-1">${eventsList}</div>
-                </div>`;
-            }).join('');
-            return `<div class="fade-in"><div class="columns-1 md:columns-2 lg:columns-3 gap-6">${calHTML}</div></div>`;
+                    `;
+                }
+
+                // Fill remaining cells
+                const totalCells = firstDay + daysInMonth;
+                const remaining = (7 - (totalCells % 7)) % 7;
+                for (let i = 0; i < remaining; i++) {
+                    gridHTML += `<div class="day-cell other-month"></div>`;
+                }
+
+                output += `
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-bold text-dark mb-4 border-b border-slate-100 pb-3">${monthData.month}</h3>
+                        <div class="calendar-grid">
+                            ${gridHTML}
+                        </div>
+                    </div>
+                `;
+            });
+
+            output += '</div>';
+            return output;
         }
+
+        // ================================================================
+        // JADWAL INTRAKURIKULER
+        // ================================================================
 
         function getSubjColor(t) {
             if (!t) return '';
@@ -1043,7 +1381,7 @@
             <div class="fade-in">
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden w-full overflow-x-auto">
                     <div class="text-center py-4 border-b border-slate-200 bg-gradient-to-r from-blue-50 to-white">
-                        <h2 class="text-xl font-extrabold text-dark uppercase tracking-wide">Jadwal Pelajaran Semester Ganjil</h2>
+                        <h2 class="text-xl font-extrabold text-dark uppercase tracking-wide">Jadwal Intrakurikuler Semester Ganjil</h2>
                         <h2 class="text-lg font-bold text-dark uppercase">${appState.school.name}</h2>
                         <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
                     </div>
@@ -1099,58 +1437,106 @@
             </div>`;
         }
 
+        // ================================================================
+        // JADWAL EKSTRAKURIKULER (REDESIGN)
+        // ================================================================
+
         function renderEkstra() {
-            let rows = appState.ekstra.map((e, i) => {
-                const isFirst = i === 0;
-                return `
-                <tr class="border-b border-slate-100 hover:bg-slate-50 transition text-sm">
-                    <td class="py-3 px-2 text-center font-bold text-slate-700">${isFirst ? '1' : ''}</td>
-                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}">${e.waktu}</td>
-                    <td class="py-3 px-2 text-center">${e.s}</td>
-                    <td class="py-3 px-2 text-center">${e.sel}</td>
-                    <td class="py-3 px-2 text-center">${e.r}</td>
-                    <td class="py-3 px-2 text-center">${e.k}</td>
-                    <td class="py-3 px-2 text-center">${e.j}</td>
-                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}">${e.ws}</td>
-                    <td class="py-3 px-2 text-center">${e.sab}</td>
-                    <td class="py-3 px-2 text-center ${isFirst ? '' : 'text-slate-400'}">${e.wm}</td>
-                    <td class="py-3 px-2 text-center">${e.m}</td>
-                </tr>`;
-            }).join('');
+            // Build a 2D mapping for better display
+            const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+            const timeSlots = [
+                { label: 'Sesi 1', time: '15.30 - Selesai' },
+                { label: 'Sesi 2', time: '15.30 - Selesai' },
+                { label: 'Sesi 3', time: '09.00 - Selesai' }
+            ];
+
+            // Map existing data to a structured table
+            // ekstra[0] is the first row (OSIS, Literasi, Futsal, Paskibra, Hadroh, Pramuka, Paskibra)
+            // ekstra[1] is second row (English Club, KIR, Jurnalistik, Silat, UKS)
+            // ekstra[2] is third row (Computer Club, Sahabat Literasi)
+
+            let rows = [];
+            // Row 1
+            let r1 = [
+                'OSIS', 'Literasi & Numerasi', 'Futsal', 'Paskibra', 'Hadroh', 'Pramuka', 'Paskibra'
+            ];
+            // Row 2
+            let r2 = [
+                'English Club', 'Karya Ilmiah Remaja', 'Jurnalistik', 'Silat', 'UKS', '', ''
+            ];
+            // Row 3
+            let r3 = [
+                '', 'Computer Club', 'Sahabat Literasi', '', '', '', ''
+            ];
+
+            // Time mapping for each row
+            const times = ['15.30 - Selesai', '15.30 - Selesai', '09.00 - Selesai'];
+
+            const combined = [r1, r2, r3];
+
+            let tableHTML = '';
+            combined.forEach((row, idx) => {
+                tableHTML += `<tr class="border-b border-slate-200 hover:bg-slate-50 transition text-sm">`;
+                tableHTML += `<td class="py-3 px-2 text-center font-bold text-slate-700">${idx+1}</td>`;
+                tableHTML +=
+                    `<td class="py-3 px-2 text-center whitespace-nowrap text-xs bg-slate-50 font-semibold">${times[idx]}</td>`;
+                row.forEach(cell => {
+                    if (cell) {
+                        let color = 'bg-indigo-50 text-indigo-800 border-indigo-200';
+                        if (cell.includes('Pramuka') || cell.includes('Paskibra')) color =
+                            'bg-blue-50 text-blue-800 border-blue-200';
+                        else if (cell.includes('OSIS')) color = 'bg-purple-50 text-purple-800 border-purple-200';
+                        else if (cell.includes('Futsal') || cell.includes('Silat')) color =
+                            'bg-rose-50 text-rose-800 border-rose-200';
+                        tableHTML +=
+                            `<td class="py-3 px-2 text-center border border-slate-100 rounded ${color} font-medium">${cell}</td>`;
+                    } else {
+                        tableHTML += `<td class="py-3 px-2 text-center text-slate-300">-</td>`;
+                    }
+                });
+                tableHTML += `</tr>`;
+            });
 
             return `
             <div class="fade-in">
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-6 border-b border-slate-100 bg-gradient-to-r from-indigo-50 to-white">
-                        <h2 class="text-xl font-extrabold text-dark">Jadwal Ekstrakurikuler Semester Ganjil</h2>
-                        <p class="text-sm text-slate-500">${appState.school.name} - Tahun Ajaran ${appState.school.tahun}</p>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden w-full overflow-x-auto">
+                    <div class="text-center py-4 border-b border-slate-200 bg-gradient-to-r from-indigo-50 to-white">
+                        <h2 class="text-xl font-extrabold text-dark uppercase tracking-wide">Jadwal Ekstrakurikuler Semester Ganjil</h2>
+                        <h2 class="text-lg font-bold text-dark uppercase">${appState.school.name}</h2>
+                        <h3 class="text-md font-semibold text-slate-600 uppercase">Tahun Ajaran ${appState.school.tahun}</h3>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-[900px] text-sm border-collapse">
-                            <thead>
-                                <tr class="bg-[#1e40af] text-white text-xs uppercase">
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">No</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Waktu</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Senin</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Selasa</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Rabu</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Kamis</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Jum'at</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Waktu</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Sabtu</th>
-                                    <th class="py-3 px-2 border-r border-slate-400 text-center">Waktu</th>
-                                    <th class="py-3 px-2 text-center">Minggu</th>
-                                </tr>
-                            </thead>
-                            <tbody>${rows}</tbody>
-                        </table>
-                    </div>
-                    <div class="p-4 bg-slate-50 border-t border-slate-100 text-xs text-slate-500 flex flex-wrap gap-x-4 gap-y-1">
-                        <span><span class="font-semibold">Penanggung Jawab:</span> Fauzi Faturohman (Senin), Maha Ikhlas (Selasa), Mochamad Hoky (Rabu), Syifa Nurlathifah (Kamis), Pelatih Tamu (Jum'at), Rukman (Sabtu), Syifa Nurlathifah (Minggu)</span>
+                    <table class="w-full min-w-[900px] border-collapse bg-white">
+                        <thead>
+                            <tr class="bg-[#1e40af] text-white text-sm uppercase text-center border-b border-slate-300">
+                                <th class="py-3 px-2 border-r border-slate-400 w-12">No</th>
+                                <th class="py-3 px-2 border-r border-slate-400 w-32">Waktu</th>
+                                <th class="py-3 px-2 border-r border-slate-400">Senin</th>
+                                <th class="py-3 px-2 border-r border-slate-400">Selasa</th>
+                                <th class="py-3 px-2 border-r border-slate-400">Rabu</th>
+                                <th class="py-3 px-2 border-r border-slate-400">Kamis</th>
+                                <th class="py-3 px-2 border-r border-slate-400">Jum'at</th>
+                                <th class="py-3 px-2 border-r border-slate-400">Sabtu</th>
+                                <th class="py-3 px-2">Minggu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableHTML}
+                        </tbody>
+                    </table>
+                    <div class="p-3 bg-slate-50 text-xs text-slate-500 border-t border-slate-200 flex justify-between items-center">
+                        <span><span class="font-semibold">Koordinator:</span> Fauzi Faturohman</span>
+                        <button onclick="if(confirm('Hapus semua data ekstrakurikuler?')){ appState.ekstra=[]; saveState(); router(); showToast('Data ekstrakurikuler dihapus!'); }" class="text-rose-500 hover:text-rose-700 font-medium text-xs flex items-center gap-1 no-print">
+                            <i class="fas fa-trash-alt"></i> Hapus Semua
+                        </button>
                     </div>
                 </div>
             </div>`;
         }
+
+
+        // ================================================================
+        // DATA MURID
+        // ================================================================
 
         function renderStudents() {
             let trs = appState.students.map((m, idx) => {
@@ -1159,6 +1545,14 @@
                     `<span class="w-8 h-8 rounded-full border border-pink-200 bg-pink-50 text-pink-600 flex items-center justify-center text-xs font-bold mx-auto">P</span>`;
                 const rombelBadge =
                     `<span class="px-4 py-1.5 rounded-full border border-teal-300 text-teal-600 bg-white text-xs font-bold shadow-sm">${m.rombel}</span>`;
+                let statusBadge = '';
+                if (m.promotionStatus === 'Naik Kelas') statusBadge =
+                    `<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">Naik</span>`;
+                else if (m.promotionStatus === 'Tidak Naik Kelas') statusBadge =
+                    `<span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold">Tidak Naik</span>`;
+                else statusBadge =
+                    `<span class="px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">-</span>`;
+
                 return `
                 <tr class="border-b border-slate-50 hover:bg-slate-50 transition student-row">
                     <td class="py-4 px-4 text-sm text-slate-600 text-center">${idx+1}</td>
@@ -1168,9 +1562,15 @@
                     <td class="py-4 px-4 text-sm text-slate-600">${m.level}</td>
                     <td class="py-4 px-4 text-center">${genderBadge}</td>
                     <td class="py-4 px-4 text-center">${rombelBadge}</td>
+                    <td class="py-4 px-4 text-center">${statusBadge}</td>
                     <td class="py-4 px-4 text-center no-print">
                         <button onclick="openGradeModal(${m.id})" class="px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-xs font-semibold transition-colors flex items-center gap-2 mx-auto border border-primary/20">
-                            <i class="fas fa-edit"></i> Nilai
+                            <i class="fas fa-edit"></i> Kelola
+                        </button>
+                    </td>
+                    <td class="py-4 px-4 text-center no-print">
+                        <button onclick="deleteData('student', ${m.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Siswa">
+                            <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
                 </tr>`;
@@ -1183,7 +1583,7 @@
                         <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400"><i class="fas fa-search"></i></span>
                         <input type="text" id="search-murid" class="w-full pl-11 pr-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm bg-slate-50 focus:bg-white transition" placeholder="Cari nama atau NISN..." />
                     </div>
-                    <div class="flex gap-2 text-xs">
+                    <div class="flex gap-2 text-xs flex-wrap">
                         <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">Total ${appState.students.length}</span>
                         <span class="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full font-medium">SD ${appState.students.filter(s=>s.level==='SD').length}</span>
                         <span class="px-3 py-1 bg-purple-50 text-purple-700 rounded-full font-medium">SMP ${appState.students.filter(s=>s.level==='SMP').length}</span>
@@ -1191,7 +1591,7 @@
                 </div>
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[900px]">
+                        <table class="w-full text-left border-collapse min-w-[1100px]">
                             <thead>
                                 <tr class="bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-wider border-b-2 border-slate-200">
                                     <th class="py-4 px-4 text-center">No</th>
@@ -1201,7 +1601,9 @@
                                     <th class="py-4 px-4">Jenjang</th>
                                     <th class="py-4 px-4 text-center">L/P</th>
                                     <th class="py-4 px-4 text-center">Rombel</th>
+                                    <th class="py-4 px-4 text-center">Status</th>
                                     <th class="py-4 px-4 text-center no-print">Aksi</th>
+                                    <th class="py-4 px-4 text-center no-print">Hapus</th>
                                 </tr>
                             </thead>
                             <tbody>${trs}</tbody>
@@ -1219,6 +1621,10 @@
                 row.style.display = (name.includes(term) || nisn.includes(term)) ? '' : 'none';
             });
         }
+
+        // ================================================================
+        // GRADE MODAL (with Promotion Status)
+        // ================================================================
 
         function openGradeModal(studentId) {
             const student = appState.students.find(s => s.id === studentId);
@@ -1245,6 +1651,11 @@
                     </div>`;
             });
             document.getElementById('grade-inputs-container').innerHTML = inputsHTML;
+
+            // Set promotion status
+            const select = document.getElementById('promotion-status-select');
+            select.value = student.promotionStatus || 'Belum Ditentukan';
+
             document.getElementById('grade-modal').classList.remove('hidden');
             document.getElementById('grade-modal').classList.add('flex');
         }
@@ -1265,11 +1676,22 @@
                     if (key.startsWith('grade_')) newGrades[key.replace('grade_', '')] = val ? parseInt(val) : 0;
                 }
                 appState.students[idx].grades = newGrades;
+
+                // Save promotion status
+                const statusSelect = document.getElementById('promotion-status-select');
+                appState.students[idx].promotionStatus = statusSelect.value;
+
                 saveState();
                 closeGradeModal();
-                showToast(`Nilai ${appState.students[idx].name} disimpan!`);
+                showToast(`Data ${appState.students[idx].name} berhasil disimpan!`);
+                router(); // Re-render to update status badge
             }
         }
+
+
+        // ================================================================
+        // RENDER GURU
+        // ================================================================
 
         function renderTeachers() {
             const sorted = [...appState.teachers].sort((a, b) => a.nip.localeCompare(b.nip));
@@ -1288,9 +1710,13 @@
             return `<div class="fade-in"><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">${html}</div></div>`;
         }
 
+        // ================================================================
+        // RENDER ADMINISTRASI (with delete)
+        // ================================================================
+
         function renderAdmin() {
             let trs = appState.adminLinks.length === 0 ?
-                `<tr><td colspan="5" class="py-10 text-center text-slate-400 text-sm">Belum ada dokumen.</td></tr>` :
+                `<tr><td colspan="6" class="py-10 text-center text-slate-400 text-sm">Belum ada dokumen.</td></tr>` :
                 appState.adminLinks.map(d => `
                 <tr class="border-b border-slate-50 hover:bg-slate-50 transition">
                     <td class="py-3.5 px-4 text-sm font-medium text-dark">${d.name}</td>
@@ -1298,17 +1724,25 @@
                     <td class="py-3.5 px-4 text-sm text-slate-700">${d.title}</td>
                     <td class="py-3.5 px-4 text-sm text-slate-500">${d.date}</td>
                     <td class="py-3.5 px-4 text-center"><a href="${d.link}" target="_blank" class="w-8 h-8 inline-flex items-center justify-center bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition"><i class="fas fa-external-link-alt text-xs"></i></a></td>
+                    <td class="py-3.5 px-4 text-center no-print">
+                        <button onclick="deleteData('admin', ${d.id})" class="text-rose-400 hover:text-rose-600 transition" title="Hapus Dokumen">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
                 </tr>`).join('');
             return `
             <div class="fade-in space-y-6">
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
+                    <div class="p-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex justify-between items-center">
                         <h3 class="font-bold text-dark"><i class="fas fa-folder-open text-amber-500 mr-2"></i>Dokumen Administrasi</h3>
+                        <button onclick="if(confirm('Hapus semua dokumen?')){ appState.adminLinks=[]; saveState(); router(); showToast('Semua dokumen dihapus!'); }" class="text-rose-500 hover:text-rose-700 text-xs font-medium no-print">
+                            <i class="fas fa-trash-alt"></i> Hapus Semua
+                        </button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead><tr class="bg-slate-50 text-slate-500 text-xs uppercase border-b border-slate-100">
-                                <th class="py-3.5 px-4">Guru</th><th class="py-3.5 px-4">Kategori</th><th class="py-3.5 px-4">Judul</th><th class="py-3.5 px-4">Tanggal</th><th class="py-3.5 px-4 text-center">Link</th>
+                                <th class="py-3.5 px-4">Guru</th><th class="py-3.5 px-4">Kategori</th><th class="py-3.5 px-4">Judul</th><th class="py-3.5 px-4">Tanggal</th><th class="py-3.5 px-4 text-center">Link</th><th class="py-3.5 px-4 text-center no-print">Hapus</th>
                             </tr></thead>
                             <tbody>${trs}</tbody>
                         </table>
@@ -1320,8 +1754,9 @@
             </div>`;
         }
 
+
         // ================================================================
-        // RENDER: RKT & KSP (LENGKAP)
+        // RENDER RKT & KSP (LENGKAP)
         // ================================================================
 
         function renderRKT_KSP() {
@@ -1569,8 +2004,10 @@
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
 
                 // Sheet 4: Siswa
-                const siswaData = appState.students.map(s => [s.id, s.name, s.nisn, s.school, s.level, s.gender, s.rombel]);
-                siswaData.unshift(['ID', 'Nama', 'NISN', 'Sekolah', 'Jenjang', 'Gender', 'Rombel']);
+                const siswaData = appState.students.map(s => [s.id, s.name, s.nisn, s.school, s.level, s.gender, s.rombel, s
+                    .promotionStatus || 'Belum Ditentukan'
+                ]);
+                siswaData.unshift(['ID', 'Nama', 'NISN', 'Sekolah', 'Jenjang', 'Gender', 'Rombel', 'Status Kenaikan']);
                 const ws4 = XLSX.utils.aoa_to_sheet(siswaData);
                 XLSX.utils.book_append_sheet(wb, ws4, 'Siswa');
 
@@ -1716,6 +2153,7 @@
                                     level: row[4] || '',
                                     gender: row[5] || '',
                                     rombel: row[6] || '',
+                                    promotionStatus: row[7] || 'Belum Ditentukan',
                                     grades: {}
                                 });
                             }
@@ -1849,16 +2287,16 @@
                 const ws3 = XLSX.utils.aoa_to_sheet(guruTemplate);
                 XLSX.utils.book_append_sheet(wb, ws3, 'Guru');
 
-                // Template Siswa
+                // Template Siswa (dengan status)
                 const siswaTemplate = [
-                    ['ID', 'Nama', 'NISN', 'Sekolah', 'Jenjang', 'Gender', 'Rombel'],
-                    [1, 'ADE MUSTOPA', '3139453861', 'SRDT 39 Garut', 'SD', 'L', 'SD'],
-                    [2, 'AGUS RAMDANI', '0104915906', 'SRMPT 39 Garut', 'SMP', 'L', '7B']
+                    ['ID', 'Nama', 'NISN', 'Sekolah', 'Jenjang', 'Gender', 'Rombel', 'Status Kenaikan'],
+                    [1, 'ADE MUSTOPA', '3139453861', 'SRDT 39 Garut', 'SD', 'L', 'SD', 'Belum Ditentukan'],
+                    [2, 'AGUS RAMDANI', '0104915906', 'SRMPT 39 Garut', 'SMP', 'L', '7B', 'Belum Ditentukan']
                 ];
                 const ws4 = XLSX.utils.aoa_to_sheet(siswaTemplate);
                 XLSX.utils.book_append_sheet(wb, ws4, 'Siswa');
 
-                // Template Ekstrakurikuler
+                // Template Ekstra
                 const ekstraTemplate = [
                     ['Waktu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Waktu Sabtu', 'Sabtu', 'Waktu Minggu',
                         'Minggu'
@@ -1876,7 +2314,7 @@
                 const calTemplate = [
                     ['Bulan', 'Tanggal', 'Event', 'Tipe'],
                     ['Juli 2026', '6 Jul', 'Hari Pertama Sekolah', 'primary'],
-                    ['Juli 2026', '6-10 Jul', 'MPLS / Asesmen Diagnostik', 'info'],
+                    ['Juli 2026', '6-10 Jul', 'MPLS / Asesmen', 'info'],
                     ['Agustus 2026', '17 Agu', 'Hari Kemerdekaan RI', 'danger'],
                     ['September 2026', '7-11 Sep', 'Penilaian Sumatif Tengah Semester', 'warning'],
                     ['Desember 2026', '18 Des', 'Pembagian Rapor', 'info']
@@ -1884,7 +2322,7 @@
                 const ws6 = XLSX.utils.aoa_to_sheet(calTemplate);
                 XLSX.utils.book_append_sheet(wb, ws6, 'Kalender');
 
-                // Template Administrasi
+                // Template Admin
                 const adminTemplate = [
                     ['NIP', 'Nama', 'Kategori', 'Judul', 'Link', 'Tanggal'],
                     ['199409082025211128', 'Fauzi Faturohman', 'Modul Ajar', 'Modul Ajar PPKn Kelas VII',
